@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Seithi247.Models.News>
+
+<div class="container mt-4">
+    @foreach (var item in Model)
+    {
+        <div class="news-card">
+            {
+            @if (item.NewsType == NewsType.Video)
+            {
+                <div class="video-wrapper">
+                    <a href="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl" data-fancybox="video" class="video-thumb">
+                        <img src="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.ThumbnailUrl" class="img-fluid rounded mb-2" alt="@item.Title">
+                        <div class="play-button">&#9658;</div> <!-- triangle play icon -->
+                    </a>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">@item.Title</h5>
+                    <p class="card-text text-muted">
+                        @((item.Content.Length > 100) ? item.Content.Substring(0, 100) + "..." : item.Content)
+                    </p>
+                    <a href="@Url.Action("Details", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
+                        Read More
+                    </a>
+                </div>
+            }
+            else
+            {
+                if (item.Images.Any())
+                {
+                    <a href="@Url.Action("Details", "News", new { id = item.Id })">
+                        <img src="@item.Images?.FirstOrDefault()?.FilePath" class="card-img-top" alt="@item.Title">
+                    </a>
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@item.Title</h5>
+                    <p class="card-text text-muted">
+                        @((item.Content.Length > 100) ? item.Content.Substring(0, 100) + "..." : item.Content)
+                    </p>
+                    <a href="@Url.Action("Details", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
+                        Read More
+                    </a>
+                </div>
+            }
+        </div>
+    }
+</div>

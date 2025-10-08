@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Seithi247.Models.News>
+@{
+    ViewData["Title"] = "Admin - News";
+}
+<h1>News (Admin)</h1>
+<p>
+    <a asp-controller="Admin" asp-action="Create"  class="btn
+btn-primary">Create New</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Published</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Title</td>
+                7
+                <td>@item.PublishedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <a asp-area="Admin" asp-controller="News" asp-action="Edit" asproute-
+                       id="@item.Id">Edit</a> |
+                    <a asp-area="Admin" asp-controller="News" asp-action="Details"
+                       asp-route-id="@item.Id">Details</a> |
+                    <a asp-area="Admin" asp-controller="News" asp-action="Delete"
+                       asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

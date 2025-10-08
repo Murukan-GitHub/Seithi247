@@ -1,0 +1,294 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\views\\news\\_newscardspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:views\\news\\_newscardspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\views\\news\\_newslistpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:views\\news\\_newslistpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\models\\news.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:models\\news.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\models\\newsmedia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:models\\newsmedia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\views\\admin\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:views\\admin\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\models\\newsimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:models\\newsimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\views\\news\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:views\\news\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\views\\news\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:views\\news\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\wwwroot\\css\\menu.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:wwwroot\\css\\menu.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|c:\\drive d\\workspace\\seithi247\\seithi247\\views\\admin\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{51040CD8-50D3-4479-A661-38D1033923FC}|Seithi247.csproj|solutionrelative:views\\admin\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\Admin\\Delete.cshtml",
+              "RelativeDocumentMoniker": "Views\\Admin\\Delete.cshtml",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\Admin\\Delete.cshtml",
+              "RelativeToolTip": "Views\\Admin\\Delete.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-01T13:38:36.448Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Controllers\\AdminController.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAADwv2QAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T13:03:52.607Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Models\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\ErrorViewModel.cs",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Models\\ErrorViewModel.cs",
+              "RelativeToolTip": "Models\\ErrorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T13:02:37.094Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "NewsMedia.cs",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Models\\NewsMedia.cs",
+              "RelativeDocumentMoniker": "Models\\NewsMedia.cs",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Models\\NewsMedia.cs",
+              "RelativeToolTip": "Models\\NewsMedia.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T12:36:59.706Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "News.cs",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Models\\News.cs",
+              "RelativeDocumentMoniker": "Models\\News.cs",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Models\\News.cs",
+              "RelativeToolTip": "Models\\News.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAowB8AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T12:34:58.312Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\News\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\News\\Details.cshtml",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\News\\Details.cshtml",
+              "RelativeToolTip": "Views\\News\\Details.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-07T12:29:11.634Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-07T11:37:11.046Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_NewsCardsPartial.cshtml",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\News\\_NewsCardsPartial.cshtml",
+              "RelativeDocumentMoniker": "Views\\News\\_NewsCardsPartial.cshtml",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\News\\_NewsCardsPartial.cshtml",
+              "RelativeToolTip": "Views\\News\\_NewsCardsPartial.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-07T08:31:25.893Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_NewsListPartial.cshtml",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\News\\_NewsListPartial.cshtml",
+              "RelativeDocumentMoniker": "Views\\News\\_NewsListPartial.cshtml",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\News\\_NewsListPartial.cshtml",
+              "RelativeToolTip": "Views\\News\\_NewsListPartial.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-05T10:53:47.625Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\News\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\News\\Index.cshtml",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\News\\Index.cshtml",
+              "RelativeToolTip": "Views\\News\\Index.cshtml",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAPAAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-30T13:55:55.636Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "NewsImage.cs",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Models\\NewsImage.cs",
+              "RelativeDocumentMoniker": "Models\\NewsImage.cs",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Models\\NewsImage.cs",
+              "RelativeToolTip": "Models\\NewsImage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-01T13:43:32.414Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T13:39:19.218Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "NewsController.cs",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Controllers\\NewsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\NewsController.cs",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Controllers\\NewsController.cs",
+              "RelativeToolTip": "Controllers\\NewsController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAiwCMAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T13:50:55.226Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "wwwroot\\css\\site.css",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAqwMoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-10-05T12:33:24.693Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-06T08:14:30.512Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\Admin\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\Admin\\Create.cshtml",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\Views\\Admin\\Create.cshtml",
+              "RelativeToolTip": "Views\\Admin\\Create.cshtml",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACkAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-09-30T13:54:50.565Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "menu.css",
+              "DocumentMoniker": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\wwwroot\\css\\menu.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\menu.css",
+              "ToolTip": "C:\\Drive D\\WorkSpace\\Seithi247\\Seithi247\\wwwroot\\css\\menu.css",
+              "RelativeToolTip": "wwwroot\\css\\menu.css",
+              "ViewState": "AgIAABoAAAAAAAAAAAAIwEUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-10-06T08:27:03.653Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+﻿@model Seithi247.Models.News
+@{
+    ViewData["Title"] = "Create News";
+}
+<h2>Create News</h2>
+<form  asp-controller="Admin" asp-action="Create"
+      method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Summary" class="form-label"></label>
+        <input asp-for="Summary" class="form-control" />
+        <span asp-validation-for="Summary" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Author" class="form-label"></label>
+        <input asp-for="Author" class="form-control" />
+        <span asp-validation-for="Author" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Content" class="form-label"></label>
+        <textarea asp-for="Content" id="contentEditor" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="ImageFiles" class="form-label">Upload Images</label>
+        <input type="file" name="ImageFiles" multiple class="form-control" />
+        <small class="text-muted">You can upload multiple images</small>
+    </div>
+    <div class="mb-3">
+        <label asp-for="VideoUrl" class="form-label"></label>
+        <input asp-for="VideoUrl" class="form-control" placeholder="Enter video URL (YouTube, Vimeo, or MP4)">
+        <span asp-validation-for="VideoUrl" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="ThumbNailImages" class="form-label">Upload Images</label>
+        <input type="file" name="ThumbNailImages" multiple class="form-control" />
+        <small class="text-muted">You can upload multiple images</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+@section Scripts {
+    <script src="https://cdn.tiny.cloud/1/pvjjooklecnrx8sgkc609x3g7hbd0um5yvr7k1szvpv2fu9e/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#contentEditor',
+            height: 400,
+        menubar: false,
+        branding: false,
+        language: 'en', // keep English
+            plugins: 'lists link image preview code fullscreen',
+            toolbar: 'undo redo | formatselect | bold italic underline | ' +
+                     'alignleft aligncenter alignright alignjustify | ' +
+                     'bullist numlist outdent indent | link image | code fullscreen',
+
+            /* Enable image upload */
+            images_upload_url: '/Admin/UploadImage',
+            automatic_uploads: true,
+            file_picker_types: 'image',
+
+            /* Custom image upload handler */
+        images_upload_handler: function (blobInfo, progress) {
+            return new Promise((resolve, reject) => {
+                let formData = new FormData();
+                formData.append("file", blobInfo.blob(), blobInfo.filename());
+
+                fetch('/Admin/UploadImage', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result && result.location) {
+                        resolve(result.location); // ✅ give TinyMCE the image URL
+                    } else {
+                        reject('Upload failed: no location in response');
+                    }
+                })
+                .catch(() => {
+                    reject('Image upload failed');
+                });
+            });
+        },
+
+            content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
+        });
+    </script>
+}

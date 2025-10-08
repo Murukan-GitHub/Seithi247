@@ -1,0 +1,69 @@
+﻿/* === NAVBAR BASE === */
+.custom-navbar {
+    background: linear-gradient(135deg, #007bff, #6610f2);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-brand, .nav-link {
+    color: #fff !important;
+    transition: color 0.3s ease;
+}
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+        width: 100%;
+    }
+
+.navbar-toggler-icon {
+    filter: brightness(0) invert(1);
+}
+
+.navbar.scrolled {
+    background: linear-gradient(135deg, #0062cc, #5a0ee3);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* === DARK MODE === */
+body.dark-mode {
+    background-color: #121212;
+    color: #e5e5e5;
+}
+
+    body.dark-mode .custom-navbar {
+        background: linear-gradient(135deg, #222, #000);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .navbar-brand,
+    body.dark-mode .nav-link {
+        color: #e5e5e5 !important;
+    }
+
+        body.dark-mode .nav-link:hover::after {
+            background-color: #fff;
+        }
+
+/* Theme toggle button */
+#themeToggle {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+    #themeToggle:hover {
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+/* Dark mode button style */
+body.dark-mode #themeToggle {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f8f9fa;
+}
+
+    body.dark-mode #themeToggle:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }

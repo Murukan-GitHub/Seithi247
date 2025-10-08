@@ -1,0 +1,246 @@
+﻿@model IEnumerable<Seithi247.Models.News>
+@{
+    ViewData["Title"] = "Latest News";
+}
+
+
+<div class="container mt-4">
+    <h2 class="mb-4">Latest News</h2>
+
+    <!-- New posts banner -->
+    <div id="newPostsBanner" class="alert alert-info text-center d-none" style="cursor:pointer;">
+        🆕 New posts available — Click to refresh
+    </div>
+
+
+    <!-- News content -->
+    <div id="newsContainer" class="news-grid">
+        @await Html.PartialAsync("_NewsListPartial", Model)
+    </div>
+    <!-- Floating Load More Button -->
+    <button id="loadMoreBtn" class="floating-btn btn btn-danger rounded-circle shadow-lg">
+        <i class="bi bi-arrow-down-circle fs-4"></i>
+    </button>
+    <div id="loadingIndicator" class="text-center my-4 d-none">
+        <div class="spinner-border text-danger" role="status"></div>
+    </div>
+    <div id="loadMoreContainer" class="text-center my-4">
+        <button id="loadMoreBtn" class="btn btn-outline-danger px-5 py-2 rounded-pill fw-bold">
+            Load More News
+        </button>
+    </div>
+</div>
+
+
+@section Scripts {
+    <!-- Include imagesLoaded (needed to wait for images before Masonry arranges them) -->
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+    <script>
+
+        let latestTimestamp = '@Model.FirstOrDefault()?.PublishedAt.ToString("o")';
+        const newPostSound = new Audio('/sounds/notification.mp3');
+
+
+        const container = document.getElementById('newsContainer');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        let skipCount = @Model.Count();
+        let isLoading = false;
+        let noMorePosts = false;
+
+        // Initialize Masonry on load
+        let msnry = new Masonry('#newsContainer', {
+            itemSelector: '.news-card',
+            columnWidth: '.news-card',
+            percentPosition: true,
+            gutter: 15,
+             transitionDuration: '0.4s' // smooth animation when rearranging
+        });
+        // Smoothly re-layout Masonry on window resize
+        window.addEventListener('resize', () => {
+            if (msnry) msnry.layout();
+        });
+
+        async function checkForNewPosts() {
+            try {
+                const response = await fetch('@Url.Action("LatestTimestamp", "News")');
+                const data = await response.json();
+                if (data.latest && new Date(data.latest) > new Date(latestTimestamp)) {
+                    showNewPostsBanner();
+                    playNotificationSound();
+                }
+            } catch (err) {
+                console.error("Error checking for new posts:", err);
+            }
+        }
+
+        function showNewPostsBanner() {
+            const banner = document.getElementById("newPostsBanner");
+            banner.classList.remove("d-none");
+            banner.classList.add("fade-in-down");
+        }
+
+        function hideNewPostsBanner() {
+            const banner = document.getElementById("newPostsBanner");
+            //banner.classList.remove("fade-in-down");
+            banner.classList.add("fade-out-up");
+            setTimeout(() => {
+                banner.classList.add("d-none");
+                banner.classList.remove("fade-out-up");
+            }, 500);
+        }
+
+        function playNotificationSound() {
+            try {
+                newPostSound.currentTime = 0;
+                newPostSound.play();
+            } catch (err) {
+                console.warn("Notification sound blocked by browser:", err);
+            }
+        }
+
+        // Refresh every 1 min
+        setInterval(checkForNewPosts, 60000);
+
+        // Reload feed when clicking banner
+        document.getElementById("newPostsBanner").addEventListener("click", async function () {
+            const response = await fetch('@Url.Action("NewsListPartial", "News")');
+            const html = await response.text();
+
+            const container = document.getElementById("newsContainer");
+            container.innerHTML = html;
+
+            // Reinitialize Masonry for the new content
+            imagesLoaded(container, function () {
+                if (msnry) msnry.destroy(); // remove old Masonry instance safely
+                msnry = new Masonry(container, {
+                    itemSelector: '.news-card',
+                    columnWidth: '.news-card',
+                    percentPosition: true,
+                    gutter: 15,
+                     transitionDuration: '0.4s'
+                });
+                container.querySelectorAll('.news-card').forEach(card => card.classList.add('is-visible'));
+            });
+
+            hideNewPostsBanner();
+            latestTimestamp = new Date().toISOString();
+        });
+
+        container.querySelectorAll('.news-card').forEach((card, i) => {
+            card.style.opacity = 0;
+            setTimeout(() => {
+                card.style.transition = "opacity 0.4s ease";
+                card.style.opacity = 1;
+            }, i * 80); // slight stagger effect
+        });
+
+
+
+
+        // Initialize Masonry after first render
+            imagesLoaded(container, function () {
+                msnry = new Masonry(container, {
+                    itemSelector: '.news-card',
+                    columnWidth: '.news-card',
+                    percentPosition: true,
+                    gutter: 15,
+                    transitionDuration: '0.4s'
+                });
+            });
+        //Infinite Scroll
+
+
+        // Show pulse animation after user scrolls halfway
+                // Infinite scroll trigger
+        window.addEventListener('scroll', async () => {
+            if (isLoading || noMorePosts) return;
+            const scrollY = window.scrollY;
+            const viewportHeight = window.innerHeight;
+            const fullHeight = document.documentElement.scrollHeight;
+            if (scrollY + viewportHeight >= fullHeight * 0.9) {
+                await loadMoreNews();
+            }
+        });
+
+        // Manual click trigger
+        loadMoreBtn.addEventListener('click', async () => {
+            await loadMoreNews();
+        });
+
+        async function loadMoreNews() {
+            if (isLoading || noMorePosts) return;
+            isLoading = true;
+            loadMoreBtn.classList.add('loading');
+            loadMoreBtn.innerHTML = '<span class="spinner-border spinner-border-sm text-light"></span>';
+
+            try {
+                const res = await fetch(`/News/LoadMore?skip=${skipCount}`);
+                const html = await res.text();
+
+                if (!html.trim()) {
+                    noMorePosts = true;
+                    loadMoreBtn.style.display = 'none';
+                    return;
+                }
+
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                const newCards = tempDiv.querySelectorAll('.news-card');
+                newCards.forEach(card => card.style.opacity = 0);
+
+                const fragment = document.createDocumentFragment();
+                newCards.forEach(card => fragment.appendChild(card));
+                container.appendChild(fragment);
+
+                imagesLoaded(container, function () {
+                    msnry.appended(newCards);
+                    msnry.layout();
+                    newCards.forEach((card, i) => {
+                        setTimeout(() => {
+                            card.style.transition = 'opacity 0.4s ease';
+                            card.style.opacity = 1;
+                        }, i * 80);
+                    });
+                });
+
+                skipCount += newCards.length;
+
+            } catch (err) {
+                console.error("Error loading more news:", err);
+                loadMoreBtn.classList.add('btn-warning');
+                loadMoreBtn.innerHTML = '<i class="bi bi-exclamation-circle"></i>';
+            } finally {
+                isLoading = false;
+                loadMoreBtn.classList.remove('loading');
+                loadMoreBtn.innerHTML = '<i class="bi bi-arrow-down-circle fs-4"></i>';
+            }
+        }
+                let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            // Hide button when scrolling down
+            if (currentScrollY > lastScrollY && currentScrollY > 200) {
+                loadMoreBtn.style.transform = 'translateY(120px)'; // moves it down out of view
+            } else {
+                loadMoreBtn.style.transform = 'translateY(0)'; // back to original position
+            }
+
+            lastScrollY = currentScrollY;
+
+            // Keep pulse if user scrolls halfway
+            if (currentScrollY > window.innerHeight / 2 && !noMorePosts) {
+                loadMoreBtn.classList.add('pulse');
+            } else {
+                loadMoreBtn.classList.remove('pulse');
+            }
+        });
+    </script>
+
+
+
+}
