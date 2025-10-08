@@ -36,7 +36,7 @@ namespace Seithi247.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult>
-        Create([Bind("Title,Summary,Content,Author,IsPublished,PublishedAt,VideoUrl")] News news, List<IFormFile> ImageFiles, List<IFormFile> ThumbNailImages)
+        Create([Bind("Title,Summary,Content,Author,IsPublished,PublishedAt,VideoUrl,NewsType")] News news, List<IFormFile> ImageFiles, List<IFormFile> ThumbNailImages)
         {
             if (ModelState.IsValid)
             {

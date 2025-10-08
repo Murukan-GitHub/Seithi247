@@ -14,7 +14,7 @@ namespace Seithi247.Controllers
 
         public async Task<IActionResult> Index(int page = 1, int pageSize = 10)
         {
-            var items = await _context.News.Include(i => i.Images)
+            var items = await _context.News.Include(i => i.Images).Include(i => i.NewsMedias)
             .Where(n => n.IsPublished)
             .OrderByDescending(n => n.PublishedAt)
             .Skip((page - 1) * pageSize)
@@ -33,7 +33,7 @@ namespace Seithi247.Controllers
         }
         public async Task<IActionResult> NewsListPartial()
         {
-            var news = await _context.News.Include(i => i.Images)
+            var news = await _context.News.Include(i => i.Images).Include(i => i.NewsMedias)
            .Where(n => n.IsPublished)
            .OrderByDescending(n => n.PublishedAt)
            .Take(20)
@@ -55,7 +55,7 @@ namespace Seithi247.Controllers
         [HttpGet]
         public async Task<IActionResult> LoadMore(int skip, int take = 6)
         {
-            var news = await _context.News
+            var news = await _context.News.Include(i => i.Images).Include(i => i.NewsMedias)
                 .OrderByDescending(n => n.PublishedAt)
                 .Skip(skip)
                 .Take(take)

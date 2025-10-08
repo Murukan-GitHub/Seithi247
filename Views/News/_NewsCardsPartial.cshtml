@@ -4,7 +4,6 @@
     @foreach (var item in Model)
     {
         <div class="news-card">
-            {
             @if (item.NewsType == NewsType.Video)
             {
                 <div class="video-wrapper">
@@ -13,7 +12,6 @@
                         <div class="play-button">&#9658;</div> <!-- triangle play icon -->
                     </a>
                 </div>
-
                 <div class="card-body">
                     <h5 class="card-title">@item.Title</h5>
                     <p class="card-text text-muted">
@@ -29,7 +27,7 @@
                 if (item.Images.Any())
                 {
                     <a href="@Url.Action("Details", "News", new { id = item.Id })">
-                        <img src="@item.Images?.FirstOrDefault()?.FilePath" class="card-img-top" alt="@item.Title">
+                        <img src="@item.Images?.FirstOrDefault()?.FilePath" class="img-fluid" alt="@item.Title">
                     </a>
                 }
                 <div class="card-body">

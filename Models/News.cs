@@ -25,7 +25,7 @@ namespace Seithi247.Models
 
         public NewsType NewsType { get; set; } = NewsType.Text;
         public ICollection<NewsImage> Images { get; set; } = new List<NewsImage>();
-        public ICollection<NewsMedia> NewsMedias { get; set; }
+        public ICollection<NewsMedia> NewsMedias { get; set; } = new List<NewsMedia>();
 
 
         [NotMapped]
