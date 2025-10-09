@@ -6,19 +6,23 @@
         <div class="news-card">
             @if (item.NewsType == NewsType.Video)
             {
-                <div class="video-wrapper">
-                    <a href="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl" data-fancybox="video" class="video-thumb">
-                        <img src="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.ThumbnailUrl" class="img-fluid rounded mb-2" alt="@item.Title">
-                        <div class="play-button">&#9658;</div> <!-- triangle play icon -->
+                <div class="video-card">
+                    <a href="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl" data-fancybox="video-@item.Id" class="video-link">
+                        <img src="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.ThumbnailUrl" class="video-thumb" alt="Video thumbnail" />
+                        <div class="video-overlay">
+                            <div class="play-button">
+                                <i class="bi bi-play-fill"></i>
+                            </div>
+                        </div>
                     </a>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">@item.Title</h5>
-                    <p class="card-text text-muted">
+@*                     <p class="card-text text-muted">
                         @((item.Content.Length > 100) ? item.Content.Substring(0, 100) + "..." : item.Content)
-                    </p>
+                    </p> *@
                     <a href="@Url.Action("Details", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
-                        Read More
+                        Click to watch
                     </a>
                 </div>
             }

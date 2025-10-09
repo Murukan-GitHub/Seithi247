@@ -239,6 +239,23 @@
                 loadMoreBtn.classList.remove('pulse');
             }
         });
+
+        Fancybox.bind("[data-fancybox^='video-']", {
+            type: "iframe",
+            autoFocus: false,
+            dragToClose: false,
+            placeFocusBack: false,
+            Toolbar: false,
+            Thumbs: false,
+            on: {
+                reveal: (fancybox, slide) => {
+                    const iframe = slide.$iframe;
+                    if (iframe && !iframe.src.includes("autoplay=1")) {
+                        iframe.src += (iframe.src.includes("?") ? "&" : "?") + "autoplay=1";
+                    }
+                }
+            }
+        });
     </script>
 
 
