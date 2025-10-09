@@ -6,24 +6,28 @@
         <div class="news-card">
             @if (item.NewsType == NewsType.Video)
             {
-                <div class="video-card">
-                    <a href="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl" data-fancybox="video-@item.Id" class="video-link">
+                <div class="video-card" data-video-url="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl">
+                    <div class="video-thumb-wrapper">
                         <img src="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.ThumbnailUrl" class="video-thumb" alt="Video thumbnail" />
                         <div class="video-overlay">
                             <div class="play-button">
                                 <i class="bi bi-play-fill"></i>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">@item.Title</h5>
 @*                     <p class="card-text text-muted">
                         @((item.Content.Length > 100) ? item.Content.Substring(0, 100) + "..." : item.Content)
                     </p> *@
-                    <a href="@Url.Action("Details", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
-                        Click to watch
+                    @if (@item.NewsMedias?.Count() > 0)
+                    {
+                        <a href="@Url.Action("Details", "News", new { id = item.Id })
+                        " class="btn btn-outline-primary btn-sm">
+                            Click here watch more 
                     </a>
+                    }
                 </div>
             }
             else
