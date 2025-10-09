@@ -21,7 +21,7 @@
                     @*                     <p class="card-text text-muted">
                         @((item.Content.Length > 100) ? item.Content.Substring(0, 100) + "..." : item.Content)
                     </p> *@
-                    @if (@item.NewsMedias?.Count() > 0)
+                    @if (@item.NewsMedias?.Count() > 1)
                     {
                         <a href="@Url.Action("Details", "News", new { id = item.Id })
                                                 " class="btn btn-outline-primary btn-sm">

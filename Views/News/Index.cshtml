@@ -240,24 +240,69 @@
             }
         });
 
+               // ====== Inline Play + Auto-pause + Scroll Stop + Fancybox ======
+
+        let observer;
+
+        // Initialize scroll watcher
+        function initVideoScrollObserver() {
+            if (observer) observer.disconnect();
+
+            observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const card = entry.target;
+                    const iframe = card.querySelector("iframe");
+                    const video = card.querySelector("video");
+
+                    // If card is out of view -> stop playing
+                    if (!entry.isIntersecting && card.classList.contains("playing")) {
+                        const videoUrl = card.getAttribute("data-video-url");
+                        const thumbUrl = card.getAttribute("data-thumb-url");
+
+                        // Replace back with thumbnail view
+                        card.innerHTML = `
+                            <div class="video-thumb-wrapper">
+                                <img src="${thumbUrl}" class="video-thumb" alt="Video thumbnail" />
+                                <div class="video-overlay">
+                                    <div class="play-button"><i class="bi bi-play-fill"></i></div>
+                                    <div class="expand-button" data-fancybox data-src="${videoUrl}">
+                                        <i class="bi bi-arrows-fullscreen"></i>
+                                    </div>
+                                </div>
+                            </div>`;
+                        card.classList.remove("playing");
+                    }
+                });
+            }, { threshold: 0.1 }); // triggers when less than 10% visible
+
+            // Observe all video cards
+            document.querySelectorAll(".video-card").forEach(card => observer.observe(card));
+        }
+
+        // Handle play click
         document.addEventListener("click", function (e) {
             const card = e.target.closest(".video-card");
             if (!card) return;
 
-            const videoUrl = card.getAttribute("data-video-url");
-            if (!videoUrl) return;
+            // Expand popup handled by Fancybox
+            if (e.target.closest(".expand-button")) return;
 
-            // Pause other videos & reset them back to thumbnails
+            const videoUrl = card.getAttribute("data-video-url");
+            const thumb = card.querySelector(".video-thumb");
+            const thumbUrl = thumb?.src || "";
+
+            // Pause others
             document.querySelectorAll(".video-card.playing").forEach(other => {
                 if (other !== card) {
-                    const videoUrlOld = other.getAttribute("data-video-url");
-                    const thumbUrl = other.querySelector(".video-thumb")?.src || "";
+                    const vUrl = other.getAttribute("data-video-url");
+                    const tUrl = other.querySelector(".video-thumb")?.src || "";
                     other.innerHTML = `
                         <div class="video-thumb-wrapper">
-                            <img src="${thumbUrl}" class="video-thumb" alt="Video thumbnail" />
+                            <img src="${tUrl}" class="video-thumb" alt="Video thumbnail" />
                             <div class="video-overlay">
-                                <div class="play-button">
-                                    <i class="bi bi-play-fill"></i>
+                                <div class="play-button"><i class="bi bi-play-fill"></i></div>
+                                <div class="expand-button" data-fancybox data-src="${vUrl}">
+                                    <i class="bi bi-arrows-fullscreen"></i>
                                 </div>
                             </div>
                         </div>`;
@@ -265,7 +310,7 @@
                 }
             });
 
-            // Replace this card’s thumbnail with iframe or video
+            // Play inline
             let embedHtml = "";
             if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
                 const videoId = videoUrl.split("v=")[1] || videoUrl.split("/").pop();
@@ -290,6 +335,7 @@
             }
 
             card.classList.add("playing");
+            card.setAttribute("data-thumb-url", thumbUrl);
             card.innerHTML = embedHtml;
 
             const media = card.querySelector("iframe, video");
@@ -298,6 +344,17 @@
                 setTimeout(() => media.classList.add("loaded"), 300);
             }
         });
+
+        // Initialize Fancybox
+        Fancybox.bind("[data-fancybox]", {
+            Toolbar: { display: ["close"] },
+            dragToClose: true,
+        });
+
+        // Observe videos after page load or when new content added
+        document.addEventListener("DOMContentLoaded", initVideoScrollObserver);
+        setTimeout(initVideoScrollObserver, 2000);
+
 
 
     </script>
