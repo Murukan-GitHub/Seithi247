@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Comment>
+
+<div class="comments-section mt-3">
+    @if (Model==null || !Model.Any())
+    {
+        <div class="text-muted small">No comments yet. Be the first to comment!</div>
+    }
+    else
+    {
+        @foreach (var c in Model)
+        {
+            <div class="comment-item mb-2 border-bottom pb-2">
+                <strong>@c.AuthorName</strong> <small class="text-muted">@c.PostedDate.ToString("g")</small>
+                <div>@c.Text</div>
+            </div>
+        }
+    }
+</div>
+

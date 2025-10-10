@@ -26,7 +26,7 @@
                             @if (@item.NewsMedias?.Count() > 1)
                             {
                                 <a href="@Url.Action("Details", "News", new { id = item.Id })
-                                                            " class="btn btn-outline-primary btn-sm">
+                                                                        " class="btn btn-outline-primary btn-sm">
                                     Click here watch more
                                 </a>
                             }
@@ -51,6 +51,24 @@
                     <a href="@Url.Action("Details", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
                         Read More
                     </a>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <!-- Likes -->
+                        <div class="likes">
+                            <i class="bi bi-heart-fill text-danger"></i>
+                            <span class="like-count">@item.Likes</span>
+                        </div>
+
+                        <!-- Comments -->
+                        <div class="comments">
+                            <i class="bi bi-chat-left-text"></i>
+                            <span class="comment-count">@item.Comments.Count</span>
+                        </div>
+
+                        <!-- Share -->
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=@Url.Action("Details", "News", new { id = @item.Id }, Context.Request.Scheme)" target="_blank">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                    </div>
                 </div>
             }
         </div>

@@ -27,6 +27,11 @@ namespace Seithi247.Models
         public ICollection<NewsImage> Images { get; set; } = new List<NewsImage>();
         public ICollection<NewsMedia> NewsMedias { get; set; } = new List<NewsMedia>();
 
+        // Likes count
+        public int Likes { get; set; }
+
+        // Navigation property
+        public ICollection<Comment> Comments { get; set; }
 
         [NotMapped]
         public string VideoUrl { get; set; }

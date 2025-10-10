@@ -1,33 +1,32 @@
 ﻿@model Seithi247.Models.News
 
-<h1>@Model.Title</h1>
-<p><small>@Model.PublishedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm") by @Model.Author</small></p>
-<hr />
+<div class="news-details">
+    <h2>@Model.Title</h2>
+    <div class="mb-2 text-muted">
+        <i class="bi bi-calendar"></i> @Model.PublishedAt.ToString("MMM dd, yyyy")
+    </div>
 
-<div class="mb-3">
-    @Html.Raw(Model.Content)
-</div>
+    <div class="news-content mb-3">@Html.Raw(Model.Content)</div>
+    @if (Model.Images != null && Model.Images.Any())
+    {
+        var count = Model.Images.Count;
+        <div class="row g-2">
+            @for (int i = 0; i < Math.Min(count, 4); i++)
+            {
+                var img = Model.Images.ElementAt(i);
+                <div class="@(count == 1 ? "col-12"
+                                                                                                       : count == 2 ? "col-6"
+                                                                                                       : count == 3 && i == 0 ? "col-12"
+                                                                                                       : count == 3 && i > 0 ? "col-6"
+                                                                                                       : "col-6")">
+                <div class="position-relative">
+                    <a data-fancybox="gallery" href="@img.FilePath">
+                        <img src="@img.FilePath"
+                             class="img-fluid rounded shadow-sm"
+                             style="cursor:pointer; object-fit:cover; height:@(count == 1 ? "400px" : "200px"); width:100%;" />
+                    </a>
 
-@if (Model.Images != null && Model.Images.Any())
-{
-    var count = Model.Images.Count;
-    <div class="row g-2">
-        @for (int i = 0; i < Math.Min(count, 4); i++)
-        {
-            var img = Model.Images.ElementAt(i);
-            <div class="@(count == 1 ? "col-12"
-                                                             : count == 2 ? "col-6"
-                                                             : count == 3 && i == 0 ? "col-12"
-                                                             : count == 3 && i > 0 ? "col-6"
-                                                             : "col-6")">
-        <div class="position-relative">
-            <a data-fancybox="gallery" href="@img.FilePath">
-                <img src="@img.FilePath"
-                     class="img-fluid rounded shadow-sm"
-                     style="cursor:pointer; object-fit:cover; height:@(count == 1 ? "400px" : "200px"); width:100%;" />
-            </a>
-
-            @if (i == 3 && count > 4)
+                    @if (i == 3 && count > 4)
                     {
                         <a data-fancybox="gallery" href="@img.FilePath">
                             <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-75 text-white fs-3 fw-bold"
@@ -43,11 +42,65 @@
         <!-- Hidden extra images for Fancybox -->
         @for (int j = 4; j < count; j++)
         {
-            var hiddenImg = Model.Images.ElementAt(j);
-            <a data-fancybox="gallery" href="@hiddenImg.FilePath" style="display:none;"></a>
+            @if (j <= Model.Images.Count)
+            {
+                var hiddenImg = Model.Images.ElementAt(j);
+                <a data-fancybox="gallery" href="@hiddenImg.FilePath" style="display:none;"></a>
+            }
         }
     </div>
+        }
+    <!-- Like & Share -->
+    <div class="d-flex align-items-center mb-3">
+        <button class="btn btn-outline-danger me-2 like-btn" data-id="@Model.Id">
+            <i class="bi bi-heart-fill"></i> <span class="like-count">@Model.Likes</span> Likes
+        </button>
+
+        <a href="https://www.facebook.com/sharer/sharer.php?u=@Url.Action("Details", "News", new { id = Model.Id }, Context.Request.Scheme)"
+           target="_blank"
+           class="btn btn-outline-primary">
+            <i class="bi bi-facebook"></i> Share
+        </a>
+    </div>
+
+    <!-- Comment Section -->
+    <div class="comment-box">
+        <h5>Leave a Comment</h5>
+        <form id="commentForm">
+            <input type="hidden" name="newsId" value="@Model.Id" />
+            <div class="mb-2">
+                <input type="text" name="authorName" placeholder="Your name" class="form-control" />
+            </div>
+            <div class="mb-2">
+                <textarea name="text" rows="3" placeholder="Your comment..." class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+    </div>
+
+    <div id="commentsList">
+        @await Html.PartialAsync("_CommentsList", Model.Comments?.OrderByDescending(c => c.PostedDate))
+    </div>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+
+        $(document).on("click", ".like-btn", function () {
+        const btn = $(this);
+        const id = btn.data("id");
+        $.post("/News/Like", {id: id }, function (data) {
+            if (data.success) btn.find(".like-count").text(data.likes);
+        });
+    });
+
+        $("#commentForm").submit(function (e) {
+            e.preventDefault();
+        $.post("/News/AddComment", $(this).serialize(), function (html) {
+            $("#commentsList").html(html);
+        $("#commentForm textarea").val("");
+        });
+    });
+    </script>
 }
-
-
-
