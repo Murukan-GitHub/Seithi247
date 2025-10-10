@@ -242,101 +242,59 @@
 
                // ====== Inline Play + Auto-pause + Scroll Stop + Fancybox ======
 
-        let observer;
+                // Initialize Fancybox
+        Fancybox.bind("[data-fancybox]", { Toolbar: { display:["close"] }, dragToClose:true });
 
-        // Initialize scroll watcher
-        function initVideoScrollObserver() {
-            if (observer) observer.disconnect();
+        // Store original HTML for restoring
+        document.querySelectorAll(".video-card").forEach(card => {
+            card.dataset.originalHtml = card.innerHTML;
+        });
 
-            observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const card = entry.target;
-                    const iframe = card.querySelector("iframe");
-                    const video = card.querySelector("video");
+        // IntersectionObserver to stop video on scroll
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const card = entry.target;
+                if (!entry.isIntersecting && card.classList.contains("playing")) {
+                    card.innerHTML = card.dataset.originalHtml;
+                    card.classList.remove("playing");
+                }
+            });
+        }, { threshold: 0.1 });
 
-                    // If card is out of view -> stop playing
-                    if (!entry.isIntersecting && card.classList.contains("playing")) {
-                        const videoUrl = card.getAttribute("data-video-url");
-                        const thumbUrl = card.getAttribute("data-thumb-url");
+        document.querySelectorAll(".video-card").forEach(card => observer.observe(card));
 
-                        // Replace back with thumbnail view
-                        card.innerHTML = `
-                            <div class="video-thumb-wrapper">
-                                <img src="${thumbUrl}" class="video-thumb" alt="Video thumbnail" />
-                                <div class="video-overlay">
-                                    <div class="play-button"><i class="bi bi-play-fill"></i></div>
-                                    <div class="expand-button" data-fancybox data-src="${videoUrl}">
-                                        <i class="bi bi-arrows-fullscreen"></i>
-                                    </div>
-                                </div>
-                            </div>`;
-                        card.classList.remove("playing");
-                    }
-                });
-            }, { threshold: 0.1 }); // triggers when less than 10% visible
-
-            // Observe all video cards
-            document.querySelectorAll(".video-card").forEach(card => observer.observe(card));
-        }
-
-        // Handle play click
-        document.addEventListener("click", function (e) {
+        // Play inline video on click
+        document.addEventListener("click", e => {
             const card = e.target.closest(".video-card");
             if (!card) return;
 
-            // Expand popup handled by Fancybox
+            // Ignore expand button
             if (e.target.closest(".expand-button")) return;
 
             const videoUrl = card.getAttribute("data-video-url");
-            const thumb = card.querySelector(".video-thumb");
-            const thumbUrl = thumb?.src || "";
 
-            // Pause others
+            // Restore other playing videos
             document.querySelectorAll(".video-card.playing").forEach(other => {
                 if (other !== card) {
-                    const vUrl = other.getAttribute("data-video-url");
-                    const tUrl = other.querySelector(".video-thumb")?.src || "";
-                    other.innerHTML = `
-                        <div class="video-thumb-wrapper">
-                            <img src="${tUrl}" class="video-thumb" alt="Video thumbnail" />
-                            <div class="video-overlay">
-                                <div class="play-button"><i class="bi bi-play-fill"></i></div>
-                                <div class="expand-button" data-fancybox data-src="${vUrl}">
-                                    <i class="bi bi-arrows-fullscreen"></i>
-                                </div>
-                            </div>
-                        </div>`;
+                    other.innerHTML = other.dataset.originalHtml;
                     other.classList.remove("playing");
                 }
             });
 
-            // Play inline
+            // Determine embed HTML
             let embedHtml = "";
             if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
                 const videoId = videoUrl.split("v=")[1] || videoUrl.split("/").pop();
-                embedHtml = `
-                    <iframe width="100%" height="315"
-                        src="https://www.youtube.com/embed/${videoId}?autoplay=1"
-                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-                    </iframe>`;
+                embedHtml = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
             } else if (videoUrl.includes("vimeo.com")) {
                 const videoId = videoUrl.split("/").pop();
-                embedHtml = `
-                    <iframe src="https://player.vimeo.com/video/${videoId}?autoplay=1"
-                        width="100%" height="315" frameborder="0"
-                        allow="autoplay; fullscreen; picture-in-picture"
-                        allowfullscreen></iframe>`;
+                embedHtml = `<iframe src="https://player.vimeo.com/video/${videoId}?autoplay=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
             } else if (videoUrl.endsWith(".mp4")) {
-                embedHtml = `
-                    <video width="100%" height="auto" controls autoplay>
-                        <source src="${videoUrl}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>`;
+                embedHtml = `<video controls autoplay><source src="${videoUrl}" type="video/mp4">Your browser does not support the video tag.</video>`;
             }
 
-            card.classList.add("playing");
-            card.setAttribute("data-thumb-url", thumbUrl);
             card.innerHTML = embedHtml;
+            card.classList.add("playing");
 
             const media = card.querySelector("iframe, video");
             if (media) {
@@ -345,11 +303,6 @@
             }
         });
 
-        // Initialize Fancybox
-        Fancybox.bind("[data-fancybox]", {
-            Toolbar: { display: ["close"] },
-            dragToClose: true,
-        });
 
         // Observe videos after page load or when new content added
         document.addEventListener("DOMContentLoaded", initVideoScrollObserver);
