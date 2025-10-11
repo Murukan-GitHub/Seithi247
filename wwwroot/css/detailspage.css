@@ -1,0 +1,88 @@
+﻿/* 📰 Full-width newspaper layout */
+.news-article-full {
+    width: 100%;
+    min-height: 100vh;
+    background: #f5ecd2;
+    background-image: radial-gradient(circle at center, #f5ecd2 0%, #f0e4c4 100%);
+    padding: 0;
+}
+
+/* Article styling */
+.news-article {
+    width: 100%;
+    max-width: 100%;
+    background: #fffaf0;
+    border-top: 6px double #b8a25a;
+    border-bottom: 6px double #b8a25a;
+    padding: 80px 10vw; /* gives readable margins on sides */
+    line-height: 1.8;
+    font-family: "Georgia", "Times New Roman", serif;
+    color: #3e2f1c;
+}
+
+/* Title and meta */
+.article-header {
+    border-bottom: 2px solid #b9a97d;
+    margin-bottom: 25px;
+    padding-bottom: 12px;
+}
+
+.article-title {
+    font-size: 3rem;
+    font-family: "Merriweather", serif;
+    color: #3a2a15;
+}
+
+.article-meta {
+    font-size: 0.95rem;
+    color: #7c6f57;
+}
+
+/* Images / Video */
+.article-image img,
+.article-video iframe {
+    width: 100%;
+    border-radius: 6px;
+    margin: 30px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Paragraphs */
+.article-content p {
+    font-size: 1.15rem;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+/* Footer actions */
+.article-actions {
+    border-top: 1px dashed #b8a25a;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.like-btn {
+    background: #f8f1db;
+    border: 1px solid #bfae83;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #3e2f1c;
+    font-weight: 500;
+}
+
+    .like-btn:hover {
+        background: #efe5c9;
+    }
+
+.article-share a {
+    color: #654c1d;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+    .article-share a:hover {
+        text-decoration: underline;
+    }

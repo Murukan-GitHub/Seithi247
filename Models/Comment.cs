@@ -9,5 +9,7 @@
         public DateTime PostedDate { get; set; }
 
         public News News { get; set; }
+        public ICollection<CommentReaction> Reactions { get; set; } = new List<CommentReaction>();
+
     }
 }

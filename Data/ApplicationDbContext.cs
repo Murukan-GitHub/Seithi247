@@ -11,6 +11,8 @@ namespace Seithi247.Data
         public DbSet<News> News { get; set; }
         public DbSet<NewsImage> NewsImages { get; set; }
         public DbSet<NewsMedia> NewsMedias { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<CommentReaction> CommentReactions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

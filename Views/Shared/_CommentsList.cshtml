@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Comment>
 
 <div class="comments-section mt-3">
-    @if (Model==null || !Model.Any())
+    @if (Model == null || !Model.Any())
     {
         <div class="text-muted small">No comments yet. Be the first to comment!</div>
     }
@@ -9,11 +9,52 @@
     {
         @foreach (var c in Model)
         {
-            <div class="comment-item mb-2 border-bottom pb-2">
-                <strong>@c.AuthorName</strong> <small class="text-muted">@c.PostedDate.ToString("g")</small>
-                <div>@c.Text</div>
+            <div class="comment-item mb-3 p-2 border-bottom">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>@c.AuthorName</strong>
+                        <small class="text-muted">@c.PostedDate.ToString("g")</small>
+                    </div>
+                </div>
+
+                <div class="mt-1">@c.Text</div>
+
+                <!-- Reaction bar -->
+                <div class="comment-reactions mt-2">
+                    <span class="react-btn" data-comment="@c.Id" data-emoji="👍">👍</span>
+                    <span class="react-btn" data-comment="@c.Id" data-emoji="❤️">❤️</span>
+                    <span class="react-btn" data-comment="@c.Id" data-emoji="😂">😂</span>
+                    <span class="react-btn" data-comment="@c.Id" data-emoji="😢">😢</span>
+                    <span class="react-btn" data-comment="@c.Id" data-emoji="😡">😡</span>
+
+                    <!-- Reaction summary -->
+                    <span class="reaction-summary" id="reaction-summary-@c.Id">
+                        @{
+                            var summary = c.Reactions
+                            .GroupBy(r => r.Emoji)
+                            .Select(g => $"{g.Key} {g.Count()}")
+                            .ToList();
+                        }
+                        @string.Join(" ", summary)
+                    </span>
+                </div>
             </div>
         }
     }
 </div>
-
+@section Scripts {
+    <script>
+    
+        $(document).on("click", ".react-btn", function () {
+            var commentId = $(this).data("comment");
+            var emoji = $(this).data("emoji");
+            alert('gg');
+            $.post("/News/ReactToComment", { commentId, emoji }, function (data) {
+                let summaryText = data.map(r => `${r.emoji} ${r.count}`).join(" ");
+                $("#reaction-summary-" + commentId).text(summaryText);
+            }).fail(function () {
+                alert("Error reacting to comment.");
+            });
+        });
+    </script>
+}

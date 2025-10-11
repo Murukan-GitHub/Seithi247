@@ -34,3 +34,24 @@
 .news-card .card-body {
     padding: 12px;
 }
+.comment-reactions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.react-btn {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+    .react-btn:hover {
+        transform: scale(1.3);
+    }
+
+.reaction-summary {
+    margin-left: 10px;
+    font-size: 0.9rem;
+    color: #666;
+}

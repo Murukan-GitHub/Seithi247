@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Seithi247.Data;
 
@@ -11,9 +12,11 @@ using Seithi247.Data;
 namespace Seithi247.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251010121248_AddCommentsAndLikes")]
+    partial class AddCommentsAndLikes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,35 +52,6 @@ namespace Seithi247.Migrations
                     b.HasIndex("NewsId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("Seithi247.Models.CommentReaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Emoji")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ReactedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserIdentifier")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommentId");
-
-                    b.ToTable("CommentReactions");
                 });
 
             modelBuilder.Entity("Seithi247.Models.News", b =>
@@ -186,17 +160,6 @@ namespace Seithi247.Migrations
                     b.Navigation("News");
                 });
 
-            modelBuilder.Entity("Seithi247.Models.CommentReaction", b =>
-                {
-                    b.HasOne("Seithi247.Models.Comment", "Comment")
-                        .WithMany("Reactions")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Comment");
-                });
-
             modelBuilder.Entity("Seithi247.Models.NewsImage", b =>
                 {
                     b.HasOne("Seithi247.Models.News", "News")
@@ -217,11 +180,6 @@ namespace Seithi247.Migrations
                         .IsRequired();
 
                     b.Navigation("News");
-                });
-
-            modelBuilder.Entity("Seithi247.Models.Comment", b =>
-                {
-                    b.Navigation("Reactions");
                 });
 
             modelBuilder.Entity("Seithi247.Models.News", b =>

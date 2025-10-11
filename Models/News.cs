@@ -35,5 +35,8 @@ namespace Seithi247.Models
 
         [NotMapped]
         public string VideoUrl { get; set; }
+
+
+
     }
 }
