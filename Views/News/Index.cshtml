@@ -5,7 +5,7 @@
 
 
 <div class="container mt-4">
-    <h2 class="mb-4">Latest News</h2>
+
 
     <!-- New posts banner -->
     <div id="newPostsBanner" class="alert alert-info text-center d-none" style="cursor:pointer;">
@@ -194,7 +194,7 @@
                 const fragment = document.createDocumentFragment();
                 newCards.forEach(card => fragment.appendChild(card));
                 container.appendChild(fragment);
-                debugger;
+
                 imagesLoaded(container, function () {
                     msnry.appended(newCards);
                     msnry.layout();

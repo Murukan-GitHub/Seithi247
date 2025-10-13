@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -201,3 +201,242 @@ body {
         text-shadow: 0 0 15px rgba(0,0,0,0.5);
         pointer-events: none;
     }
+
+
+/* Sticky navbar */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: radial-gradient(circle at top, #1a0000, #000);
+    padding: 8px 20px;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+    border-bottom: 2px solid #ff0000;
+    animation: navbarPulse 3s infinite alternate;
+}
+
+/* Navbar glow */
+@keyframes navbarPulse {
+    0% {
+        box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 50px rgba(255, 100, 0, 0.8);
+    }
+
+    100% {
+        box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+    }
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Rotating globe */
+.globe {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #00bfff, #00264d);
+    box-shadow: 0 0 15px rgba(0, 150, 255, 0.8);
+    animation: globeSpin 6s linear infinite;
+}
+
+@keyframes globeSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Seithi 24/7 banner with 3D waving */
+.seithi-banner {
+    position: relative;
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(90deg, #ff0000, #ffea00);
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255, 120, 0, 0.9);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    animation: waveBanner 3s ease-in-out infinite;
+}
+
+/* Gentle 3D wave motion */
+@keyframes waveBanner {
+    0%, 100% {
+        transform: rotateY(0deg) rotateX(0deg);
+    }
+
+    25% {
+        transform: rotateY(5deg) rotateX(3deg);
+    }
+
+    50% {
+        transform: rotateY(-5deg) rotateX(-3deg);
+    }
+
+    75% {
+        transform: rotateY(4deg) rotateX(2deg);
+    }
+}
+
+.seithi-banner span {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #ffea00, #ff0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(255, 50, 0, 0.9);
+}
+
+/* Light sweep */
+.shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+}
+
+
+/* --- Floating Seithi 24/7 Banner (Bottom-Right) --- */
+/* Floating Seithi 24/7 Banner */
+.floating-seithi-banner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 999; /* lowered so other elements like Load icon can show above */
+    animation: floatUpDown 3s ease-in-out infinite;
+}
+/* Make sure Load More icon stays on top */
+.load-more-icon, .load-more-button {
+    position: relative;
+    z-index: 1000; /* higher than the floating banner */
+}
+/* Make sure Load More icon stays on top */
+.load-more-icon, .load-more-button {
+    position: relative;
+    z-index: 1000; /* higher than the floating banner */
+}
+/* Floating animation */
+@keyframes floatUpDown {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Rotating globe */
+.floating-seithi-banner .globe {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #00bfff, #00264d);
+    box-shadow: 0 0 15px rgba(0, 150, 255, 0.8);
+    animation: globeSpin 6s linear infinite;
+}
+
+@keyframes globeSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Seithi 24/7 banner style */
+.floating-seithi-banner .seithi-banner {
+    position: relative;
+    display: inline-block;
+    padding: 6px 16px;
+    background: linear-gradient(90deg, #ff0000, #ffea00);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 18px rgba(255, 120, 0, 0.9);
+    animation: bannerPulse 2s infinite alternate;
+}
+
+/* Banner glow */
+@keyframes bannerPulse {
+    0%, 100% {
+        box-shadow: 0 0 12px rgba(255,120,0,0.8);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(255,150,0,1);
+    }
+}
+
+/* Gradient text */
+.floating-seithi-banner .seithi-banner span {
+    font-size: 22px;
+    font-weight: 900;
+    background: linear-gradient(90deg, #ffea00, #ff0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 6px rgba(255, 50, 0, 0.8);
+}
+
+/* Shine animation */
+.floating-seithi-banner .shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient( 120deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.1) 100% );
+    transform: skewX(-20deg);
+    animation: shineSweep 3s linear infinite;
+}
+
+@keyframes shineSweep {
+    0% {
+        left: -100%;
+    }
+
+    50% {
+        left: 100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* --- Responsive Behavior --- */
+@media (max-width: 768px) {
+    .floating-seithi-banner {
+        bottom: 10px;
+        right: 10px;
+        transform: scale(0.8);
+    }
+
+        .floating-seithi-banner .seithi-banner span {
+            font-size: 18px;
+        }
+}
+
+@media (max-width: 480px) {
+    .floating-seithi-banner {
+        display: none; /* hide on very small screens */
+    }
+}
+

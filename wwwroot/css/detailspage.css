@@ -16,7 +16,7 @@
     border-bottom: 6px double #b8a25a;
     padding: 80px 10vw; /* gives readable margins on sides */
     line-height: 1.8;
-    font-family: "Georgia", "Times New Roman", serif;
+    font-family: "Georgia", "Arial, Helvetica, sans-serif";
     color: #3e2f1c;
 }
 
@@ -85,4 +85,25 @@
 
     .article-share a:hover {
         text-decoration: underline;
+    }
+
+.news-article {
+    max-width: 1100px; /* wider container */
+    width: 90%; /* responsive width */
+    margin: 40px auto;
+    background-color: #fdf6e3; /* old book page color */
+    padding: 40px 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    line-height: 1.8;
+    font-size: 1.1rem;
+    
+}
+    .news-article::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient( 0deg, transparent, transparent 30px, rgba(0, 0, 0, 0.02) 31px );
+        pointer-events: none;
+        border-radius: 10px;
     }

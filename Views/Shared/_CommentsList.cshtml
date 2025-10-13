@@ -42,19 +42,3 @@
         }
     }
 </div>
-@section Scripts {
-    <script>
-    
-        $(document).on("click", ".react-btn", function () {
-            var commentId = $(this).data("comment");
-            var emoji = $(this).data("emoji");
-            alert('gg');
-            $.post("/News/ReactToComment", { commentId, emoji }, function (data) {
-                let summaryText = data.map(r => `${r.emoji} ${r.count}`).join(" ");
-                $("#reaction-summary-" + commentId).text(summaryText);
-            }).fail(function () {
-                alert("Error reacting to comment.");
-            });
-        });
-    </script>
-}
