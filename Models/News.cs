@@ -9,6 +9,25 @@ namespace Seithi247.Models
         Image = 1,
         Video = 2
     }
+    public enum Country
+    {
+        Australia,
+        USA,
+        India,
+        UK,
+        SriLanka,
+        Other
+    }
+
+    public enum NewsCategory
+    {
+        Cinema,
+        Politics,
+        Sports,
+        Funny,
+        Technology,
+        Health
+    }
     public class News
     {
         public int Id { get; set; }
@@ -22,6 +41,9 @@ namespace Seithi247.Models
         // optional: author, tags, isPublished flag
         public string Author { get; set; }
         public bool IsPublished { get; set; } = true;
+
+        public Country Country { get; set; }         // enum property
+        public NewsCategory NewsCategory { get; set; }  // enum property
 
         public NewsType NewsType { get; set; } = NewsType.Text;
         public ICollection<NewsImage> Images { get; set; } = new List<NewsImage>();

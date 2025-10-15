@@ -6,37 +6,47 @@
         <div class="news-card">
             @if (item.NewsType == NewsType.Video)
             {
-                <div class="video-card" data-video-url="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl">
+                <div class="video-card" data-video-url="@GetEmbeddedVideoUrl(item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl)">
                     <div class="video-thumb-wrapper">
                         <img src="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.ThumbnailUrl" class="video-thumb" alt="Video thumbnail" />
                         <div class="video-overlay">
                             <div class="play-button">
                                 <i class="bi bi-play-fill"></i>
                             </div>
+                            <div class="expand-button" data-fancybox data-src="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl" title="Open video">
+                                <i class="bi bi-arrows-fullscreen"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">@item.Title</div>
+                        <div class="video-meta">
+                            <i class="bi bi-calendar-event"></i> @item.PublishedAt.ToString("MMM dd, yyyy") ·
+                            @*  <i class="bi bi-eye"></i> @item.ViewCount views *@
+                            @if (@item.NewsMedias?.Count() > 1)
+                            {
+                                <a href="@Url.Action("Details", "News", new { id = item.Id })
+                                                                                                " class="btn btn-outline-primary btn-sm">
+                                    Click here watch more
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">@item.Title</h5>
-                    @*                     <p class="card-text text-muted">
-                        @((item.Content.Length > 100) ? item.Content.Substring(0, 100) + "..." : item.Content)
-                    </p> *@
-                    @if (@item.NewsMedias?.Count() > 1)
-                    {
-                        <a href="@Url.Action("Details", "News", new { id = item.Id })
-                                                " class="btn btn-outline-primary btn-sm">
-                            Click here watch more
-                        </a>
-                    }
-                </div>
+
             }
             else
             {
                 if (item.Images.Any())
                 {
-                    <a href="@Url.Action("Details", "News", new { id = item.Id })">
-                        <img src="@item.Images?.FirstOrDefault()?.FilePath" class="img-fluid" alt="@item.Title">
-                    </a>
+                    <div class="news-image-container">
+                        <a href="@Url.Action("Details", "News", new { id = item.Id })">
+                            <img src="@item.Images?.FirstOrDefault()?.FilePath" class="img-fluid" alt="@item.Title">
+                        </a>
+                        <div class="news-label">
+                            @item?.Country | @item?.NewsCategory
+                        </div>
+                    </div>
                 }
                 <div class="card-body">
                     <h5 class="card-title">@item.Title</h5>
@@ -46,8 +56,70 @@
                     <a href="@Url.Action("Details", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
                         Read More
                     </a>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <!-- Likes -->
+                        <div class="likes">
+                            <i class="bi bi-heart-fill text-danger"></i>
+                            <span class="like-count">@item.Likes</span>
+                        </div>
+
+                        <!-- Comments -->
+                        <div class="comments">
+                            <i class="bi bi-chat-left-text"></i>
+                            <span class="comment-count">@item.Comments?.Count</span>
+                        </div>
+
+                        <!-- Share -->
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=@Url.Action("Details", "News", new { id = @item.Id }, Context.Request.Scheme)" target="_blank">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                    </div>
                 </div>
             }
         </div>
     }
 </div>
+@functions {
+    string GetEmbeddedVideoUrl(string url)
+    {
+        if (string.IsNullOrEmpty(url))
+            return "";
+
+        // 🔹 YouTube
+        if (url.Contains("youtube.com/watch?v="))
+        {
+            var id = url.Split("v=")[1].Split('&')[0];
+            return $"https://www.youtube.com/embed/{id}";
+        }
+        if (url.Contains("youtu.be/"))
+        {
+            var id = url.Split("youtu.be/")[1].Split('?')[0];
+            return $"https://www.youtube.com/embed/{id}";
+        }
+
+        // 🔹 Vimeo
+        if (url.Contains("vimeo.com/"))
+        {
+            var id = url.Split("vimeo.com/")[1].Split('?')[0];
+            return $"https://player.vimeo.com/video/{id}";
+        }
+
+        // 🔹 Facebook
+        if (url.Contains("facebook.com") || url.Contains("fb.watch"))
+        {
+            // Facebook embed format
+            return $"https://www.facebook.com/plugins/video.php?href={Uri.EscapeDataString(url)}&show_text=false&width=560";
+        }
+
+        // 🔹 Instagram
+        if (url.Contains("instagram.com"))
+        {
+            // Instagram embed format
+            if (!url.EndsWith("/")) url += "/";
+            return $"{url}embed/";
+        }
+
+        // 🔹 Default fallback
+        return url;
+    }
+}

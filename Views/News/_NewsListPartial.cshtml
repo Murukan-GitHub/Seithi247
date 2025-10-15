@@ -26,7 +26,7 @@
                             @if (@item.NewsMedias?.Count() > 1)
                             {
                                 <a href="@Url.Action("Details", "News", new { id = item.Id })
-                                                                        " class="btn btn-outline-primary btn-sm">
+                                                                                    " class="btn btn-outline-primary btn-sm">
                                     Click here watch more
                                 </a>
                             }
@@ -39,9 +39,14 @@
             {
                 if (item.Images.Any())
                 {
-                    <a href="@Url.Action("Details", "News", new { id = item.Id })">
-                        <img src="@item.Images?.FirstOrDefault()?.FilePath" class="img-fluid" alt="@item.Title">
-                    </a>
+                    <div class="news-image-container">
+                        <a href="@Url.Action("Details", "News", new { id = item.Id })">
+                            <img src="@item.Images?.FirstOrDefault()?.FilePath" class="img-fluid" alt="@item.Title">
+                        </a>
+                        <div class="news-label">
+                            @item?.Country | @item?.NewsCategory
+                        </div>
+                    </div>
                 }
                 <div class="card-body">
                     <h5 class="card-title">@item.Title</h5>

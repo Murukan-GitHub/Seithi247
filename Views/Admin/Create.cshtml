@@ -20,7 +20,19 @@
         <input asp-for="Author" class="form-control" />
         <span asp-validation-for="Author" class="text-danger"></span>
     </div>
+    <div class="form-group">
+        <label asp-for="Country"></label>
+        <select asp-for="Country" class="form-control" asp-items="Html.GetEnumSelectList<Country>()">
+            <option value="">-- Select Country --</option>
+        </select>
+    </div>
 
+    <div class="form-group">
+        <label asp-for="NewsCategory"></label>
+        <select asp-for="NewsCategory" class="form-control" asp-items="Html.GetEnumSelectList<NewsCategory>()">
+            <option value="">-- Select Category --</option>
+        </select>
+    </div>
     <div class="mb-3">
         <label asp-for="Content" class="form-label"></label>
         <textarea asp-for="Content" id="contentEditor" class="form-control"></textarea>

@@ -2,9 +2,15 @@
 @{
     ViewData["Title"] = "Latest News";
 }
+<!-- Floating Categories as Pills -->
+<div class="news-categories-pills">
+    @foreach (var category in Enum.GetValues(typeof(NewsCategory)).Cast<NewsCategory>())
+    {
+        <a href="#" id="category-pill" class="category-pill" data-category="@category">@category</a>
+    }
+</div>
 
-
-<div class="container mt-4">
+<div class="news-container mt-4">
 
 
     <!-- New posts banner -->
@@ -304,10 +310,73 @@
         });
 
 
-        // Observe videos after page load or when new content added
-        document.addEventListener("DOMContentLoaded", initVideoScrollObserver);
-        setTimeout(initVideoScrollObserver, 2000);
+        //Category Filter
+        const pills = document.querySelectorAll('.category-pill');
+        const newsCards = document.querySelectorAll('.news-card');
 
+        pills.forEach(pill => {
+            pill.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const selectedCategory = this.dataset.category;
+
+                // Set active class
+                pills.forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+
+                // Show/hide news cards
+                newsCards.forEach(card => {
+                    if (selectedCategory === 'All' || card.dataset.category === selectedCategory) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // If using Masonry.js, trigger layout refresh
+                if (typeof masonryInstance !== 'undefined') {
+                    masonryInstance.layout();
+                }
+            });
+        });
+
+
+        document.querySelectorAll('.category-pill').forEach(pill => {
+            pill.addEventListener('click', async function (e) {
+                e.preventDefault();
+
+            const $pill = $(this);
+            const category = $pill.data('category');
+            alert('d');
+            $('.category-pill').removeClass('active');
+            $pill.addClass('active');
+                            // smooth scroll this pill into view
+                this.scrollIntoView({
+                    behavior: 'smooth',
+                    inline: 'center',
+                    block: 'nearest'
+                });
+            const response = await fetch(`/News/FilterByCategory?category=${category}`);
+            const html = await response.text();
+
+            const container = document.getElementById("newsContainer");
+            container.innerHTML = html;
+
+            // Reinitialize Masonry for the new content
+            imagesLoaded(container, function () {
+                if (msnry) msnry.destroy(); // remove old Masonry instance safely
+                msnry = new Masonry(container, {
+                    itemSelector: '.news-card',
+                    columnWidth: '.news-card',
+                    percentPosition: true,
+                    gutter: 15,
+                     transitionDuration: '0.4s'
+                });
+                container.querySelectorAll('.news-card').forEach(card => card.classList.add('is-visible'));
+            });
+        });
+
+        });
 
 
     </script>
@@ -315,3 +384,5 @@
 
 
 }
+
+

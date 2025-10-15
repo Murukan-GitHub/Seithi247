@@ -141,5 +141,20 @@ namespace Seithi247.Controllers
 
             return Json(reactionSummary);
         }
+
+        // NEW: AJAX endpoint for category filtering
+        [HttpGet]
+        public async Task<IActionResult> FilterByCategory(string category)
+        {
+            var filtered =  _context.News.AsQueryable();
+
+            if (!string.IsNullOrEmpty(category) && category != "All")
+                filtered = filtered.Where(n => n.NewsCategory.ToString() == category);
+
+            var list = await filtered.Include(i => i.Images).Include(i => i.NewsMedias).OrderByDescending(n => n.PublishedAt).ToListAsync();
+
+            // Return a partial with just the cards
+            return PartialView("_NewsCardsPartial", list);
+        }
     }
 }
