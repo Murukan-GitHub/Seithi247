@@ -6,7 +6,7 @@
 <div class="news-categories-pills">
     @foreach (var category in Enum.GetValues(typeof(NewsCategory)).Cast<NewsCategory>())
     {
-        <a href="#" id="category-pill" class="category-pill" data-category="@category">@category</a>
+        <a href="#" class="category-pill" data-category="@category">@category</a>
     }
 </div>
 
@@ -181,9 +181,17 @@
             isLoading = true;
             loadMoreBtn.classList.add('loading');
             loadMoreBtn.innerHTML = '<span class="spinner-border spinner-border-sm text-light"></span>';
-
+            let res;
             try {
-                const res = await fetch(`/News/LoadMore?skip=${skipCount}`);
+                const selectedCategory = $('.category-pill.active').data('category');
+                console.log(selectedCategory);
+                if(selectedCategory !=null && selectedCategory.length  >0)
+                {
+                    res = await fetch(`/News/FilterByCategory?category=${selectedCategory}&skip=${skipCount}`);
+                }else{
+                    res = await fetch(`/News/LoadMore?skip=${skipCount}`);
+                }
+
                 const html = await res.text();
 
                 if (!html.trim()) {
@@ -314,53 +322,79 @@
         const pills = document.querySelectorAll('.category-pill');
         const newsCards = document.querySelectorAll('.news-card');
 
-        pills.forEach(pill => {
-            pill.addEventListener('click', function(e) {
-                e.preventDefault();
+        // pills.forEach(pill => {
+        //     pill.addEventListener('click', function(e) {
+        //         e.preventDefault();
+        //         alert('gg');
+        //         const selectedCategory = this.dataset.category;
 
-                const selectedCategory = this.dataset.category;
+        //         // Set active class
+        //         pills.forEach(p => p.classList.remove('active'));
+        //         this.classList.add('active');
 
-                // Set active class
-                pills.forEach(p => p.classList.remove('active'));
-                this.classList.add('active');
+        //         // Show/hide news cards
+        //         newsCards.forEach(card => {
+        //             if (selectedCategory === 'All' || card.dataset.category === selectedCategory) {
+        //                 card.style.display = 'block';
+        //             } else {
+        //                 card.style.display = 'none';
+        //             }
+        //         });
 
-                // Show/hide news cards
-                newsCards.forEach(card => {
-                    if (selectedCategory === 'All' || card.dataset.category === selectedCategory) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
+        //         // If using Masonry.js, trigger layout refresh
+        //         if (typeof masonryInstance !== 'undefined') {
+        //             masonryInstance.layout();
+        //         }
+        //     });
+        // });
 
-                // If using Masonry.js, trigger layout refresh
-                if (typeof masonryInstance !== 'undefined') {
-                    masonryInstance.layout();
-                }
-            });
-        });
-
+        let prevCategory = 'All';
 
         document.querySelectorAll('.category-pill').forEach(pill => {
             pill.addEventListener('click', async function (e) {
                 e.preventDefault();
 
-            const $pill = $(this);
-            const category = $pill.data('category');
-            alert('d');
-            $('.category-pill').removeClass('active');
-            $pill.addClass('active');
-                            // smooth scroll this pill into view
+            skipCount=0;
+        
+
+            let category = this.dataset.category;;
+                    
+            // If same category clicked again → deselect it
+                 if ($(this).hasClass('active')) {
+               pills.forEach(p => p.classList.remove('active'));
+                  alert($(this).hasClass('active'));
+                category = 'All'; // Reset to show all
+                prevCategory = 'All';
+                 $(this).blur();
+            }
+            else{
+                pills.forEach(p => p.classList.remove('active'));
+               $(this).addClass('active');
+            }
+                // smooth scroll this pill into view
                 this.scrollIntoView({
                     behavior: 'smooth',
                     inline: 'center',
                     block: 'nearest'
                 });
-            const response = await fetch(`/News/FilterByCategory?category=${category}`);
+
+            let response ='';
+            if (category == 'All'){
+                response = await fetch(`/News/Index`);
+            }else{
+                response = await fetch(`/News/FilterByCategory?category=${category}`);
+            }
+
+            //const response = response;
             const html = await response.text();
 
             const container = document.getElementById("newsContainer");
             container.innerHTML = html;
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            const newCards = tempDiv.querySelectorAll('.news-card');
+
+            skipCount = newsCards.length;
 
             // Reinitialize Masonry for the new content
             imagesLoaded(container, function () {
@@ -370,11 +404,14 @@
                     columnWidth: '.news-card',
                     percentPosition: true,
                     gutter: 15,
-                     transitionDuration: '0.4s'
+                        transitionDuration: '0.4s'
                 });
                 container.querySelectorAll('.news-card').forEach(card => card.classList.add('is-visible'));
             });
-        });
+
+            prevCategory = category;
+
+            });
 
         });
 

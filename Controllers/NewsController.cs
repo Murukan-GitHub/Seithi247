@@ -54,7 +54,7 @@ namespace Seithi247.Controllers
             return Json(new { latest });
         }
         [HttpGet]
-        public async Task<IActionResult> LoadMore(int skip, int take = 10)
+        public async Task<IActionResult> LoadMore(int skip, int take = 12)
         {
             var news = await _context.News.Include(i => i.Images).Include(i => i.NewsMedias)
                 .OrderByDescending(n => n.PublishedAt)
@@ -144,16 +144,23 @@ namespace Seithi247.Controllers
 
         // NEW: AJAX endpoint for category filtering
         [HttpGet]
-        public async Task<IActionResult> FilterByCategory(string category)
+        public async Task<IActionResult> FilterByCategory(string category, int skip, int take = 12)
         {
-            var filtered =  _context.News.AsQueryable();
+            var query = _context.News.AsQueryable();
 
             if (!string.IsNullOrEmpty(category) && category != "All")
-                filtered = filtered.Where(n => n.NewsCategory.ToString() == category);
+                query = query.Where(n => n.NewsCategory.ToString() == category);
 
-            var list = await filtered.Include(i => i.Images).Include(i => i.NewsMedias).OrderByDescending(n => n.PublishedAt).ToListAsync();
+            var total = query.Count();
+            var list = query
+                .Include(i => i.Images).Include(i => i.NewsMedias)
+                .OrderByDescending(n => n.PublishedAt)
+                .Skip(skip)
+                .Take(take)
+                .ToList();
 
-            // Return a partial with just the cards
+
+
             return PartialView("_NewsCardsPartial", list);
         }
     }

@@ -96,10 +96,16 @@ namespace Seithi247.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Country")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsPublished")
                         .HasColumnType("bit");
 
                     b.Property<int>("Likes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewsCategory")
                         .HasColumnType("int");
 
                     b.Property<int>("NewsType")
