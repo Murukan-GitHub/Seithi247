@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Seithi247.Models.News>
+﻿@model IEnumerable<Seithi247.Views.ViewModel.NewsVM>
 @{
     ViewData["Title"] = "Latest News";
 }
@@ -254,9 +254,9 @@
             }
         });
 
-               // ====== Inline Play + Auto-pause + Scroll Stop + Fancybox ======
+    // ====== Inline Play + Auto-pause + Scroll Stop + Fancybox ======
 
-                // Initialize Fancybox
+    // Initialize Fancybox
         Fancybox.bind("[data-fancybox]", { Toolbar: { display:["close"] }, dragToClose:true });
 
         // Store original HTML for restoring
@@ -414,6 +414,7 @@
             });
 
         });
+
 
 
     </script>

@@ -40,6 +40,7 @@ namespace Seithi247.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (news.Content == null) { news.Content = " "; }
                 news.Content=news.Content.Replace("../uploads/", "/uploads/");
                 _context.News.Add(news);
                 await _context.SaveChangesAsync();

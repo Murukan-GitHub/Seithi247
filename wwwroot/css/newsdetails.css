@@ -1,0 +1,41 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: transparent;
+    color: #f2f2f2;
+    /* allow scrolling inside iframe */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+}
+
+/* make the article container scrollable and constrained */
+.details-popup {
+    background: #101010;
+    border-radius: 16px;
+    padding: 25px;
+    width: 850px;
+    margin: 0 auto;
+    max-height: calc(90vh - 40px); /* room for padding in Fancybox */
+    overflow: auto; /* enable internal scrolling here */
+    -webkit-overflow-scrolling: touch;
+}
+
+.news-detail-image {
+    width: 100%;
+    border-radius: 12px;
+    margin: 15px 0;
+}
+
+.content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.meta {
+    color: #ffcc00;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

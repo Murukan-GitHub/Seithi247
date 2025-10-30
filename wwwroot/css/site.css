@@ -582,3 +582,87 @@ body {
     /* Push container below navbar + category pills */
     margin-top: 120px; /* adjust according to navbar + pills height */
 }
+
+
+
+
+
+
+/* Make Fancybox backdrop fully transparent (but with blur) */
+/* Transparent blurred backdrop */
+.fancybox__container {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+/* Solid article container */
+.fancybox__content {
+    border-radius: 16px;
+    overflow: hidden; /* keep outer box clipped */
+    max-height: 90vh; /* limit to viewport */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* allow inner container to scroll */
+    height: 100%;
+    width: 1000px;
+    background-color:black
+}
+
+    /* target the inner content area (iframe) to scroll */
+    .fancybox__content > iframe,
+    .fancybox__content > .fancybox__inner {
+        height: 100%;
+
+
+    }
+
+    /* Glowing "Seithi 24/7" watermark */
+    .fancybox__content::after {
+        content: "Seithi 24/7";
+        position: absolute;
+        bottom: 12px;
+        right: 18px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: rgba(255, 0, 0, 0.5);
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        pointer-events: none;
+    }
+
+    /* Smooth internal scroll */
+    .fancybox__content::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .fancybox__content::-webkit-scrollbar-thumb {
+        background-color: #ff0000;
+        border-radius: 3px;
+    }
+
+    .fancybox__content::-webkit-scrollbar-track {
+        background: #222;
+    }
+
+/* Custom Fancybox class */
+.news-details-popup .fancybox__content {
+    max-width: 900px; /* Adjust to match your container */
+    width: 90%; /* Responsive */
+    margin: auto;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+    max-height: 85vh; /* Keeps scroll within popup */
+}
+
+/* Darken background but keep semi-transparent */
+.fancybox__backdrop {
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+@media (max-width: 768px) {
+    .news-details-popup .fancybox__content {
+        max-width: 95%;
+        padding: 10px;
+    }
+}

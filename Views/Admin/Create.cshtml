@@ -36,7 +36,7 @@
     <div class="mb-3">
         <label asp-for="Content" class="form-label"></label>
         <textarea asp-for="Content" id="contentEditor" class="form-control"></textarea>
-        <span asp-validation-for="Content" class="text-danger"></span>
+@*         <span asp-validation-for="Content" class="text-danger"></span> *@
     </div>
 
     <div class="mb-3">
@@ -47,7 +47,7 @@
     <div class="mb-3">
         <label asp-for="VideoUrl" class="form-label"></label>
         <input asp-for="VideoUrl" class="form-control" placeholder="Enter video URL (YouTube, Vimeo, or MP4)">
-        <span asp-validation-for="VideoUrl" class="text-danger"></span>
+
     </div>
 
     <div class="mb-3">
@@ -67,11 +67,13 @@
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
 @section Scripts {
-    <script src="https://cdn.tiny.cloud/1/pvjjooklecnrx8sgkc609x3g7hbd0um5yvr7k1szvpv2fu9e/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    
+
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: '#contentEditor',
-            height: 400,
+            height: 400,           
         menubar: false,
         branding: false,
         language: 'en', // keep English

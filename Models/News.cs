@@ -11,6 +11,7 @@ namespace Seithi247.Models
     }
     public enum Country
     {
+
         Australia,
         USA,
         India,
@@ -46,14 +47,14 @@ namespace Seithi247.Models
         public NewsCategory NewsCategory { get; set; }  // enum property
 
         public NewsType NewsType { get; set; } = NewsType.Text;
-        public ICollection<NewsImage> Images { get; set; } = new List<NewsImage>();
-        public ICollection<NewsMedia> NewsMedias { get; set; } = new List<NewsMedia>();
+        public virtual ICollection<NewsImage> Images { get; set; } = new List<NewsImage>();
+        public virtual ICollection<NewsMedia> NewsMedias { get; set; } = new List<NewsMedia>();
 
         // Likes count
         public int Likes { get; set; }
 
-        // Navigation property
-        public ICollection<Comment> Comments { get; set; }
+        // Navigation property        
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>(); 
 
         [NotMapped]
         public string VideoUrl { get; set; }

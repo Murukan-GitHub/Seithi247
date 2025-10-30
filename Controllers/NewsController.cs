@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NuGet.Versioning;
 using Seithi247.Data;
 using Seithi247.Models;
+using Seithi247.Views.ViewModel;
 
 namespace Seithi247.Controllers
 {
@@ -15,26 +16,69 @@ namespace Seithi247.Controllers
 
         public async Task<IActionResult> Index(int page = 1, int pageSize = 20)
         {
-            var items = await _context.News.Include(i => i.Images).Include(i => i.NewsMedias).Include(c=>c.Comments)
-            .Where(n => n.IsPublished)
-            .OrderByDescending(n => n.PublishedAt)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+            var items = await _context.News.Select(i => new NewsVM
+                                        {
+                                            Id = i.Id,
+                                            NewsCategory = i.NewsCategory,
+                                            Content = i.Content,
+                                            Author = i.Author,
+                                            Country= i.Country,
+                                            Summary= i.Summary,
+                                            Likes = i.Likes,
+                                            Images = i.Images,
+                                            Comments = i.Comments,
+                                            NewsMedias = i.NewsMedias,
+                                            IsPublished = i.IsPublished,
+                                            PublishedAt = i.PublishedAt
+                                        })
+                                        .Where(n => n.IsPublished)
+                                        .OrderByDescending(n => n.PublishedAt)
+                                        .Skip((page - 1) * pageSize)
+                                        .Take(pageSize)
+                                        .ToListAsync();
+
             return View(items);
         }
         // GET: /News/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
-            var news = await _context.News.Include(i => i.Images).Include(i => i.NewsMedias).Include(i => i.Comments)
+            var news = await _context.News.Select(i => new NewsVM
+            {
+                Id = i.Id,
+                NewsCategory = i.NewsCategory,
+                Content = i.Content,
+                Author = i.Author,
+                Country = i.Country,
+                Summary = i.Summary,
+                Likes = i.Likes,
+                Images = i.Images,
+                Comments = i.Comments,
+                NewsMedias = i.NewsMedias,
+                IsPublished = i.IsPublished,
+                PublishedAt = i.PublishedAt
+            })
                             .FirstOrDefaultAsync(o => o.Id == id);
             if (news == null || !news.IsPublished) return NotFound();
             return View(news);
         }
         public async Task<IActionResult> NewsListPartial()
         {
-            var news = await _context.News.Include(i => i.Images).Include(i => i.NewsMedias)
+            var news = await _context.News.Select(i => new NewsVM
+            {
+                Id = i.Id,
+                NewsCategory = i.NewsCategory,
+                Content = i.Content,
+                Author = i.Author,
+                Country = i.Country,
+                Summary = i.Summary,
+                Likes = i.Likes,
+                Images = i.Images,
+                Comments = i.Comments,
+                NewsMedias = i.NewsMedias,
+                IsPublished = i.IsPublished,
+                PublishedAt = i.PublishedAt
+            })
            .Where(n => n.IsPublished)
            .OrderByDescending(n => n.PublishedAt)
            .Take(20)
@@ -56,7 +100,21 @@ namespace Seithi247.Controllers
         [HttpGet]
         public async Task<IActionResult> LoadMore(int skip, int take = 12)
         {
-            var news = await _context.News.Include(i => i.Images).Include(i => i.NewsMedias)
+            var news = await _context.News.Select(i => new NewsVM
+            {
+                Id = i.Id,
+                NewsCategory = i.NewsCategory,
+                Content = i.Content,
+                Author = i.Author,
+                Country = i.Country,
+                Summary = i.Summary,
+                Likes = i.Likes,
+                Images = i.Images,
+                Comments = i.Comments,
+                NewsMedias = i.NewsMedias,
+                IsPublished = i.IsPublished,
+                PublishedAt = i.PublishedAt
+            })
                 .OrderByDescending(n => n.PublishedAt)
                 .Skip(skip)
                 .Take(take)
@@ -77,7 +135,7 @@ namespace Seithi247.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddComment(int newsId, string authorName, string text,string reaction)
+        public IActionResult AddComment(int newsId, string authorName, string text, string reaction)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return Json(new { success = false, message = "Comment cannot be empty." });
@@ -146,20 +204,32 @@ namespace Seithi247.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterByCategory(string category, int skip, int take = 12)
         {
-            var query = _context.News.AsQueryable();
+            //var query = _context.News.AsQueryable();
 
-            if (!string.IsNullOrEmpty(category) && category != "All")
-                query = query.Where(n => n.NewsCategory.ToString() == category);
+            //if (!string.IsNullOrEmpty(category) && category != "All")
+            //    query = query.Where(n => n.NewsCategory.ToString() == category);
 
-            var total = query.Count();
-            var list = query
-                .Include(i => i.Images).Include(i => i.NewsMedias)
+            //var total = query.Count();
+            var list =  _context.News.Select(i => new NewsVM
+                {
+                    Id = i.Id,
+                    NewsCategory = i.NewsCategory,
+                    Content = i.Content,
+                    Author = i.Author,
+                    Country = i.Country,
+                    Summary = i.Summary,
+                    Likes = i.Likes,
+                    Images = i.Images,
+                    Comments = i.Comments,
+                    NewsMedias = i.NewsMedias,
+                    IsPublished = i.IsPublished,
+                    PublishedAt = i.PublishedAt
+                })
+                .Where(n => n.NewsCategory.ToString() == category)
                 .OrderByDescending(n => n.PublishedAt)
                 .Skip(skip)
                 .Take(take)
                 .ToList();
-
-
 
             return PartialView("_NewsCardsPartial", list);
         }

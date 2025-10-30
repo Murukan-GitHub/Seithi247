@@ -9,8 +9,7 @@
 
 /* Article styling */
 .news-article {
-    width: 100%;
-    max-width: 100%;
+
     background: #fffaf0;
     border-top: 6px double #b8a25a;
     border-bottom: 6px double #b8a25a;
@@ -88,10 +87,10 @@
     }
 
 .news-article {
-    max-width: 1100px; /* wider container */
+    max-width: 1000px; /* wider container */
     width: 90%; /* responsive width */
     margin: 40px auto;
-    background-color: #fdf6e3; /* old book page color */
+    background-color: #f8f1db; /* old book page color */
     padding: 40px 50px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
