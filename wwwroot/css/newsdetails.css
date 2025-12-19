@@ -1,41 +1,72 @@
-﻿body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: transparent;
-    color: #f2f2f2;
-    /* allow scrolling inside iframe */
-    overflow: auto;
-    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+﻿.news-post-popup .fancybox__content {
+  width: 95%;
+  max-width: 1200px;
+  height: 85vh;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
 }
 
-/* make the article container scrollable and constrained */
-.details-popup {
-    background: #101010;
-    border-radius: 16px;
-    padding: 25px;
-    width: 850px;
-    margin: 0 auto;
-    max-height: calc(90vh - 40px); /* room for padding in Fancybox */
-    overflow: auto; /* enable internal scrolling here */
-    -webkit-overflow-scrolling: touch;
+.post-popup-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
 
-.news-detail-image {
-    width: 100%;
-    border-radius: 12px;
-    margin: 15px 0;
+.post-left {
+  flex: 2;
+  overflow-y: auto;
+  padding: 20px;
 }
 
-.content {
-    font-size: 1.1rem;
-    line-height: 1.8;
+.post-right {
+  flex: 1;
+  background: #fafafa;
+  border-left: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.meta {
-    color: #ffcc00;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.comments-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+#comment-form {
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  background: #fff;
+}
+
+#comment-form textarea {
+  width: 100%;
+  resize: none;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 6px;
+}
+
+#comment-form button {
+  width: 100%;
+  background: #d32f2f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 6px;
+}
+
+@media (max-width: 768px) {
+  .news-post-popup .fancybox__content {
+    flex-direction: column;
+  }
+  .post-right {
+    border-left: none;
+    border-top: 1px solid #ddd;
+    height: 50%;
+  }
 }

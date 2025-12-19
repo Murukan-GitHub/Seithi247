@@ -14,7 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fancyapps/ui/dist/fancybox.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@@fancyapps/ui/dist/fancybox.umd.js"></script>
+    
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="~/css/newsdetails.css" />
@@ -36,7 +36,7 @@
              });
          });
 
-         let selectedReaction = "";
+         
         $(document).on("click", ".like-btn", function () {
              const btn = $(this);
              const id = btn.data("id");
@@ -55,29 +55,29 @@
          });
     </script>
 </body>
-<div class="news-detail-popup">
-        <article class="news-article shadow-sm">
-            <!-- Header -->
-            <header class="article-header">
-                <h1 class="article-title">@Model.Title</h1>
-                <div class="article-meta">
-                    <span class="article-author">By <strong>@Model.Author</strong></span> |
-                    <span class="article-date">@Model.PublishedAt.ToString("MMMM dd, yyyy")</span>
-                </div>
-            </header>
-            <!-- Like & Share -->
-            <div class="article-actions mt-5">
-                <div class="article-likes">
-                    <button class="like-btn" data-id="@Model.Id">👍 Like (<span class="like-count">@Model.Likes</span>)</button>
-                </div>
-
-                <div class="article-share">
-                    <span>Share:</span>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=@Url.Action("Details", "News", new { id = Model.Id }, Context.Request.Scheme)" target="_blank" class="fb-share">Facebook</a>
-                    <a href="https://twitter.com/intent/tweet?url=@Url.Action("Details", "News", new { id = Model.Id }, Context.Request.Scheme)&text=@Model.Title" target="_blank" class="tw-share">Twitter</a>
-                </div>
+<div class="post-popup-container">
+    <!-- Left: Article Section -->
+    <div class="post-left">
+        <div class="post-header">
+            <h1 class="article-title">@Model.Title</h1>
+            <div class="article-meta">
+                <span class="article-author">By <strong>@Model.Author</strong></span> |
+                <span class="article-date">@Model.PublishedAt.ToString("MMMM dd, yyyy")</span>
             </div>
-            @*         <!-- feature image -->
+        </div>
+        <!-- Like & Share -->
+        <div class="article-actions mt-5">
+            <div class="article-likes">
+                <button class="like-btn" data-id="@Model.Id">👍 Like (<span class="like-count">@Model.Likes</span>)</button>
+            </div>
+
+            <div class="article-share">
+                <span>Share:</span>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=@Url.Action("Details", "News", new { id = Model.Id }, Context.Request.Scheme)" target="_blank" class="fb-share">Facebook</a>
+                <a href="https://twitter.com/intent/tweet?url=@Url.Action("Details", "News", new { id = Model.Id }, Context.Request.Scheme)&text=@Model.Title" target="_blank" class="tw-share">Twitter</a>
+            </div>
+        </div>
+        @*         <!-- feature image -->
         @if (!string.IsNullOrEmpty(Model.FeatureImage))
         {
             <div class="article-image">
@@ -85,70 +85,73 @@
             </div>
         } *@
 
-            <section class="article-content">
-                @Html.Raw(Model.Content)
-            </section>
-            @if (Model.Images != null && Model.Images.Any())
-            {
-                var count = Model.Images.Count;
-                <div class="row g-2">
-                    @for (int i = 0; i < Math.Min(count, 4); i++)
-                    {
-                        var img = Model.Images.ElementAt(i);
-                        <div class="@(count == 1 ? "col-12"
-                                                             : count == 2 ? "col-6"
-                                                             : count == 3 && i == 0 ? "col-12"
-                                                             : count == 3 && i > 0 ? "col-6"
-                                                             : "col-6")">
-                        <div class="position-relative">
+        <section class="article-content">
+            @Html.Raw(Model.Content)
+        </section>
+        @if (Model.Images != null && Model.Images.Any())
+        {
+            var count = Model.Images.Count;
+            <div class="row g-2">
+                @for (int i = 0; i < Math.Min(count, 4); i++)
+                {
+                    var img = Model.Images.ElementAt(i);
+                    <div class="@(count == 1 ? "col-12"
+                                                                                      : count == 2 ? "col-6"
+                                                                                      : count == 3 && i == 0 ? "col-12"
+                                                                                      : count == 3 && i > 0 ? "col-6"
+                                                                                      : "col-6")">
+                    <div class="position-relative">
+                        <a data-fancybox="gallery" href="@img.FilePath">
+                            <img src="@img.FilePath"
+                                 class="img-fluid rounded shadow-sm"
+                                 style="cursor:pointer; object-fit:cover; height:@(count == 1 ? "400px" : "200px"); width:100%;" />
+                        </a>
+
+                        @if (i == 3 && count > 4)
+                        {
                             <a data-fancybox="gallery" href="@img.FilePath">
-                                <img src="@img.FilePath"
-                                     class="img-fluid rounded shadow-sm"
-                                     style="cursor:pointer; object-fit:cover; height:@(count == 1 ? "400px" : "200px"); width:100%;" />
+                                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-75 text-white fs-3 fw-bold"
+                                     style="cursor:pointer;">
+                                    +@(count - 3)
+                                </div>
                             </a>
-
-                            @if (i == 3 && count > 4)
-                            {
-                                <a data-fancybox="gallery" href="@img.FilePath">
-                                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-75 text-white fs-3 fw-bold"
-                                         style="cursor:pointer;">
-                                        +@(count - 3)
-                                    </div>
-                                </a>
-                            }
-                        </div>
-                    </div>
-                }
-
-                <!-- Hidden extra images for Fancybox -->
-                @for (int j = 4; j < count; j++)
-                {
-                    @if (j <= Model.Images.Count)
-                    {
-                        var hiddenImg = Model.Images.ElementAt(j);
-                        <a data-fancybox="gallery" href="@hiddenImg.FilePath" style="display:none;"></a>
-                    }
-                }
-            </div>
                         }
-
-            <!-- Video Section -->
-            @foreach (var v in Model.NewsMedias)
-            {
-                @if (!string.IsNullOrEmpty(@v.MediaUrl))
-                {
-                    <div class="article-video">
-                        <iframe width="100%" height="400"
-                                src="@GetEmbedUrl(@v.MediaUrl)"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                        </iframe>
                     </div>
+                </div>
+            }
+
+            <!-- Hidden extra images for Fancybox -->
+            @for (int j = 4; j < count; j++)
+            {
+                @if (j <= Model.Images.Count)
+                {
+                    var hiddenImg = Model.Images.ElementAt(j);
+                    <a data-fancybox="gallery" href="@hiddenImg.FilePath" style="display:none;"></a>
                 }
             }
-            <!-- Comment Section -->
-            <div class="comment-box">
+        </div>
+                }
+
+        <!-- Video Section -->
+        @foreach (var v in Model.NewsMedias)
+        {
+            @if (!string.IsNullOrEmpty(@v.MediaUrl))
+            {
+                <div class="article-video">
+                    <iframe width="100%" height="400"
+                            src="@GetEmbedUrl(@v.MediaUrl)"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            }
+        }
+    </div>
+
+        <!-- Comment Section -->
+        <aside class="news-comments">
+            <h4>Comments</h4>
                 <h5>Leave a Comment</h5>
                 <form id="commentForm">
                     <input type="hidden" name="newsId" value="@Model.Id" />
@@ -160,13 +163,14 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Post Comment</button>
                 </form>
-            </div>
+
 
             <div id="commentsList">
                 @await Html.PartialAsync("_CommentsList", Model.Comments?.OrderByDescending(c => c.PostedDate))
             </div>
-        </article>
-    </div>
+        </aside>
+
+</div>
 
 @functions {
     public string GetEmbedUrl(string VideoUrl)
@@ -187,4 +191,52 @@
 
 
 
+@section Scripts {
+    <script>
+
+        Fancybox.bind("[data-fancybox='details']", {
+          type: "iframe",
+          mainClass: "news-detail-popup",
+          hideScrollbar: true,
+          dragToClose: false,    // prevent drag from interfering with vertical scroll
+          closeButton: "inside",
+          animated: true,
+          hideScrollbar: true,   // stop the background page from scrolling
+          iframe: {
+            preload: false,
+            css: {
+              width: "auto",
+              height: "auto",
+              maxWidth: "1000px",
+              maxHeight: "90vh",
+            }
+          },
+          on: {
+            reveal: (fbox) => {
+              // optional: ensure iframe scrolling is enabled after load
+              const iframe = fbox.iframe;
+              if (iframe) {
+                iframe.addEventListener('load', () => {
+                  try {
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+                    doc.body.style.overflow = 'auto';
+                    const container = doc.querySelector('.news-detail-popup');
+                    if (container) {
+                      container.style.maxHeight = 'calc(90vh - 40px)';
+                      container.style.overflow = 'auto';
+                    }
+                  } catch (e) {
+                    // cross-origin pages won't allow access — ignore
+                    console.warn('Could not access iframe doc to force styles', e);
+                  }
+                });
+              }
+            }
+          }
+        });
+
+        $(document).on('contentLoaded', function () {
+                Fancybox.bind("[data-fancybox]");
+        }
+    </script>
 }

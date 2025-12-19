@@ -22,12 +22,14 @@ namespace Seithi247.Models
 
     public enum NewsCategory
     {
+
         Cinema,
         Politics,
         Sports,
         Funny,
         Technology,
-        Health
+        Health,
+        Home
     }
     public class News
     {
@@ -38,6 +40,9 @@ namespace Seithi247.Models
         public string Summary { get; set; }
         [DataType(DataType.Html)]
         public string Content { get; set; }
+        [NotMapped]
+
+        public string Editor { get; set; }
         public DateTime PublishedAt { get; set; } = DateTime.UtcNow;
         // optional: author, tags, isPublished flag
         public string Author { get; set; }

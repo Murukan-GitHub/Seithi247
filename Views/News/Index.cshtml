@@ -45,267 +45,276 @@
 
     <script>
 
-        let latestTimestamp = '@Model.FirstOrDefault()?.PublishedAt.ToString("o")';
-        const newPostSound = new Audio('/sounds/notification.mp3');
+            let latestTimestamp = '@Model.FirstOrDefault()?.PublishedAt.ToString("o")';
+            const newPostSound = new Audio('/sounds/notification.mp3');
 
 
-        const container = document.getElementById('newsContainer');
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        const loadingIndicator = document.getElementById('loadingIndicator');
-        let skipCount = @Model.Count();
-        let isLoading = false;
-        let noMorePosts = false;
+            const container = document.getElementById('newsContainer');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            let skipCount = @Model.Count();
+            let isLoading = false;
+            let noMorePosts = false;
 
-        // Initialize Masonry on load
-        let msnry = new Masonry('#newsContainer', {
-            itemSelector: '.news-card',
-            columnWidth: '.news-card',
-            percentPosition: true,
-            gutter: 15,
-             transitionDuration: '0.4s' // smooth animation when rearranging
-        });
-        // Smoothly re-layout Masonry on window resize
-        window.addEventListener('resize', () => {
-            if (msnry) msnry.layout();
-        });
-
-        async function checkForNewPosts() {
-            try {
-                const response = await fetch('@Url.Action("LatestTimestamp", "News")');
-                const data = await response.json();
-                if (data.latest && new Date(data.latest) > new Date(latestTimestamp)) {
-                    showNewPostsBanner();
-                    playNotificationSound();
-                }
-            } catch (err) {
-                console.error("Error checking for new posts:", err);
-            }
-        }
-
-        function showNewPostsBanner() {
-            const banner = document.getElementById("newPostsBanner");
-            banner.classList.remove("d-none");
-            banner.classList.add("fade-in-down");
-        }
-
-        function hideNewPostsBanner() {
-            const banner = document.getElementById("newPostsBanner");
-            //banner.classList.remove("fade-in-down");
-            banner.classList.add("fade-out-up");
-            setTimeout(() => {
-                banner.classList.add("d-none");
-                banner.classList.remove("fade-out-up");
-            }, 500);
-        }
-
-        function playNotificationSound() {
-            try {
-                newPostSound.currentTime = 0;
-                newPostSound.play();
-            } catch (err) {
-                console.warn("Notification sound blocked by browser:", err);
-            }
-        }
-
-        // Refresh every 1 min
-        setInterval(checkForNewPosts, 60000);
-
-        // Reload feed when clicking banner
-        document.getElementById("newPostsBanner").addEventListener("click", async function () {
-            const response = await fetch('@Url.Action("NewsListPartial", "News")');
-            const html = await response.text();
-
-            const container = document.getElementById("newsContainer");
-            container.innerHTML = html;
-
-            // Reinitialize Masonry for the new content
-            imagesLoaded(container, function () {
-                if (msnry) msnry.destroy(); // remove old Masonry instance safely
-                msnry = new Masonry(container, {
-                    itemSelector: '.news-card',
-                    columnWidth: '.news-card',
-                    percentPosition: true,
-                    gutter: 15,
-                     transitionDuration: '0.4s'
-                });
-                container.querySelectorAll('.news-card').forEach(card => card.classList.add('is-visible'));
+            // Initialize Masonry on load
+            let msnry = new Masonry('#newsContainer', {
+                itemSelector: '.news-card',
+                columnWidth: '.news-card',
+                percentPosition: true,
+                gutter: 15,
+                 transitionDuration: '0.4s' // smooth animation when rearranging
+            });
+            // Smoothly re-layout Masonry on window resize
+            window.addEventListener('resize', () => {
+                if (msnry) msnry.layout();
             });
 
-            hideNewPostsBanner();
-            latestTimestamp = new Date().toISOString();
-        });
-
-        container.querySelectorAll('.news-card').forEach((card, i) => {
-            card.style.opacity = 0;
-            setTimeout(() => {
-                card.style.transition = "opacity 0.4s ease";
-                card.style.opacity = 1;
-            }, i * 80); // slight stagger effect
-        });
-
-
-
-
-        // Initialize Masonry after first render
-            imagesLoaded(container, function () {
-                msnry = new Masonry(container, {
-                    itemSelector: '.news-card',
-                    columnWidth: '.news-card',
-                    percentPosition: true,
-                    gutter: 15,
-                    transitionDuration: '0.4s'
-                });
-            });
-        //Infinite Scroll
-
-
-        // Show pulse animation after user scrolls halfway
-                // Infinite scroll trigger
-        window.addEventListener('scroll', async () => {
-            if (isLoading || noMorePosts) return;
-            const scrollY = window.scrollY;
-            const viewportHeight = window.innerHeight;
-            const fullHeight = document.documentElement.scrollHeight;
-            if (scrollY + viewportHeight >= fullHeight * 0.9) {
-                await loadMoreNews();
+            async function checkForNewPosts() {
+                try {
+                    const response = await fetch('@Url.Action("LatestTimestamp", "News")');
+                    const data = await response.json();
+                    if (data.latest && new Date(data.latest) > new Date(latestTimestamp)) {
+                        showNewPostsBanner();
+                        playNotificationSound();
+                    }
+                } catch (err) {
+                    console.error("Error checking for new posts:", err);
+                }
             }
-        });
 
-        // Manual click trigger
-        loadMoreBtn.addEventListener('click', async () => {
-            await loadMoreNews();
-        });
+            function showNewPostsBanner() {
+                const banner = document.getElementById("newPostsBanner");
+                banner.classList.remove("d-none");
+                banner.classList.add("fade-in-down");
+            }
 
-        async function loadMoreNews() {
-            if (isLoading || noMorePosts) return;
-            isLoading = true;
-            loadMoreBtn.classList.add('loading');
-            loadMoreBtn.innerHTML = '<span class="spinner-border spinner-border-sm text-light"></span>';
-            let res;
-            try {
-                const selectedCategory = $('.category-pill.active').data('category');
-                console.log(selectedCategory);
-                if(selectedCategory !=null && selectedCategory.length  >0)
-                {
-                    res = await fetch(`/News/FilterByCategory?category=${selectedCategory}&skip=${skipCount}`);
-                }else{
-                    res = await fetch(`/News/LoadMore?skip=${skipCount}`);
+            function hideNewPostsBanner() {
+                const banner = document.getElementById("newPostsBanner");
+                //banner.classList.remove("fade-in-down");
+                banner.classList.add("fade-out-up");
+                setTimeout(() => {
+                    banner.classList.add("d-none");
+                    banner.classList.remove("fade-out-up");
+                }, 500);
+            }
+
+            function playNotificationSound() {
+                try {
+                    newPostSound.currentTime = 0;
+                    newPostSound.play();
+                } catch (err) {
+                    console.warn("Notification sound blocked by browser:", err);
                 }
+            }
 
-                const html = await res.text();
+            // Refresh every 1 min
+            setInterval(checkForNewPosts, 60000);
 
-                if (!html.trim()) {
-                    noMorePosts = true;
-                    loadMoreBtn.style.display = 'none';
-                    return;
-                }
+            // Reload feed when clicking banner
+            document.getElementById("newPostsBanner").addEventListener("click", async function () {
+                const response = await fetch('@Url.Action("NewsListPartial", "News")');
+                const html = await response.text();
 
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                const newCards = tempDiv.querySelectorAll('.news-card');
-                newCards.forEach(card => card.style.opacity = 0);
+                const container = document.getElementById("newsContainer");
+                container.innerHTML = html;
 
-                const fragment = document.createDocumentFragment();
-                newCards.forEach(card => fragment.appendChild(card));
-                container.appendChild(fragment);
-
+                // Reinitialize Masonry for the new content
                 imagesLoaded(container, function () {
-                    msnry.appended(newCards);
-                    msnry.layout();
-                    newCards.forEach((card, i) => {
-                        setTimeout(() => {
-                            card.style.transition = 'opacity 0.4s ease';
-                            card.style.opacity = 1;
-                        }, i * 80);
+                    if (msnry) msnry.destroy(); // remove old Masonry instance safely
+                    msnry = new Masonry(container, {
+                        itemSelector: '.news-card',
+                        columnWidth: '.news-card',
+                        percentPosition: true,
+                        gutter: 15,
+                         transitionDuration: '0.4s'
+                    });
+                    container.querySelectorAll('.news-card').forEach(card => card.classList.add('is-visible'));
+                });
+
+                hideNewPostsBanner();
+                latestTimestamp = new Date().toISOString();
+            });
+
+            container.querySelectorAll('.news-card').forEach((card, i) => {
+                card.style.opacity = 0;
+                setTimeout(() => {
+                    card.style.transition = "opacity 0.4s ease";
+                    card.style.opacity = 1;
+                }, i * 80); // slight stagger effect
+            });
+
+
+
+
+            // Initialize Masonry after first render
+                imagesLoaded(container, function () {
+                    msnry = new Masonry(container, {
+                        itemSelector: '.news-card',
+                        columnWidth: '.news-card',
+                        percentPosition: true,
+                        gutter: 15,
+                        transitionDuration: '0.4s'
                     });
                 });
+            //Infinite Scroll
 
-                skipCount += newCards.length;
 
-            } catch (err) {
-                console.error("Error loading more news:", err);
-                loadMoreBtn.classList.add('btn-warning');
-                loadMoreBtn.innerHTML = '<i class="bi bi-exclamation-circle"></i>';
-            } finally {
-                isLoading = false;
-                loadMoreBtn.classList.remove('loading');
-                loadMoreBtn.innerHTML = '<i class="bi bi-arrow-down-circle fs-4"></i>';
-            }
-        }
-                let lastScrollY = window.scrollY;
-
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-
-            // Hide button when scrolling down
-            if (currentScrollY > lastScrollY && currentScrollY > 200) {
-                loadMoreBtn.style.transform = 'translateY(120px)'; // moves it down out of view
-            } else {
-                loadMoreBtn.style.transform = 'translateY(0)'; // back to original position
-            }
-
-            lastScrollY = currentScrollY;
-
-            // Keep pulse if user scrolls halfway
-            if (currentScrollY > window.innerHeight / 2 && !noMorePosts) {
-                loadMoreBtn.classList.add('pulse');
-            } else {
-                loadMoreBtn.classList.remove('pulse');
-            }
-        });
-
-    // ====== Inline Play + Auto-pause + Scroll Stop + Fancybox ======
-
-    // Initialize Fancybox
-        Fancybox.bind("[data-fancybox]", { Toolbar: { display:["close"] }, dragToClose:true });
-
-        // Store original HTML for restoring
-        document.querySelectorAll(".video-card").forEach(card => {
-            card.dataset.originalHtml = card.innerHTML;
-        });
-
-        // IntersectionObserver to stop video on scroll
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                const card = entry.target;
-                if (!entry.isIntersecting && card.classList.contains("playing")) {
-                    card.innerHTML = card.dataset.originalHtml;
-                    card.classList.remove("playing");
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll(".video-card").forEach(card => observer.observe(card));
-
-        // Play inline video on click
-        document.addEventListener("click", e => {
-            const card = e.target.closest(".video-card");
-            if (!card) return;
-
-            // Ignore expand button
-            if (e.target.closest(".expand-button")) return;
-
-            const videoUrl = card.getAttribute("data-video-url");
-
-            // Restore other playing videos
-            document.querySelectorAll(".video-card.playing").forEach(other => {
-                if (other !== card) {
-                    other.innerHTML = other.dataset.originalHtml;
-                    other.classList.remove("playing");
+            // Show pulse animation after user scrolls halfway
+                    // Infinite scroll trigger
+            window.addEventListener('scroll', async () => {
+                if (isLoading || noMorePosts) return;
+                const scrollY = window.scrollY;
+                const viewportHeight = window.innerHeight;
+                const fullHeight = document.documentElement.scrollHeight;
+                if (scrollY + viewportHeight >= fullHeight * 0.9) {
+                    await loadMoreNews();
                 }
             });
 
-            // Determine embed HTML
-            let embedHtml = "";
-            if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
-                const videoId = videoUrl.split("v=")[1] || videoUrl.split("/").pop();
-                embedHtml = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-            } else if (videoUrl.includes("vimeo.com")) {
-                const videoId = videoUrl.split("/").pop();
-                embedHtml = `<iframe src="https://player.vimeo.com/video/${videoId}?autoplay=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-            } else if (videoUrl.endsWith(".mp4")) {
-                embedHtml = `<video controls autoplay><source src="${videoUrl}" type="video/mp4">Your browser does not support the video tag.</video>`;
+            // Manual click trigger
+            loadMoreBtn.addEventListener('click', async () => {
+                await loadMoreNews();
+            });
+
+            async function loadMoreNews() {
+                let selectedCategory  = 'Home';
+                if (isLoading || noMorePosts) return;
+                isLoading = true;
+                loadMoreBtn.classList.add('loading');
+                loadMoreBtn.innerHTML = '<span class="spinner-border spinner-border-sm text-light"></span>';
+                let res;
+                try {
+                    selectedCategory = $('.category-pill.active').data('category');
+                    console.log(selectedCategory);
+                    if(selectedCategory !=null && selectedCategory.length  >0)
+                    {
+                        res = await fetch(`/News/FilterByCategory?category=${selectedCategory}&skip=${skipCount}`);
+                    }else{
+                        res = await fetch(`/News/LoadMore?skip=${skipCount}`);
+                    }
+
+                    const html = await res.text();
+
+                    if (!html.trim()) {
+                        noMorePosts = true;
+                        loadMoreBtn.style.display = 'none';
+                        return;
+                    }
+
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html;
+                    const newCards = tempDiv.querySelectorAll('.news-card');
+                    newCards.forEach(card => card.style.opacity = 0);
+
+                    const fragment = document.createDocumentFragment();
+                    newCards.forEach(card => fragment.appendChild(card));
+                    container.appendChild(fragment);
+
+                    imagesLoaded(container, function () {
+                        msnry.appended(newCards);
+                        msnry.layout();
+                        newCards.forEach((card, i) => {
+                            setTimeout(() => {
+                                card.style.transition = 'opacity 0.4s ease';
+                                card.style.opacity = 1;
+                            }, i * 80);
+                        });
+                    });
+
+                    skipCount += newCards.length;
+
+                } catch (err) {
+                    console.error("Error loading more news:", err);
+                    loadMoreBtn.classList.add('btn-warning');
+                    loadMoreBtn.innerHTML = '<i class="bi bi-exclamation-circle"></i>';
+                } finally {
+                    isLoading = false;
+                    loadMoreBtn.classList.remove('loading');
+                    loadMoreBtn.innerHTML = '<i class="bi bi-arrow-down-circle fs-4"></i>';
+                }
             }
+                    let lastScrollY = window.scrollY;
+
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+
+                // Hide button when scrolling down
+                if (currentScrollY > lastScrollY && currentScrollY > 200) {
+                    loadMoreBtn.style.transform = 'translateY(120px)'; // moves it down out of view
+                } else {
+                    loadMoreBtn.style.transform = 'translateY(0)'; // back to original position
+                }
+
+                lastScrollY = currentScrollY;
+
+                // Keep pulse if user scrolls halfway
+                if (currentScrollY > window.innerHeight / 2 && !noMorePosts) {
+                    loadMoreBtn.classList.add('pulse');
+                } else {
+                    loadMoreBtn.classList.remove('pulse');
+                }
+            });
+
+        // ====== Inline Play + Auto-pause + Scroll Stop + Fancybox ======
+
+        // Initialize Fancybox
+            Fancybox.bind("[data-fancybox]", { Toolbar: { display:["close"] }, dragToClose:true });
+
+            // Store original HTML for restoring
+            document.querySelectorAll(".video-card").forEach(card => {
+                card.dataset.originalHtml = card.innerHTML;
+            });
+
+            // IntersectionObserver to stop video on scroll
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    const card = entry.target;
+                    if (!entry.isIntersecting && card.classList.contains("playing")) {
+                        card.innerHTML = card.dataset.originalHtml;
+                        card.classList.remove("playing");
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll(".video-card").forEach(card => observer.observe(card));
+
+            // Play inline video on click
+            document.addEventListener("click", e => {
+                const card = e.target.closest(".video-card");
+                if (!card) return;
+
+                // Ignore expand button
+                if (e.target.closest(".expand-button")) return;
+
+                const videoUrl = card.getAttribute("data-video-url");
+
+                // Restore other playing videos
+                document.querySelectorAll(".video-card.playing").forEach(other => {
+                    if (other !== card) {
+                        other.innerHTML = other.dataset.originalHtml;
+                        other.classList.remove("playing");
+                    }
+                });
+
+                // Determine embed HTML
+                let embedHtml = "";
+                        const videoId = getYouTubeId(videoUrl);
+        if (videoId) {
+            embedHtml = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen></iframe>`;
+        } else if (videoUrl.includes("vimeo.com")) {
+                    const videoId = videoUrl.split("/").pop();
+                    embedHtml = `<iframe src="https://player.vimeo.com/video/${videoId}?autoplay=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+                }
+                else if (videoUrl.includes("x.com") || videoUrl.includes("twitter.com")) {
+                embedHtml = `<blockquote class="twitter-tweet"><a href="${videoUrl}"></a></blockquote>`;
+                }
+                else if (videoUrl.endsWith(".mp4")) {
+                    embedHtml = `
+                    <video controls autoplay><source src="${videoUrl}" type="video/mp4">Your browser does not support the video tag.</video>`;
+                }
 
             card.innerHTML = embedHtml;
             card.classList.add("playing");
@@ -317,60 +326,40 @@
             }
         });
 
-
+                function getYouTubeId(url) {
+            const match = url.match(
+                /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([^?&/]+)/i
+            );
+            return match ? match[1] : null;
+        }
         //Category Filter
         const pills = document.querySelectorAll('.category-pill');
         const newsCards = document.querySelectorAll('.news-card');
 
-        // pills.forEach(pill => {
-        //     pill.addEventListener('click', function(e) {
-        //         e.preventDefault();
-        //         alert('gg');
-        //         const selectedCategory = this.dataset.category;
-
-        //         // Set active class
-        //         pills.forEach(p => p.classList.remove('active'));
-        //         this.classList.add('active');
-
-        //         // Show/hide news cards
-        //         newsCards.forEach(card => {
-        //             if (selectedCategory === 'All' || card.dataset.category === selectedCategory) {
-        //                 card.style.display = 'block';
-        //             } else {
-        //                 card.style.display = 'none';
-        //             }
-        //         });
-
-        //         // If using Masonry.js, trigger layout refresh
-        //         if (typeof masonryInstance !== 'undefined') {
-        //             masonryInstance.layout();
-        //         }
-        //     });
-        // });
-
-        let prevCategory = 'All';
+        let prevCategory = 'Home';
 
         document.querySelectorAll('.category-pill').forEach(pill => {
             pill.addEventListener('click', async function (e) {
                 e.preventDefault();
 
             skipCount=0;
-        
+
 
             let category = this.dataset.category;;
-                    
+
             // If same category clicked again → deselect it
-                 if ($(this).hasClass('active')) {
-               pills.forEach(p => p.classList.remove('active'));
-                  alert($(this).hasClass('active'));
-                category = 'All'; // Reset to show all
-                prevCategory = 'All';
-                 $(this).blur();
-            }
-            else{
+            //      if ($(this).hasClass('active')) {
+            //    pills.forEach(p => p.classList.remove('active'));
+            //       alert($(this).hasClass('active'));
+            //     category = 'Home'; // Reset to show all
+            //     prevCategory = 'Home';
+            //      $(this).blur();
+            // }
+            // else{
                 pills.forEach(p => p.classList.remove('active'));
                $(this).addClass('active');
-            }
+                    alert($(this).hasClass('active'));
+            //}
                 // smooth scroll this pill into view
                 this.scrollIntoView({
                     behavior: 'smooth',
@@ -379,7 +368,7 @@
                 });
 
             let response ='';
-            if (category == 'All'){
+            if (category == 'Home'){
                 response = await fetch(`/News/Index`);
             }else{
                 response = await fetch(`/News/FilterByCategory?category=${category}`);
@@ -416,7 +405,19 @@
         });
 
 
-
+        // (function () {
+        //             $("[data-fancybox='details']").fancybox({
+        //             type: 'ajax',
+        //             touch: false,
+        //             toolbar: false,
+        //             smallBtn: true,
+        //             arrows: false,
+        //             iframe: { preload: false },
+        //             afterLoad: function (instance, slide) {
+        //                 slide.type = "html"; // Force HTML mode
+        //             }
+        //         });
+        //     });
     </script>
 
 

@@ -148,10 +148,24 @@ body {
     padding: 5px 10px;
     background-color: rgba(255, 0, 0, 0.6); /* red with medium opacity */
     color: white;
-    font-size: 0.85rem;
+    font-size: 1.0rem;
     font-weight: 600;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
+    text-align: center;
+}
+.newsheader-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 10px;
+    background-color: rgba(255, 0, 0, 0.6); /* red with medium opacity */
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
     text-align: center;
 }
 
@@ -643,18 +657,7 @@ body {
         background: #222;
     }
 
-/* Custom Fancybox class */
-.news-details-popup .fancybox__content {
-    max-width: 900px; /* Adjust to match your container */
-    width: 90%; /* Responsive */
-    margin: auto;
-    background: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
-    overflow-y: auto;
-    max-height: 85vh; /* Keeps scroll within popup */
-}
+
 
 /* Darken background but keep semi-transparent */
 .fancybox__backdrop {

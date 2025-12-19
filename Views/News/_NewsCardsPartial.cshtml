@@ -25,27 +25,22 @@
                             @*  <i class="bi bi-eye"></i> @item.ViewCount views *@
                             @if (@item.NewsMedias?.Count() > 1)
                             {
-                                <a href="@Url.Action("Details", "News", new { id = item.Id })
-                                                                                                            " class="btn btn-outline-primary btn-sm">
+                                <a href="@Url.Action("Details", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
                                     Click here watch more
                                 </a>
                             }
                         </div>
                     </div>
                 </div>
-
             }
             else
             {
                 if (item.Images.Any())
                 {
-
                     <div class="news-image-container">
-                        <a data-fancybox
-                           data-type="iframe"
-                           data-src="@Url.Action("Details", "News", new { id = item.Id })"
-                           data-caption="@item.Title"
-                           class="news-link">
+                        <a data-fancybox="details"
+                           href="@Url.Action("DetailsPartial", "News", new { id = item.Id })"
+                           >
                             <img src="@item.Images?.FirstOrDefault()?.FilePath" class="img-fluid" alt="@item.Title">
                         </a>
                         <div class="news-label">
@@ -58,7 +53,7 @@
                     <p class="card-text text-muted">
                         @((item.Content.Length > 100) ? item.Content.Substring(0, 100) + "..." : item.Content)
                     </p>
-                    <a href="@Url.Action("Details", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
+                    <a href="@Url.Action("Details", "News", new { id = item.Id })" target="_blank" class="btn btn-outline-primary btn-sm">
                         Read More
                     </a>
                     <div class="d-flex justify-content-between align-items-center mt-2">
@@ -128,50 +123,55 @@
         return url;
     }
 }
-@section Scripts{
+
 <script>
+    @*     $(function(){
+         $('[data-fancybox="details"]').fancybox({
+            type: 'ajax',
+            autoSize: true,
+            iframe: false,
+            toolbar: false,
+            smallBtn: true,
+            baseClass: 'news-post-popup',
+            trapFocus: false,
+            touch: false,
+            afterLoad: function (instance, slide) {
+                slide.$content.addClass('/css/partialdetails.css');
+            }
+        });
+    }); *@
 
-    Fancybox.bind("[data-fancybox]", {
-      type: "iframe",
-      dragToClose: false,    // prevent drag from interfering with vertical scroll
-      closeButton: "inside",
-      animated: true,
-      hideScrollbar: true,   // stop the background page from scrolling
-      iframe: {
-        preload: false,
-        css: {
-          width: "auto",
-          height: "auto",
-          maxWidth: "1000px",
-          maxHeight: "90vh",
-        }
-      },
-      on: {
-        reveal: (fbox) => {
-          // optional: ensure iframe scrolling is enabled after load
-          const iframe = fbox.iframe;
-          if (iframe) {
-            iframe.addEventListener('load', () => {
-              try {
-                const doc = iframe.contentDocument || iframe.contentWindow.document;
-                doc.body.style.overflow = 'auto';
-                const container = doc.querySelector('.details-popup');
-                if (container) {
-                  container.style.maxHeight = 'calc(90vh - 40px)';
-                  container.style.overflow = 'auto';
+    @*     $(document).ready(function () {
+                    $("[data-fancybox='details']").fancybox({
+                type: 'ajax',
+                touch: false,
+                toolbar: false,
+                smallBtn: true,
+                arrows: false,
+                iframe: { preload: false },
+                afterLoad: function (instance, slide) {
+                    slide.type = "html"; // Force HTML mode
                 }
-              } catch (e) {
-                // cross-origin pages won't allow access — ignore
-                console.warn('Could not access iframe doc to force styles', e);
-              }
             });
-          }
-        }
-      }
-    });
+        }); *@
 
-    $(document).on('contentLoaded', function () {
-            Fancybox.bind("[data-fancybox]");
-    }
+@*     $(document).on("click", "[data-fancybox='details']", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        Fancybox.show([
+            {
+                src: $(this).attr("href"),
+                type: "ajax"
+            }
+        ], {
+            dragToClose: false,
+            infinite: false,
+            arrows: false,
+            Toolbar: false,
+            animated: true,
+        });
+
+        return false;
+    }); *@
 </script>
-}

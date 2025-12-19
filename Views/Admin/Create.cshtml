@@ -1,9 +1,16 @@
 ﻿@model Seithi247.Models.News
 @{
     ViewData["Title"] = "Create News";
+    Layout = "_Layout";
 }
+<head>
+
+
+</head>
+
 <h2>Create News</h2>
-<form  asp-controller="Admin" asp-action="Create"
+
+<form asp-controller="Admin" asp-action="Create"
       method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label asp-for="Title" class="form-label"></label>
@@ -33,12 +40,21 @@
             <option value="">-- Select Category --</option>
         </select>
     </div>
-    <div class="mb-3">
+    @*     <div class="mb-3">
         <label asp-for="Content" class="form-label"></label>
         <textarea asp-for="Content" id="contentEditor" class="form-control"></textarea>
-@*         <span asp-validation-for="Content" class="text-danger"></span> *@
-    </div>
+         <span asp-validation-for="Content" class="text-danger"></span>
+    </div> *@
+    @*     <div class="mb-3">
+        <label asp-for="Editor" class="form-label"></label>
+        <textarea asp-for="Editor" class="form-control editor"></textarea>
+        
+    </div> *@
 
+    <div class="mb-3">
+        <label class="form-label">Content</label>
+        @Html.TextAreaFor(m => m.Content, new { @id = "editor", @class = "form-control" })
+    </div>
     <div class="mb-3">
         <label for="ImageFiles" class="form-label">Upload Images</label>
         <input type="file" name="ImageFiles" multiple class="form-control" />
@@ -51,67 +67,118 @@
     </div>
 
     <div class="mb-3">
-        <label for="ThumbNailImages" class="form-label">Upload Images</label>
+        <label for="ThumbNailImages" class="form-label">Video ThumbNail Image</label>
         <input type="file" name="ThumbNailImages" multiple class="form-control" />
         <small class="text-muted">You can upload multiple images</small>
     </div>
     <div class="mb-3">
         <label asp-for="NewsType" class="form-label"></label>
         <select asp-for="NewsType" class="form-select"
-               asp-items="Html.GetEnumSelectList<NewsType>()">
-         </select>
+                asp-items="Html.GetEnumSelectList<NewsType>()">
+        </select>
         <span asp-validation-for="NewsType" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
+
 @section Scripts {
-    
 
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+    @* <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> *@
+    <!-- Summernote -->
+
+
     <script>
-        tinymce.init({
-            selector: '#contentEditor',
-            height: 400,           
-        menubar: false,
-        branding: false,
-        language: 'en', // keep English
-            plugins: 'lists link image preview code fullscreen',
-            toolbar: 'undo redo | formatselect | bold italic underline | ' +
-                     'alignleft aligncenter alignright alignjustify | ' +
-                     'bullist numlist outdent indent | link image | code fullscreen',
+                // tinymce.init({
+                //     selector: '#contentEditor',
+                //     height: 400,
+                // menubar: false,
+                // branding: false,
+                // language: 'en', // keep English
+                //     plugins: 'lists link image preview code fullscreen',
+                //     toolbar: 'undo redo | formatselect | bold italic underline | ' +
+                //              'alignleft aligncenter alignright alignjustify | ' +
+                //              'bullist numlist outdent indent | link image | code fullscreen',
 
-            /* Enable image upload */
-            images_upload_url: '/Admin/UploadImage',
-            automatic_uploads: true,
-            file_picker_types: 'image',
+                //     /* Enable image upload */
+                //     images_upload_url: '/Admin/UploadImage',
+                //     automatic_uploads: true,
+                //     file_picker_types: 'image',
 
-            /* Custom image upload handler */
-        images_upload_handler: function (blobInfo, progress) {
-            return new Promise((resolve, reject) => {
-                let formData = new FormData();
-                formData.append("file", blobInfo.blob(), blobInfo.filename());
+                //     /* Custom image upload handler */
+                // images_upload_handler: function (blobInfo, progress) {
+                //     return new Promise((resolve, reject) => {
+                //         let formData = new FormData();
+                //         formData.append("file", blobInfo.blob(), blobInfo.filename());
 
-                fetch('/Admin/UploadImage', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(result => {
-                    if (result && result.location) {
-                        resolve(result.location); // ✅ give TinyMCE the image URL
-                    } else {
-                        reject('Upload failed: no location in response');
+                //         fetch('/Admin/UploadImage', {
+                //             method: 'POST',
+                //             body: formData
+                //         })
+                //         .then(response => response.json())
+                //         .then(result => {
+                //             if (result && result.location) {
+                //                 resolve(result.location); // ✅ give TinyMCE the image URL
+                //             } else {
+                //                 reject('Upload failed: no location in response');
+                //             }
+                //         })
+                //         .catch(() => {
+                //             reject('Image upload failed');
+                //         });
+                //     });
+                // },
+
+                //     content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
+                // });
+
+
+        /*
+                tinymce.init({
+                        selector: 'textarea.editor',
+                        height: 300,
+
+                        plugins: 'image link lists code',
+                        toolbar: 'undo redo | bold italic | bullist numlist | image | code',
+
+                        images_upload_url: '/Admin/UploadImage',
+                        images_upload_method: 'post'
+                    }); */
+
+                     $(function () {
+                     $('#editor').summernote({
+                        height: 300,
+                        toolbar: [
+                            ['style', ['bold', 'italic', 'underline']],
+                            ['para', ['ul', 'ol', 'paragraph']],
+                            ['insert', ['picture', 'link']],
+                            ['view', ['codeview']]
+                        ],
+                        callbacks: {
+                            onImageUpload: function (files) {
+                                uploadImage(files[0]);
+                            }
+                        }
+                    });
+                    });
+
+                    function uploadImage(file) {
+                        let data = new FormData();
+                        data.append("file", file);
+
+                        $.ajax({
+                                    url: '/Admin/UploadImage',
+                            method: 'POST',
+                            data: data,
+                            processData: false,
+                            contentType: false,
+                            success: function (url) {
+                                $('#editor').summernote('insertImage', url);
+                            }
+                        });
                     }
-                })
-                .catch(() => {
-                    reject('Image upload failed');
-                });
-            });
-        },
 
-            content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
-        });
     </script>
 }

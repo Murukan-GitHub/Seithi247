@@ -9,21 +9,341 @@
     <link rel="stylesheet" href="~/Seithi247.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/menu.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/VideoCard.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/comment.js" asp-append-version="true" />
+
     <link rel="stylesheet" href="~/css/comment.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/detailspage.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/partialdetails.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" asp-append-version="true" async/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fancyapps/ui/dist/fancybox.css" asp-append-version="true" async/>
+    <script src="~/js/news.js"></script>
+    <script src="~/css/comment.js"></script>
+    <script src="~/js/fancybox.umd.js" async></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fancyapps/ui/dist/fancybox.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@@fancyapps/ui/dist/fancybox.umd.js"></script>
+
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery (required by Summernote) -->
+    
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
     <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" async></script>
     <script src="~/js/globe.js"></script>
+    <script src="~/js/news.js"></script>
 </head>
 <body>
+    <style>
+        /* Container that Fancybox uses for your AJAX content */
+        .news-post-popup .fancybox__content {
+            display: flex;
+            flex-direction: row;
+            width: 90vw;
+            max-width: 1200px;
+            height: 90vh; /* full visible height */
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+            overflow: hidden; /* hide global scroll */
+            margin: auto;
+        }
+
+        .fancybox__content {
+            width: 95vw !important;
+            height: 95vh !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+        }
+        /* Left side (news article) */
+        .popup-left {
+            flex: 2;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        /* Right side (comments) */
+        /* Comments Right Sidebar */
+        .popup-right {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+            /* Allow scrollbar visibility */
+            .popup-left::-webkit-scrollbar,
+            .popup-right::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .popup-left::-webkit-scrollbar-thumb,
+            .popup-right::-webkit-scrollbar-thumb {
+                background: #aaa;
+                border-radius: 10px;
+            }
+
+        /* Responsive stacking */
+        media (max-width: 768px) {
+            .news-post-popup .fancybox__content {
+                flex-direction: column;
+                height: 100vh;
+            }
+
+            .popup-container {
+                flex-direction: column;
+            }
+
+            .popup-left, .popup-right {
+
+                height: 50vh;
+            }
+
+            .popup-right {
+                border-top: 1px solid #eee;
+            }
+        }
+
+
+
+        .news-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .news-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 1rem;
+        }
+        /* SHARE BUTTONS */
+        .share-buttons button {
+            background: #333;
+            border: none;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-right: 5px;
+        }
+
+        .like-btn, .share-btn {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        /* Title */
+        .comments-title {
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Comment input wrapper */
+        .comment-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Name input */
+        .author-input {
+            height: 36px;
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        /* Main comment row */
+        .comment-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Comment textarea */
+        .comment-textarea {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            outline: none;
+            resize: none;
+        }
+
+        /* Send button */
+        .send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #ff5252;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .send-btn:hover {
+            background: #ff3030;
+        }
+        /* Main container */
+        #comments-list {
+            padding: 10px;
+            background: #000;
+            border-radius: 10px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        /* Each comment row */
+        .fb-comment {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+            /* Avatar */
+            .fb-comment .avatar {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                margin-right: 10px;
+                object-fit: cover;
+                background: #222;
+            }
+
+            /* Comment text bubble */
+            .fb-comment .comment-bubble {
+                background: #1a1a1a;
+                padding: 10px 12px;
+                border-radius: 14px;
+                border: 1px solid #333;
+                max-width: 100%;
+            }
+
+            /* Author */
+            .fb-comment .name {
+                font-weight: 600;
+                color: #e4e6eb;
+                display: block;
+                margin-bottom: 2px;
+                font-size: 14px;
+            }
+
+            /* Comment text paragraph */
+            .fb-comment .text {
+                margin: 0;
+                color: #ddd;
+                font-size: 14px;
+                line-height: 1.4;
+            }
+
+            /* Meta row */
+            .fb-comment .comment-meta {
+                font-size: 12px;
+                color: #888;
+                margin-left: 4px;
+                margin-top: 4px;
+            }
+
+            /* Reply link */
+            .fb-comment .reply-link {
+                color: #bbb;
+                cursor: pointer;
+                text-decoration: none;
+            }
+
+                .fb-comment .reply-link:hover {
+                    color: #fff;
+                    text-decoration: underline;
+                }
+
+        /* Scrollbar */
+        #comments-list::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        #comments-list::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 5px;
+        }
+
+        #comments-list::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+
+        .popup-container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+
+        /* Fade-in animation */
+        .fade-in {
+            animation: fadeInPopup 0.4s ease;
+        }
+
+        @@keyframes fadeInPopup {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Dark Mode background around content */
+        .fancybox__backdrop {
+            background: rgba(10, 10, 10, 0.92) !important;
+        }
+
+        .add-comment {
+            display: flex;
+            padding: 10px;
+            gap: 5px;
+        }
+
+            .add-comment input {
+                flex: 1;
+                padding: 8px;
+                border-radius: 4px;
+                border: none;
+            }
+
+            .add-comment button {
+                padding: 8px 12px;
+                border-radius: 4px;
+                border: none;
+                background: #e74c3c;
+                color: #fff;
+                cursor: pointer;
+            }
+    </style>
     <header>
 
-@*         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        @*         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
                 <div class="brand-container">
                     <div class="globe"></div>
@@ -68,45 +388,188 @@
             &copy; 2025 - Seithi247 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
 
-        // Load saved theme or system preference
-        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        setTheme(savedTheme);
+            $(function(){
 
-        themeToggle.addEventListener('click', () => {
-            const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
-            setTheme(newTheme);
-        });
+            // document.addEventListener("DOMContentLoaded", function () {
 
-        function setTheme(mode) {
-            if (mode === 'dark') {
-                document.body.classList.add('dark-mode');
-                themeIcon.classList.replace('bi-moon-fill', 'bi-sun-fill');
-            } else {
-                document.body.classList.remove('dark-mode');
-                themeIcon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+            //     // Clear auto-binding if any
+            //     Fancybox.defaults.selector = false;
+
+            //     // Delegate click for all future news items (works with infinite scroll)
+            //     document.addEventListener('click', function(e) {
+            //             const target = e.target.closest('[data-fancybox="details"]');
+            //         if(!target) return;
+
+            //         e.preventDefault();
+
+            //         Fancybox.show([{
+            //             src: target.href,
+            //             type: 'ajax'
+            //         }], {
+            //             dragToClose: false,
+            //             infinite: false,
+            //             Toolbar: false,
+            //             closeButton: "top",
+            //             animated: true,
+            //             autoFocus: false,
+            //             trapFocus: false,
+            //             width: "90%",
+            //             height: "90%",
+            //             display: "flex"
+            //         });
+            //     });
+            // });
+                    // Clear auto-binding if any
+        Fancybox.defaults.selector = false;
+
+
+            Fancybox.defaults.autoFocus = false;
+            Fancybox.defaults.trapFocus = false;
+            Fancybox.defaults.placeFocusBack = false;
+            Fancybox.defaults.closeButton = true;
+            Fancybox.defaults.Hash = false;
+            Fancybox.defaults.Thumbs = false;
+            Fancybox.defaults.arrows =false;
+
+            Fancybox.bind('[data-fancybox="details"]', {
+                type: "ajax",
+                dragToClose: false,
+                infinite: false,
+                Toolbar: false,
+                closeButton: "top",
+                animated: true,
+                autoFocus: false,
+        Thumbs: false,
+        Hash: false,
+        Carousel: {
+            infinite: false,
+            Navigation: false  // Removes left/right arrows
+        },
+                width: "90%",
+                height: "90%",
+                display: "flex",
+                groupAll: false,
+                contentClick: false,
+                arrows: false,
+                Images: {
+                    zoom: false,
+                },
+                baseClass: 'news-post-popup',
+            });
+
+
+            // $(document).on("click", "[data-fancybox='details']", function (e) {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            //     console.log("Fancybox v4 available?", typeof Fancybox);
+            //     Fancybox.show([
+            //         {
+            //             src: $(this).attr("href"),
+            //             type: "ajax"
+            //         }
+            //     ], {
+            //         infinite: false,
+            //         animated: true,
+            // smallBtn: true,
+            // toolbar: false,
+            // arrows: false,
+            // touch: false,
+            // autoFocus: false,
+            // trapFocus: false,
+            // closeButton:"inside"
+            //     });
+
+            //     return false;
+            // });...
+
+
+
+
+                        $(document).on("click", ".like-btn", function (e) {
+                    e.preventDefault();
+                   
+                    const id = $(this).data("id");
+                      $.post("/News/Like", { id: id }, function (res) {
+                        $(".like-count").text(res.likes);
+                    });
+                });
+
+                                $(document).off("click", ".post-comment").on("click", ".post-comment", function (e) {
+                    e.preventDefault();
+                    alert("dff");
+        let id = $(this).data("id");
+
+        let comment = $(`#commentText[data-id='${id}']`).val();
+        let author  = $(`#authorName[data-id='${id}']`).val();
+
+        console.log(comment);
+                                console.log(author);
+                        $.post("/News/AddComment", { newsId: id,authorName :author, text: comment ,reaction:""}, function (res) {
+
+                            $(".comments-list").html(res);
+                              $(`#commentText[data-id='${id}']`).val("");
+                              $(`#commentText[data-id='${id}']`).val("");
+                        });
+                });
+                  //  $(document).on("click", ".post-comment", function (e) {
+                  //       e.preventDefault();
+                        
+                  //       let id = $(this).data("id");
+                  //       let comment = $("#commentText").val();
+                  //       let auth =$("#authorName").val();
+                  //       console.log(comment);
+                  //       console.log(auth);
+                  //       $.post("/News/AddComment", { newsId: id,authorName :auth, text: comment ,reaction:""}, function (res) {
+                  //           console.log(res);
+                  //           $("#comments-list").html(res);
+                  //             $("#commentText").val("");
+                  //             $("#authorName").val("");
+                  //       });
+                  // });
+            });
+
+
+
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+
+            // Load saved theme or system preference
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            setTheme(savedTheme);
+
+            themeToggle.addEventListener('click', () => {
+                const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                setTheme(newTheme);
+            });
+
+            function setTheme(mode) {
+                if (mode === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    themeIcon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    themeIcon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+                }
+                localStorage.setItem('theme', mode);
             }
-            localStorage.setItem('theme', mode);
-        }
 
-        // Optional scroll effect
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('.custom-navbar');
-            if (window.scrollY > 50) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
-        });
+            // Optional scroll effect
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('.custom-navbar');
+                if (window.scrollY > 50) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            });
     </script>
     <!-- Floating Seithi 24/7 Banner -->
     <div class="floating-seithi-banner">
-        <div class="globe"></div>
+        <!-- <div class="globe"></div>-->
         <div class="seithi-banner">
             <span>Seithi 24/7</span>
             <div class="shine"></div>

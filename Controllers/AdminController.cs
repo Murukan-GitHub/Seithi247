@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Ganss.Xss;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Seithi247.Data;
@@ -35,12 +36,15 @@ namespace Seithi247.Controllers
         // POST: Admin/News/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult>
-        Create([Bind("Title,Summary,Content,Author,IsPublished,PublishedAt,VideoUrl,NewsType")] News news, List<IFormFile> ImageFiles, List<IFormFile> ThumbNailImages)
+        public async Task<IActionResult>  Create([Bind("Title,Summary,Content,Author,IsPublished,PublishedAt,VideoUrl,NewsType")] News news, List<IFormFile> ImageFiles, List<IFormFile> ThumbNailImages)
         {
             if (ModelState.IsValid)
             {
                 if (news.Content == null) { news.Content = " "; }
+
+                var sanitizer = new HtmlSanitizer();
+                news.Content = sanitizer.Sanitize(news.Content);
+
                 news.Content=news.Content.Replace("../uploads/", "/uploads/");
                 _context.News.Add(news);
                 await _context.SaveChangesAsync();
