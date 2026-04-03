@@ -1,0 +1,18 @@
+﻿<div class="shared-users-popup">
+
+    <h5>People who shared this</h5>
+
+    <div class="shared-users-list">
+        @foreach (var user in Model)
+        {
+            <div class="shared-user">
+                <div class="avatar"></div>
+                <div>
+                    <strong>@user.Name</strong>
+                    <div class="time">@user.Time</div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

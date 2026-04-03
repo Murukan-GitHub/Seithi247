@@ -22,14 +22,14 @@ namespace Seithi247.Models
 
     public enum NewsCategory
     {
-
+        Home,
         Cinema,
         Politics,
         Sports,
         Funny,
         Technology,
-        Health,
-        Home
+        Health
+        
     }
     public class News
     {
@@ -64,7 +64,9 @@ namespace Seithi247.Models
         [NotMapped]
         public string VideoUrl { get; set; }
 
-
-
+        public string CreatedBy { get; set; }
+        public bool IsStory { get; set; }
+        public DateTime? StoryActivatedAt { get; set; }
+        public int ShareCount { get; set; }
     }
 }

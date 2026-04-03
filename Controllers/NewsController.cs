@@ -5,6 +5,7 @@ using NuGet.Versioning;
 using Seithi247.Data;
 using Seithi247.Models;
 using Seithi247.Views.ViewModel;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Seithi247.Controllers
@@ -276,6 +277,87 @@ namespace Seithi247.Controllers
                     NewsType = i.NewsType
                 })
                 .ToList();
+        }
+        [HttpPost]
+        public IActionResult Recommend(int newsId)
+        {
+            var news = _context.News.First(n => n.Id == newsId);
+
+            string userKey = HttpContext.Connection.RemoteIpAddress.ToString();
+
+            // Prevent author recommending own news
+            if (news.CreatedBy == userKey)
+                return BadRequest();
+
+            // Prevent duplicate recommendations
+            bool already = _context.NewsRecommendations
+                .Any(r => r.NewsId == newsId && r.RecommendedBy == userKey && r.RecommendedAt > DateTime.Now.AddHours(-24));
+
+            if (!already)
+            {
+                _context.NewsRecommendations.Add(new NewsRecommendation
+                {
+                    NewsId = newsId,
+                    RecommendedBy = userKey,
+                    RecommendedAt = DateTime.Now
+                });
+                _context.SaveChanges();
+            }
+
+            ActivateStory(newsId);
+            return Ok();
+        }
+
+        private void ActivateStory(int newsId)
+        {
+            var count = _context.NewsRecommendations
+                .Count(r => r.NewsId == newsId &&
+                            r.RecommendedAt > DateTime.Now.AddHours(-24));
+
+            if (count >= 1) // threshold
+            {
+                var news = _context.News.First(n => n.Id == newsId);
+                news.IsStory = true;
+                news.StoryActivatedAt = DateTime.Now;
+                _context.SaveChanges();
+            }
+        }
+        public IActionResult Stories()
+        {
+            var stories = _context.News.AsNoTracking()
+                .Include(i => i.Images)
+                .Where(n => n.IsStory &&
+                            n.StoryActivatedAt > DateTime.Now.AddHours(-24))
+                .OrderByDescending(n => n.StoryActivatedAt)
+                .Take(15)
+                .ToList();
+
+            List<NewsVM> newsList = MapToNewsVM(stories);
+
+
+            return PartialView("_Stories", newsList);
+        }
+        [HttpPost]
+        public IActionResult IncreaseShare(int id)
+        {
+            var news = _context.News.First(x => x.Id == id);
+            news.ShareCount++;
+            _context.SaveChanges();
+
+            return Json(new { count = news.ShareCount });
+        }
+        public IActionResult GetSharedUsers(int newsId)
+        {
+            var users = _context.NewsRecommendations.AsNoTracking()
+                .Where(r => r.NewsId == newsId)
+                .OrderByDescending(r => r.RecommendedAt)
+                .Select(r => new {
+                    Name = r.RecommendedBy,
+                    Time = r.RecommendedAt.ToString("g")
+                })
+                .ToList();
+
+            return PartialView("_SharedUsers", users);
         }
     }
 }

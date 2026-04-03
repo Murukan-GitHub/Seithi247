@@ -160,7 +160,7 @@ body {
     left: 0;
     width: 100%;
     padding: 5px 10px;
-    background-color: rgba(255, 0, 0, 0.6); /* red with medium opacity */
+    background-color: #333; /* red with medium opacity rgba(255, 0, 0, 0.6);*/
     color: white;
     font-size: 0.85rem;
     font-weight: 600;
@@ -594,7 +594,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     /* Push container below navbar + category pills */
-    margin-top: 120px; /* adjust according to navbar + pills height */
+    margin-top: 100px; /* adjust according to navbar + pills height */
 }
 
 

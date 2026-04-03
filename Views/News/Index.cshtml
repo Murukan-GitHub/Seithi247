@@ -2,15 +2,8 @@
 @{
     ViewData["Title"] = "Latest News";
 }
-<!-- Floating Categories as Pills -->
-<div class="news-categories-pills">
-    @foreach (var category in Enum.GetValues(typeof(NewsCategory)).Cast<NewsCategory>())
-    {
-        <a href="#" class="category-pill" data-category="@category">@category</a>
-    }
-</div>
 
-<div class="news-container mt-4">
+<div class="news-container mt-6">
 
 
     <!-- New posts banner -->
@@ -34,7 +27,7 @@
         <button id="loadMoreBtn" class="btn btn-outline-danger px-5 py-2 rounded-pill fw-bold">
             Load More News
         </button>
-    </div>
+    </div>l
 </div>
 
 
@@ -259,65 +252,61 @@
 
         // Initialize Fancybox
             Fancybox.bind("[data-fancybox]", { Toolbar: { display:["close"] }, dragToClose:true });
+                     // Auto-pause other videos and inline play
+        document.addEventListener("click", function (e) {
+            const card = e.target.closest(".video-card");
+            if (!card) return;
 
-            // Store original HTML for restoring
-            document.querySelectorAll(".video-card").forEach(card => {
-                card.dataset.originalHtml = card.innerHTML;
+            // If expand button clicked → Let Fancybox handle it
+            if (e.target.closest(".expand-button")) return;
+
+            const videoUrl = card.getAttribute("data-video-url");
+            if (!videoUrl) return;
+
+            // Reset all other video cards
+            document.querySelectorAll(".video-card.playing").forEach(other => {
+                if (other !== card) {
+                    const thumbUrl = other.querySelector(".video-thumb")?.src || "";
+                    other.innerHTML = `
+                        <div class="video-thumb-wrapper">
+                            <img src="${thumbUrl}" class="video-thumb" alt="Video thumbnail" />
+                            <div class="video-overlay">
+                                <div class="play-button"><i class="bi bi-play-fill"></i></div>
+                                <div class="expand-button" data-fancybox data-src="${other.getAttribute("data-video-url")}">
+                                    <i class="bi bi-arrows-fullscreen"></i>
+                                </div>
+                            </div>
+                        </div>`;
+                    other.classList.remove("playing");
+                }
             });
 
-            // IntersectionObserver to stop video on scroll
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    const card = entry.target;
-                    if (!entry.isIntersecting && card.classList.contains("playing")) {
-                        card.innerHTML = card.dataset.originalHtml;
-                        card.classList.remove("playing");
-                    }
-                });
-            }, { threshold: 0.1 });
+            // Replace this card with embedded video
+            let embedHtml = "";
+            if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
+                const videoId = videoUrl.split("v=")[1] || videoUrl.split("/").pop();
+                embedHtml = `
+                    <iframe width="100%" height="315"
+                        src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+                    </iframe>`;
+            } else if (videoUrl.includes("vimeo.com")) {
+                const videoId = videoUrl.split("/").pop();
+                embedHtml = `
+                    <iframe src="https://player.vimeo.com/video/${videoId}?autoplay=1"
+                        width="100%" height="315" frameborder="0"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowfullscreen></iframe>`;
+            } else if (videoUrl.endsWith(".mp4")) {
+                embedHtml = `
+                    <video width="100%" height="auto" controls autoplay>
+                        <source src="${videoUrl}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>`;
+            }
 
-            document.querySelectorAll(".video-card").forEach(card => observer.observe(card));
-
-            // Play inline video on click
-            document.addEventListener("click", e => {
-                const card = e.target.closest(".video-card");
-                if (!card) return;
-
-                // Ignore expand button
-                if (e.target.closest(".expand-button")) return;
-
-                const videoUrl = card.getAttribute("data-video-url");
-
-                // Restore other playing videos
-                document.querySelectorAll(".video-card.playing").forEach(other => {
-                    if (other !== card) {
-                        other.innerHTML = other.dataset.originalHtml;
-                        other.classList.remove("playing");
-                    }
-                });
-
-                // Determine embed HTML
-                let embedHtml = "";
-                        const videoId = getYouTubeId(videoUrl);
-        if (videoId) {
-            embedHtml = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1"
-                frameborder="0"
-                allow="autoplay; encrypted-media"
-                allowfullscreen></iframe>`;
-        } else if (videoUrl.includes("vimeo.com")) {
-                    const videoId = videoUrl.split("/").pop();
-                    embedHtml = `<iframe src="https://player.vimeo.com/video/${videoId}?autoplay=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-                }
-                else if (videoUrl.includes("x.com") || videoUrl.includes("twitter.com")) {
-                embedHtml = `<blockquote class="twitter-tweet"><a href="${videoUrl}"></a></blockquote>`;
-                }
-                else if (videoUrl.endsWith(".mp4")) {
-                    embedHtml = `
-                    <video controls autoplay><source src="${videoUrl}" type="video/mp4">Your browser does not support the video tag.</video>`;
-                }
-
-            card.innerHTML = embedHtml;
             card.classList.add("playing");
+            card.innerHTML = embedHtml;
 
             const media = card.querySelector("iframe, video");
             if (media) {
@@ -326,7 +315,18 @@
             }
         });
 
-                function getYouTubeId(url) {
+        // Fancybox initialization for all expand buttons
+        Fancybox.bind("[data-fancybox]", {
+            Toolbar: {
+                display: ["close"],
+            },
+            dragToClose: true,
+            groupAll: false,
+        });
+
+
+
+        function getYouTubeId(url) {
             const match = url.match(
                 /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([^?&/]+)/i
             );
@@ -343,8 +343,7 @@
                 e.preventDefault();
 
             skipCount=0;
-
-
+            debugger;
             let category = this.dataset.category;;
 
             // If same category clicked again → deselect it
@@ -358,7 +357,6 @@
             // else{
                 pills.forEach(p => p.classList.remove('active'));
                $(this).addClass('active');
-                    alert($(this).hasClass('active'));
             //}
                 // smooth scroll this pill into view
                 this.scrollIntoView({
@@ -368,11 +366,11 @@
                 });
 
             let response ='';
-            if (category == 'Home'){
-                response = await fetch(`/News/Index`);
-            }else{
+            //if (category == 'Home'){
+             //   response = await fetch(`/News/Index`);
+            //}else{
                 response = await fetch(`/News/FilterByCategory?category=${category}`);
-            }
+            //}
 
             //const response = response;
             const html = await response.text();
@@ -403,7 +401,9 @@
             });
 
         });
-
+                $(function () {
+            $("#stories-container").load("/News/Stories");
+        });
 
         // (function () {
         //             $("[data-fancybox='details']").fancybox({

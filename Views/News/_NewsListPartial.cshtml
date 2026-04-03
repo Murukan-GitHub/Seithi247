@@ -6,7 +6,7 @@
         <div class="news-card">
             @if (item.NewsType == NewsType.Video)
             {
-                <div class="video-card" data-video-url="@GetEmbeddedVideoUrl(item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl)">
+                <div class="video-card" data-row="1" data-video-url="@GetEmbeddedVideoUrl(item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl)">
                     <div class="video-thumb-wrapper">
                         <img src="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.ThumbnailUrl" class="video-thumb" alt="Video thumbnail" />
                         <div class="video-overlay">
@@ -25,7 +25,7 @@
                             @*  <i class="bi bi-eye"></i> @item.ViewCount views *@
                             @if (@item.NewsMedias?.Count() > 1)
                             {
-                                <a href="@Url.Action("Details", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
+                                <a data-fancybox="details" href="@Url.Action("DetailsPartial", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
                                     Click here watch more
                                 </a>
                             }
@@ -51,13 +51,16 @@
                 <div class="card-body">
                     <h5 class="card-title">@item.Title</h5>
                     <p class="card-text text-muted">
-                        @((item.Content.Length > 100) ? item.Content.Substring(0, 100) + "..." : item.Content)
+                        @((item.Content.Length > 100) ? Html.Raw(item.Content.Substring(0, 100)) + "..." : Html.Raw(item.Content))
                     </p>
                     <i class="bi bi-calendar-event"></i> @item.PublishedAt.ToString("MMM dd, yyyy") ·
-                    <a href="@Url.Action("Details", "News", new { id = item.Id })" target="_blank" class="btn btn-outline-primary btn-sm">
+  @*                   <a href="@Url.Action("DetailsPartial", "News", new { id = item.Id })" target="_blank" class="btn btn-outline-primary btn-sm">
+                        Read More
+                    </a> *@
+                    <a data-fancybox="details"
+                       href="@Url.Action("DetailsPartial", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
                         Read More
                     </a>
-
                     <div class="d-flex justify-content-between align-items-center mt-2">
                         <!-- Likes -->
                         <div class="likes">

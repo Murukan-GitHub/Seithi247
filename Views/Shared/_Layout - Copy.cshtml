@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/css/menu.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/VideoCard.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/stories.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
     <link rel="stylesheet" href="~/css/comment.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/detailspage.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/partialdetails.css" asp-append-version="true" />
@@ -42,39 +42,47 @@
 
         
 
-.news-post-popup .fancybox__content {
-    display:flex !important;
-    width:95vw !important;
-    height:95vh !important;
-    padding:0 !important;
-    overflow:hidden !important;
+
+        .popup-container .fancybox__content {
+    display: flex;
+    flex-direction: row;
+    width: 90vw;
+    height: 90vh;
+    overflow: hidden;
 }
-.popup-container{
-    display:flex;
-    flex-direction:row;
-    width:100%;
-    height:100%;
+.fancybox__content {
+    width: 95vw !important;
+    height: 95vh !important;
+    padding: 0 !important;
+    overflow: hidden !important;
 }
 
-.popup-left{
-    flex:2;
-    overflow-y:auto;
-    padding:15px;
+.popup-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
 }
 
-.popup-right{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    border-left:1px solid #444;
-    overflow:hidden;
-    background:#333;
+.popup-left {
+    flex: 2;
+    overflow-y: auto;
+    padding: 15px;
 }
 
-.comments-list{
-    flex:1;
-    overflow-y:auto;
+.popup-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #ddd;
+    overflow: hidden;
 }
+
+.comments-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
 
 /* Allow scrollbar visibility */
 .popup-left::-webkit-scrollbar,
@@ -89,52 +97,45 @@
 }
 
 /* Responsive stacking */
-@@media (max-width:768px){
-
-.fancybox__content{
-    border-radius:0 !important;
-    flex-direction:column !important;
-    width:100vw !important;
-    height:100vh !important;
+@@media (max-width: 768px) {
+.news-post-popup .fancybox__content {
+flex-direction: column !important;
+height: 100vh !important;
+width: 100vw !important;
+               
 }
 
-.popup-container{
-    flex-direction:column;
+.popup-container {
+    flex-direction: column;
+        height:100%;
 }
 
-.popup-left{
-    flex:none;
-    max-height:60vh;
-    overflow-y:auto;
+/* Article content */
+    .popup-left {
+        order: 1;
+        flex: none;
+        max-height: 55vh;
+        overflow-y: auto;
+    }
+
+    /* Comments section */
+    .popup-right {
+        order: 2;
+        flex: none;
+        max-height: 45vh;
+        border-left: none;
+        border-top: 1px solid #ddd;
+    }
+
+    /* Sticky comment input */
+    .add-comment {
+        position: sticky;
+        bottom: 0;
+        background: #000;
+        z-index: 2;
+    }
 }
 
-.popup-right{
-    flex:none;
-    max-height:40vh;
-    border-left:none;
-    border-top:1px solid #444;
-    background:#333;
-}
-/* Content first */
-
-
-/* Floating share bar visible only mobile */
-.floating-share-bar{
-    display:flex;
-}
-.add-comment{
-    position:sticky;
-    bottom:0;
-    background:gray;
-    z-index:3;
-}
-
-}
-@@media (min-width:769px){
-.floating-share-bar{
-    display:none;
-}
-}
 
 
         .news-header h2 {
@@ -153,41 +154,15 @@
             display: flex;
             gap: 1rem;
         }
- /* SHARE BUTTONS */
-.share-section{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-top:10px;
-}
-
-.share-buttons{
-    display:flex;
-    gap:8px;
-}
-
-.share-btn{
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    border:none;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    cursor:pointer;
-}
-
-/* Colors */
-.fb{background:#1877f2;}
-.wa{background:#25D366;}
-.tw{background:#000;}
-.copy{background:#666;}
-
-.share-count{
-    font-size:13px;
-    color:#ccc;
-}
+        /* SHARE BUTTONS */
+        .share-buttons button {
+            background: #333;
+            border: none;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-right: 5px;
+        }
 
         .like-btn, .share-btn {
             background: none;
@@ -195,7 +170,7 @@
             color: #007bff;
             cursor: pointer;
             font-size: 1rem;
-        }       
+        }
         /* Title */
         .comments-title {
             margin-bottom: 10px;
@@ -257,11 +232,11 @@
         /* Main container */
         #comments-list {
             padding: 10px;
+            background: #000;
             border-radius: 10px;
              flex:1;
-            overflow-y:auto;
-            padding:10px;
-            
+    overflow-y:auto;
+    padding:10px;
         }
 
         /* Each comment row */
@@ -269,7 +244,6 @@
             display: flex;
             align-items: flex-start;
             margin-bottom: 14px;
-            background: #333;
         }
 
             /* Avatar */
@@ -342,7 +316,7 @@
             background: #000;
         }
 
-/* 
+
         .popup-container {
             display: flex;
             flex-direction: row;
@@ -352,7 +326,7 @@
             color: #fff;
             border-radius: 8px;
             overflow: hidden;
-        } */
+        }
 
 
         /* Fade-in animation */
@@ -380,7 +354,7 @@
 .add-comment{
     position:sticky;
     bottom:0;
-    background: #333;
+    background:#000;
     padding:10px;
     display:flex;
     gap:6px;
@@ -392,45 +366,61 @@
     padding:8px;
 }
 
-.add-comment button {
+            .add-comment button {
   border:none;
     background:#ff004f;
     color:white;
     padding:10px 14px;
     border-radius:50%;
             }
-
-
-/*popup who shared what*/
-.shared-users-popup{
-    padding:20px;
-    background:#111;
-    color:#fff;
-    width:300px;
-}
-
-.shared-user{
-    display:flex;
-    gap:10px;
-    margin-bottom:10px;
-}
-
-.shared-user .avatar{
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    background:#444;
-}
-
-.time{
-    font-size:12px;
-    color:#aaa;
-}
-
-
     </style>
     <header>
 
+        @*         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <div class="brand-container">
+                    <div class="globe"></div>
+                    <div class="seithi-banner">
+                        <span>Seithi 24/7</span>
+                        <div class="shine"></div>
+                    </div>
+                </div>
+
+
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "News")">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Categories", "News")">Categories</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Admin")">Admin</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("About", "Home")">About</a></li>
+
+                        <!-- Theme toggle button -->
+                        <li class="nav-item ms-3">
+                            <button id="themeToggle" class="btn btn-sm btn-light rounded-circle d-flex align-items-center justify-content-center" title="Toggle theme">
+                                <i class="bi bi-moon-fill" id="themeIcon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav> *@
+@* 
+        <div class="category-pills sticky-pills">
+            <a href="/" class="pill pill-home active">
+                <i class="bi bi-house-fill"></i>
+                Home
+            </a>
+
+            <a href="#" class="pill">Cinema</a>
+            <a href="#" class="pill">Politics</a>
+            <a href="#" class="pill">Sports</a>
+            <a href="#" class="pill">Funny</a>
+        </div> *@
 
     </header>
     <!-- Floating Categories as Pills -->
@@ -476,6 +466,35 @@
 
             $(function(){
 
+            // document.addEventListener("DOMContentLoaded", function () {
+
+            //     // Clear auto-binding if any
+            //     Fancybox.defaults.selector = false;
+
+            //     // Delegate click for all future news items (works with infinite scroll)
+            //     document.addEventListener('click', function(e) {
+            //             const target = e.target.closest('[data-fancybox="details"]');
+            //         if(!target) return;
+
+            //         e.preventDefault();
+
+            //         Fancybox.show([{
+            //             src: target.href,
+            //             type: 'ajax'
+            //         }], {
+            //             dragToClose: false,
+            //             infinite: false,
+            //             Toolbar: false,
+            //             closeButton: "top",
+            //             animated: true,
+            //             autoFocus: false,
+            //             trapFocus: false,
+            //             width: "90%",
+            //             height: "90%",
+            //             display: "flex"
+            //         });
+            //     });
+            // });
                     // Clear auto-binding if any
         Fancybox.defaults.selector = false;
 
@@ -515,6 +534,30 @@
             });
 
 
+            // $(document).on("click", "[data-fancybox='details']", function (e) {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            //     console.log("Fancybox v4 available?", typeof Fancybox);
+            //     Fancybox.show([
+            //         {
+            //             src: $(this).attr("href"),
+            //             type: "ajax"
+            //         }
+            //     ], {
+            //         infinite: false,
+            //         animated: true,
+            // smallBtn: true,
+            // toolbar: false,
+            // arrows: false,
+            // touch: false,
+            // autoFocus: false,
+            // trapFocus: false,
+            // closeButton:"inside"
+            //     });
+
+            //     return false;
+            // });...
+
 
 
 
@@ -544,7 +587,21 @@
                               $(`#commentText[data-id='${id}']`).val("");
                         });
                 });
-
+                  //  $(document).on("click", ".post-comment", function (e) {
+                  //       e.preventDefault();
+                        
+                  //       let id = $(this).data("id");
+                  //       let comment = $("#commentText").val();
+                  //       let auth =$("#authorName").val();
+                  //       console.log(comment);
+                  //       console.log(auth);
+                  //       $.post("/News/AddComment", { newsId: id,authorName :auth, text: comment ,reaction:""}, function (res) {
+                  //           console.log(res);
+                  //           $("#comments-list").html(res);
+                  //             $("#commentText").val("");
+                  //             $("#authorName").val("");
+                  //       });
+                  // });
             });
 
 

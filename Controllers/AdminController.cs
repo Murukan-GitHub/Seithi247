@@ -46,6 +46,11 @@ namespace Seithi247.Controllers
                 news.Content = sanitizer.Sanitize(news.Content);
 
                 news.Content=news.Content.Replace("../uploads/", "/uploads/");
+
+                string userKey = HttpContext.Connection.RemoteIpAddress.ToString();
+
+                news.CreatedBy = userKey;
+
                 _context.News.Add(news);
                 await _context.SaveChangesAsync();
 

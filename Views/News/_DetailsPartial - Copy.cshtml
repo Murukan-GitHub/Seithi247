@@ -30,11 +30,14 @@
                 border-radius: 10px;
                 overflow: hidden;
             }
-.gallery img{
-    width:100%;
-    height:auto !important;
-    border-radius:8px;
-}
+
+        .gallery-img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.25s ease, opacity 0.25s;
+            background: #111;
+        }
+
             .gallery-img:hover {
                 transform: scale(1.05);
                 opacity: 0.9;
@@ -45,18 +48,20 @@
         }
 
         .video-wrapper {
-        position: relative;
-        width: 100%;
-        padding-bottom: 56.25%;
+            width: 100%;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
         }
 
-        .video-wrapper iframe {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        }
+            /* Responsive video */
+            .video-wrapper video {
+                width: 80%;
+                height: auto;
+                display: block;
+                border-radius: 12px;
+            }
 
         /* ---------- MOBILE RESPONSIVENESS ---------- */
         @@media (max-width: 768px) {
@@ -64,12 +69,7 @@
                 column-count: 2;
                 column-gap: 10px;
             }
-            .share-btn{
-        width:34px;
-        height:34px;
-    }
-}
-        
+        }
 
         @@media (max-width: 576px) {
             .gallery {
@@ -84,31 +84,6 @@
                 border-radius: 10px;
             }
         }
-
-        .floating-share-bar {
-        position: fixed;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #111;
-        padding: 8px 14px;
-        border-radius: 30px;
-        display: flex;
-        gap: 12px;
-        z-index: 9999;
-        }
-
-        .floating-share-bar button {
-        background: none;
-        border: none;
-        color: #fff;
-        font-size: 18px;
-        }
-
-        .native{
-    background:#444;
-}
-
     </style>
 </head>
 <body>
@@ -237,76 +212,16 @@
         });
 
         /* SHARE */
-        // function shareFB(id) {
-        //     window.open("https://www.facebook.com/sharer/sharer.php?u=" + location.origin + "/News/Details/" + id);
-        // }
-        // function shareWA(id) {
-        //     window.open("https://wa.me/?text=" + encodeURIComponent(location.origin + "/News/Details/" + id));
-        // }
-        // function shareTW(id) {
-        //     window.open("https://twitter.com/intent/tweet?url=" + location.origin + "/News/Details/" + id);
-        // }
-        function getShareUrl(id){
-        return window.location.origin + "/News/Details/" + id;
+        function shareFB(id) {
+            window.open("https://www.facebook.com/sharer/sharer.php?u=" + location.origin + "/News/Details/" + id);
+        }
+        function shareWA(id) {
+            window.open("https://wa.me/?text=" + encodeURIComponent(location.origin + "/News/Details/" + id));
+        }
+        function shareTW(id) {
+            window.open("https://twitter.com/intent/tweet?url=" + location.origin + "/News/Details/" + id);
         }
 
-        function increaseShareCount(id){
-        $.post("/News/IncreaseShare", { id: id }, function(res){
-        $("#shareCount").text(res.count);
-        });
-        }
-
-        function shareFB(id){
-        const url = getShareUrl(id);
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
-        increaseShareCount(id);
-        }
-
-        function shareWA(id){
-        const url = getShareUrl(id);
-        window.open(`https://wa.me/?text=${encodeURIComponent(url)}`);
-        increaseShareCount(id);
-        }
-
-        function shareTW(id){
-        const url = getShareUrl(id);
-        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`);
-        increaseShareCount(id);
-        }
-
-        function copyLink(id){
-        const url = getShareUrl(id);
-        navigator.clipboard.writeText(url);
-
-        alert("Link copied!");
-        increaseShareCount(id);
-        }
-
-
-        function showSharedUsers(id){
-        Fancybox.show([{
-        src: "/News/GetSharedUsers?newsId=" + id,
-        type: "ajax"
-        }]);
-        }
-
-        function nativeShare(id){
-
-        const url = window.location.origin + "/News/Details/" + id;
-
-        if (navigator.share) {
-        navigator.share({
-        title: document.title,
-        text: "Check this news",
-        url: url
-        }).then(() => {
-        increaseShareCount(id);
-        }).catch(err => console.log(err));
-        } else {
-        // fallback
-        copyLink(id);
-        }
-        }
     </script>
 
 </body>
@@ -332,42 +247,14 @@
 @*             <!-- FLOATING LIKE BUTTON -->
             <div class="floating-like" id="likeBtn" data-id="@Model.Id">❤️</div> *@
             <!-- SHARE -->
-@*             <div class="share-buttons mt-3">
+            <div class="share-buttons mt-3">
                 <button onclick="shareFB('@Model.Id')">Facebook</button>
                 <button onclick="shareWA('@Model.Id')">WhatsApp</button>
                 <button onclick="shareTW('@Model.Id')">Twitter</button>
-            </div> *@
-            <div class="share-section">
-
-                <div class="share-buttons">
-                    <button class="share-btn fb" onclick="shareFB('@Model.Id')">
-                        <i class="fab fa-facebook-f"></i>
-                    </button>
-
-                    <button class="share-btn wa" onclick="shareWA('@Model.Id')">
-                        <i class="fab fa-whatsapp"></i>
-                    </button>
-
-                    <button class="share-btn tw" onclick="shareTW('@Model.Id')">
-                        <i class="fab fa-x-twitter"></i>
-                    </button>
-
-                    <button class="share-btn copy" onclick="copyLink('@Model.Id')">
-                        <i class="fas fa-link"></i>
-                    </button>
-                    <button class="share-btn native" onclick="nativeShare('@Model.Id')">
-                        <i class="fas fa-share-alt"></i>
-                    </button>
-                </div>
-
-                <div class="share-count" onclick="showSharedUsers('@Model.Id')" style="cursor:pointer;">
-                    🔗 <span id="shareCount">@Model.ShareCount</span> shares
-                </div>
-
             </div>
         </div>
 
-        <div >
+        <div class="news-content">
             @Html.Raw(Model.Content)
         </div>
 
@@ -426,9 +313,11 @@
             {
                 @if (!string.IsNullOrEmpty(@v.MediaUrl))
                 {
-                    <div class="video-wrapper">
-                        <iframe src="@GetEmbedUrl(@v.MediaUrl)"
+                    <div class="article-video">
+                        <iframe width="80%" height="400"
+                                src="@GetEmbedUrl(@v.MediaUrl)"
                                 frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen>
                         </iframe>
                     </div>
@@ -500,14 +389,6 @@
             }
         </div>
     </div>
-</div>
-<div class="floating-share-bar">
-
-    <button onclick="shareFB('@Model.Id')"><i class="fab fa-facebook-f"></i></button>
-    <button onclick="shareWA('@Model.Id')"><i class="fab fa-whatsapp"></i></button>
-    <button onclick="shareTW('@Model.Id')"><i class="fab fa-x-twitter"></i></button>
-    <button onclick="copyLink('@Model.Id')"><i class="fas fa-link"></i></button>
-
 </div>
 @functions {
     public string GetEmbedUrl(string VideoUrl)

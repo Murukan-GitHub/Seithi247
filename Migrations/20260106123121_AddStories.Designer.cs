@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Seithi247.Data;
 
@@ -11,9 +12,11 @@ using Seithi247.Data;
 namespace Seithi247.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260106123121_AddStories")]
+    partial class AddStories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,9 +123,6 @@ namespace Seithi247.Migrations
 
                     b.Property<DateTime>("PublishedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ShareCount")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("StoryActivatedAt")
                         .HasColumnType("datetime2");

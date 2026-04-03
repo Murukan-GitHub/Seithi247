@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Seithi247.Views.ViewModel.NewsVM>
+
+<div class="stories-bar">
+    @foreach (var news in Model)
+    {
+        <div class="story-item">
+            <a data-fancybox
+               data-type="ajax"
+               data-src="/News/DetailsPartial/@news.Id">
+
+                <div class="story-ring">
+                    <img src="@news.Images?.FirstOrDefault()?.FilePath" class="img-fluid" alt="@news.Title">
+                </div>
+
+                <span class="story-text">Recommended</span>
+            </a>
+        </div>
+    }
+</div>

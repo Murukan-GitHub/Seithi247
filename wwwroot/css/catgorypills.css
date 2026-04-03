@@ -1,0 +1,56 @@
+﻿
+.sticky-pills {
+    position: sticky;
+    top: 56px; /* height of navbar */
+    z-index: 1030;
+    background: #fff;
+    padding: 8px 0;
+}
+
+
+.category-pills {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0;
+    position: fixed;
+    top: 70px; /* below navbar */
+    z-index: 99;
+    background: #fff;
+}
+
+.pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #f1f1f1;
+    color: #333;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+
+    .pill i {
+        font-size: 1.1rem;
+    }
+
+    /* Hover */
+    .pill:hover {
+        background: #dc3545;
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+    /* Active */
+    .pill.active {
+        background: linear-gradient(135deg, #dc3545, #ff9800);
+        color: #fff;
+    }
+
+/* Home pill special */
+.pill-home {
+    font-weight: 600;
+}

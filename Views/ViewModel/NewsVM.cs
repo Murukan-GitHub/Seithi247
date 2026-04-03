@@ -31,6 +31,6 @@ namespace Seithi247.Views.ViewModel
         // Navigation property        
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-
+        public int ShareCount { get; set; }
     }
 }
