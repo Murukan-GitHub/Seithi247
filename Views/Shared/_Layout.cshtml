@@ -90,7 +90,89 @@
 
 /* Responsive stacking */
 @@media (max-width:768px){
+.recommended-section{
+    width:100%;
+    padding:8px 10px;
+    background:#000;
+    margin-top:0px;
+}
+/* show toggle */
 
+.menu-toggle{
+    display:block !important;
+    position:fixed;
+    top:12px;
+    left:12px;
+    z-index:99999; /* VERY IMPORTANT */
+    background:#111;
+    color:#fff;
+    border:none;
+    padding:10px 12px;
+    border-radius:8px;
+    font-size:18px;
+}
+
+
+/* overlay */
+.drawer-overlay{
+
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    opacity:0;
+    visibility:hidden;
+    transition:0.3s;
+
+        pointer-events: none;   /* 🔥 prevents blocking */
+    opacity:0;
+    visibility:hidden;
+}
+
+/* drawer */
+.pills-drawer{
+    position: fixed;
+    top: 0;
+    left: -260px; /* hidden */
+    width: 250px;
+    height: 100vh;
+    background: #000;
+    z-index: 9999;
+    transition: left 0.3s ease;
+    display: block !important;
+}
+
+/* 🔥 THIS IS THE IMPORTANT PART */
+.pills-drawer.active{
+    left: 0 !important;
+}
+
+.drawer-overlay.active{
+    pointer-events: auto;   /* enable only when open */
+    opacity:1;
+    visibility:visible;
+}
+
+/* header */
+.drawer-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.drawer-content{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+/* hide desktop pills */
+.news-categories-pills{
+    display:none !important;
+}
 .fancybox__content{
     border-radius:0 !important;
     flex-direction:column !important;
@@ -128,14 +210,33 @@
     background:gray;
     z-index:3;
 }
+.recommended-card{
+    min-width:140px;
+    height:100px;
+}
 
+.newsContainer{
+    margin-top:80px;
+}
+
+.nav-arrows{
+    display:flex !important; /* swipe instead */
+}
 }
 @@media (min-width:769px){
 .floating-share-bar{
     display:none;
 }
+    .menu-toggle,
+    .pills-drawer,
+    .drawer-overlay{
+        display:none !important;
+    }
 }
 
+.newsContainer{
+    margin-top:140px; /* adjust to header height */
+}
 
         .news-header h2 {
             margin: 0;
@@ -427,16 +528,151 @@
     color:#aaa;
 }
 
+/* recommended section */
+.recommended-section{
+    width:100%;
+    padding:8px 10px;
+    background:#000;
+    margin-top:100px;
+}
 
+
+/* Header */
+.recommended-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+    margin-top:10px;
+}
+
+/* Container */
+.recommended-container{
+    display:flex;
+    gap:10px;
+    overflow:hidden; /* important for auto scroll */
+}
+
+.recommended-container::-webkit-scrollbar{
+    display:none;
+}
+
+/* Cards */
+.recommended-card{
+    min-width:160px;
+    height:100px;
+    border-radius:12px;
+    overflow:hidden;
+    transition:0.2s;
+}
+
+.recommended-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.recommended-card:hover{
+    transform:scale(1.05);
+}
+/* Overlay */
+.rec-overlay{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    padding:6px;
+    background:rgba(0,0,0,0.6);
+    color:#fff;
+    font-size:12px;
+}
+
+/* Arrows */
+.nav-arrows button{
+    background:#111;
+    border:none;
+    color:#fff;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    margin-left:5px;
+    cursor:pointer;
+}
+
+.nav-arrows button:hover{
+    background:#ff004f;
+}
+
+.container{
+    margin-top:250px 
+}
+.nav-arrows{
+    display:flex;
+}
+.top-section{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+    background:#000;
+    display:flex;
+    flex-direction:column;
+    z-index:1000;
+}
+
+/* Desktop pills */
+.pills-container{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+}
+.menu-toggle,
+.pills-drawer,
+.drawer-overlay {
+    display: none;
+}
     </style>
     <header>
 
 
     </header>
     <!-- Floating Categories as Pills -->
-    <div>
+    <div class="top-section">
 
+<!-- MENU BUTTON (mobile only) -->
+<button id="menuToggle" class="menu-toggle">
+    ☰
+</button>
 
+<!-- OVERLAY -->
+<div id="drawerOverlay" class="drawer-overlay"></div>
+
+<!-- DRAWER -->
+<div id="pillsDrawer" class="pills-drawer">
+    <div class="drawer-header">
+        <span></span>
+        <button id="closeDrawer">✕</button>
+    </div>
+
+    <div class="drawer-content">
+
+            @foreach (var category in Enum.GetValues(typeof(NewsCategory)).Cast<NewsCategory>())
+            {
+                @if (category.ToString() == "Home")
+                {
+                    <a href="/" class="pill pill-home active">
+                        <i class="bi bi-house-fill"></i>
+                        @category
+                    </a>
+                }
+                else
+                {
+                    <a href="#" class="category-pill" data-category="@category">@category</a>
+                }
+
+            }
+
+        </div>
+        </div>
         <div class="news-categories-pills">
             @foreach (var category in Enum.GetValues(typeof(NewsCategory)).Cast<NewsCategory>())
             {
@@ -454,7 +690,42 @@
 
             }
         </div>
-        <div id="stories-container"></div>
+        @* <div id="stories-container"></div> *@
+        <div class="recommended-section">
+
+    <div class="recommended-header">
+        <h5>⭐ Recommended By Viewers</h5>
+
+        <div class="nav-arrows">
+            <button class="scroll-left"><i class="fas fa-chevron-left"></i></button>
+            <button class="scroll-right"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <div class="recommended-container" id="recommendedContainer">
+
+       @*  @foreach (var news in Model.Stories)
+        {
+            <div class="recommended-card">
+
+                <a data-fancybox
+                   data-type="ajax"
+                   data-src="/News/DetailsPartial/@news.Id">
+
+                    <img src="@news.ThumbnailImage" />
+
+                    <div class="rec-overlay">
+                        <span>@news.Title</span>
+                    </div>
+
+                </a>
+
+            </div>
+        } *@
+
+    </div>
+
+</div>
     </div>
     <div class="container">
         <main role="main" class="pb-3">
@@ -462,11 +733,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+@*     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2025 - Seithi247 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer> *@
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -475,7 +746,49 @@
     <script>
 
             $(function(){
+                    const toggle = document.getElementById("menuToggle");
+window.onload = function(){
 
+    const toggle = document.getElementById("menuToggle");
+    const drawer = document.getElementById("pillsDrawer");
+    const overlay = document.getElementById("drawerOverlay");
+    const closeBtn = document.getElementById("closeDrawer");
+
+    console.log("Elements:", toggle, drawer, overlay);
+
+    toggle.onclick = function(){
+        console.log("OPEN CLICK");
+        drawer.classList.add("active");
+        overlay.classList.add("active");
+    };
+
+    closeBtn.onclick = function(){
+        drawer.classList.remove("active");
+        overlay.classList.remove("active");
+    };
+
+    overlay.onclick = function(){
+        drawer.classList.remove("active");
+        overlay.classList.remove("active");
+    };
+
+};
+document.addEventListener("click", function(e){
+
+
+    // OPEN
+    if(e.target.closest("#menuToggle")){
+        document.getElementById("pillsDrawer").classList.add("active");
+        document.getElementById("drawerOverlay").classList.add("active");
+    }
+
+    // CLOSE
+    if(e.target.closest("#closeDrawer") || e.target.id === "drawerOverlay"){
+        document.getElementById("pillsDrawer").classList.remove("active");
+        document.getElementById("drawerOverlay").classList.remove("active");
+    }
+
+});
                     // Clear auto-binding if any
         Fancybox.defaults.selector = false;
 
@@ -578,6 +891,46 @@
                 if (window.scrollY > 50) nav.classList.add('scrolled');
                 else nav.classList.remove('scrolled');
             });
+
+            document.querySelector(".menu-toggle").onclick = () => {
+            document.getElementById("pillsDrawer").classList.toggle("active");
+};
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const toggle = document.getElementById("menuToggle");
+    const drawer = document.getElementById("pillsDrawer");
+    const overlay = document.getElementById("drawerOverlay");
+    const closeBtn = document.getElementById("closeDrawer");
+
+    function openDrawer(){
+        drawer.classList.add("active");
+        overlay.classList.add("active");
+    }
+
+    function closeDrawer(){
+        drawer.classList.remove("active");
+        overlay.classList.remove("active");
+    }
+
+    if(toggle){
+        toggle.addEventListener("click", openDrawer);
+        toggle.classList.add("display:none");
+    }
+
+    if(closeBtn){
+        closeBtn.addEventListener("click", closeDrawer);
+    }
+
+    if(overlay){
+        overlay.addEventListener("click", closeDrawer);
+    }
+
+});
+
+
+
     </script>
     <!-- Floating Seithi 24/7 Banner -->
     <div class="floating-seithi-banner">

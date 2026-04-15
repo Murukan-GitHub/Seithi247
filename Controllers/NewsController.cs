@@ -329,7 +329,7 @@ namespace Seithi247.Controllers
                 .Where(n => n.IsStory &&
                             n.StoryActivatedAt > DateTime.Now.AddHours(-24))
                 .OrderByDescending(n => n.StoryActivatedAt)
-                .Take(15)
+                //.Take(15)
                 .ToList();
 
             List<NewsVM> newsList = MapToNewsVM(stories);

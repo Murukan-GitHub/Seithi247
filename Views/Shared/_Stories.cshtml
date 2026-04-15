@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Seithi247.Views.ViewModel.NewsVM>
 
-<div class="stories-bar">
+@* <div class="stories-bar">
     @foreach (var news in Model)
     {
         <div class="story-item">
@@ -16,4 +16,25 @@
             </a>
         </div>
     }
-</div>
+</div> *@
+
+@foreach (var news in Model)
+{
+    <div class="recommended-card">
+
+        <a data-fancybox
+               data-type="ajax"
+               data-src="/News/DetailsPartial/@news.Id">
+
+            <img src="@news.Images?.FirstOrDefault()?.FilePath" alt="@news.Title">
+
+            <div class="rec-overlay">
+                <span>@news.Title</span>
+            </div>
+
+        </a>
+
+    </div>
+
+}
+

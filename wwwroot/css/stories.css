@@ -15,6 +15,22 @@
     transform: translateX(-50%);
 }
 
+.stories-barrec {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    overflow-x: hidden;
+    background: #151313;
+    border-bottom: 1px solid #555;
+    margin: 00px;
+    position: fixed;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1020;
+    scroll-behavior: smooth;
+    left: 50%;
+    transform: translateX(-50%);
+}
     .stories-bar::-webkit-scrollbar {
         display: none;
     }

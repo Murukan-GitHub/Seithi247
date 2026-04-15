@@ -23,11 +23,11 @@
     <div id="loadingIndicator" class="text-center my-4 d-none">
         <div class="spinner-border text-danger" role="status"></div>
     </div>
-    <div id="loadMoreContainer" class="text-center my-4">
+@*     <div id="loadMoreContainer" class="text-center my-4">
         <button id="loadMoreBtn" class="btn btn-outline-danger px-5 py-2 rounded-pill fw-bold">
             Load More News
         </button>
-    </div>l
+    </div> *@
 </div>
 
 
@@ -402,8 +402,48 @@
 
         });
                 $(function () {
-            $("#stories-container").load("/News/Stories");
+        $("#recommendedContainer").load("/News/Stories");
         });
+        
+        
+
+        const reccontainer = document.getElementById("recommendedContainer");
+
+        document.querySelector(".scroll-left").onclick = () => {
+        reccontainer.scrollBy({ left: -300, behavior: "smooth" });
+        };
+
+        document.querySelector(".scroll-right").onclick = () => {
+        reccontainer.scrollBy({ left: 300, behavior: "smooth" });
+        };
+
+
+        // let scrollSpeed = 1; // adjust speed
+        // let autoScroll;
+
+        // function startAutoScroll(){
+        // autoScroll = setInterval(() => {
+        // reccontainer.scrollLeft += scrollSpeed;
+
+        // // loop back to start
+        // if (reccontainer.scrollLeft >= reccontainer.scrollWidth - reccontainer.clientWidth) {
+        // reccontainer.scrollLeft = 0;
+        // }
+
+        // }, 20);
+        // }
+
+        // function stopAutoScroll(){
+        // clearInterval(autoScroll);
+        // }
+
+        // // start
+        // startAutoScroll();
+
+        // // pause on hover
+        // reccontainer.addEventListener("mouseenter", stopAutoScroll);
+        // reccontainer.addEventListener("mouseleave", startAutoScroll);
+
 
         // (function () {
         //             $("[data-fancybox='details']").fancybox({

@@ -108,7 +108,47 @@
         .native{
     background:#444;
 }
+.recommend-icon{
+    width:34px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    cursor:pointer;
+    transition:0.2s;
+}
 
+/* Default star */
+.recommend-icon i{
+    font-size:18px;
+    color:#aaa;
+    transition:0.3s;
+}
+
+/* Hover */
+.recommend-icon:hover i{
+    color:#ffc107;
+}
+
+/* Active (recommended) */
+.recommend-icon.active i{
+    color:#ffc107;
+}
+
+/* Animation on click */
+.recommend-icon.animate i{
+    animation: starPop 0.4s ease;
+}
+
+@@keyframes starPop{
+    0% { transform: scale(1); }
+    50% { transform: scale(1.6); }
+    100% { transform: scale(1); }
+}
+.recommend-icon.active{
+    box-shadow: 0 0 10px rgba(255,193,7,0.6);
+}
     </style>
 </head>
 <body>
@@ -160,49 +200,6 @@
                  });
 
 
-                  //  $(document).on("click", ".post-comment", function (e) {
-                  //       e.preventDefault();
-
-                  //       let id = $(this).data("id");
-                  //       let comment = $("#commentText").val();
-                  //       let auth =$("#authorName").val();
-                  //       console.log(comment);
-                  //       console.log(auth);
-                  //       $.post("/News/AddComment", { newsId: id,authorName :auth, text: comment ,reaction:""}, function (res) {
-
-                  //           $("#comments-list").html(res);
-                  //             $("#commentText").val("");
-                  //             $("#authorName").val("");
-                  //       });
-                  // });
-
-                // $(document).off("click", ".like-btn").on("click", ".like-btn", function (e) {
-                //     e.preventDefault();
-                //     alert("d");
-                //     const id = $(this).data("id");
-                //       $.post("/News/Like", { id: id }, function (res) {
-                //         $(".like-count").text(res.likes);
-                //     });
-                // });
-
-        //         $(document).off("click", ".post-comment").on("click", ".post-comment", function (e) {
-        //             e.preventDefault();
-        //             alert("dff");
-        // let id = $(this).data("id");
-
-        // let comment = $(`#commentText[data-id='${id}']`).val();
-        // let author  = $(`#authorName[data-id='${id}']`).val();
-
-        // console.log(comment);
-        //                         console.log(author);
-        //                 $.post("/News/AddComment", { newsId: id,authorName :author, text: comment ,reaction:""}, function (res) {
-
-        //                     $("#comments-list").html(res);
-        //                       $("#commentText").text("");
-        //                       $("#authorName").text("");
-        //                 });
-        //         });
-
                 $(document).off("click", ".recommend-btn")
                    .on("click", ".recommend-btn", function (e) {
 
@@ -224,7 +221,7 @@
                        .html("⭐ Recommended");
 
                     // Reload stories bar
-                    $("#stories-container").load("/News/Stories");
+                    $("#recommendedContainer").load("/News/Stories");
                 },
                 error: function (err) {
                     console.error(err);
@@ -236,6 +233,36 @@
             });
         });
 
+
+        
+$(document).off("click", ".recommend-icon")
+.on("click", ".recommend-icon", function () {
+
+    const el = $(this);
+    const id = el.data("id");
+
+    // prevent double click
+    if (el.hasClass("active")) return;
+
+    // animation trigger
+    el.addClass("animate");
+
+    setTimeout(() => el.removeClass("animate"), 400);
+
+    $.post("/News/Recommend", { newsId: id }, function () {
+
+        el.addClass("active");
+
+        // change icon to solid
+        el.find("i")
+          .removeClass("fa-regular")
+          .addClass("fa-solid");
+
+        // reload stories
+        $("#recommendedContainer").load("/News/Stories");
+
+    });
+});
         /* SHARE */
         // function shareFB(id) {
         //     window.open("https://www.facebook.com/sharer/sharer.php?u=" + location.origin + "/News/Details/" + id);
@@ -326,9 +353,9 @@
             <button class="like-btn" data-id="@Model.Id">
                 👍 Like (<span class="like-count">@Model.Likes</span>)
             </button>
-            <button class="recommend-btn" data-id="@Model.Id" title="Recommend this news">
-                ⭐ Recommend
-            </button>
+<div class="recommend-icon" data-id="@Model.Id">
+    <i class="fa-star fa-regular"></i>
+</div>
 @*             <!-- FLOATING LIKE BUTTON -->
             <div class="floating-like" id="likeBtn" data-id="@Model.Id">❤️</div> *@
             <!-- SHARE -->

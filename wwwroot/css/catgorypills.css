@@ -9,13 +9,20 @@
 
 
 .category-pills {
-    display: flex;
+    /*display: flex;
     justify-content: center;
     gap: 10px;
     padding: 10px 0;
     position: fixed;
-    top: 70px; /* below navbar */
-    z-index: 99;
+    top: 70px;*/ /* below navbar */
+    /*z-index: 99;
+    background: #fff;
+    margin-bottom: 0 !important;
+    padding-bottom: 5px;*/
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 10px;
     background: #fff;
 }
 
@@ -53,4 +60,13 @@
 /* Home pill special */
 .pill-home {
     font-weight: 600;
+}
+/* Mobile drawer */
+@media (max-width:768px) {
+
+    .category-pills {
+        display: none; /* hide pills */
+    }
+
+ 
 }
