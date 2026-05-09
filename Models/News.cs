@@ -42,7 +42,7 @@ namespace Seithi247.Models
         public string Content { get; set; }
         [NotMapped]
 
-        public string Editor { get; set; }
+        public string Editor { get; set; } = string.Empty;
         public DateTime PublishedAt { get; set; } = DateTime.UtcNow;
         // optional: author, tags, isPublished flag
         public string Author { get; set; }
@@ -64,7 +64,7 @@ namespace Seithi247.Models
         [NotMapped]
         public string VideoUrl { get; set; }
 
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; set; } = string.Empty;
         public bool IsStory { get; set; }
         public DateTime? StoryActivatedAt { get; set; }
         public int ShareCount { get; set; }

@@ -32,5 +32,6 @@ namespace Seithi247.Views.ViewModel
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
         public int ShareCount { get; set; }
+        public string VideoUrl { get; set; }
     }
 }

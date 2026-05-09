@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 namespace Seithi247.Controllers
 {
+
     public class NewsController : Controller
     {
         private readonly ApplicationDbContext _context;

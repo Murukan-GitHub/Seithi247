@@ -9,11 +9,16 @@
                 <div class="video-card" data-row="1" data-video-url="@GetEmbeddedVideoUrl(item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl)">
                     <div class="video-thumb-wrapper">
                         <img src="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.ThumbnailUrl" class="video-thumb" alt="Video thumbnail" />
+    <!-- NEW: video container -->
+    <div class="video-player"></div>
+<div class="video-loading">
+  <div class="spinner"></div>
+</div>
                         <div class="video-overlay">
                             <div class="play-button">
                                 <i class="bi bi-play-fill"></i>
                             </div>
-                            <div class="expand-button" data-fancybox data-src="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl" title="Open video">
+                            <div class="expand-button" data-fancybox  data-type="ajax" data-src="@item.NewsMedias?.OrderByDescending(x => x.Id)?.FirstOrDefault()?.MediaUrl" title="Open video">
                                 <i class="bi bi-arrows-fullscreen"></i>
                             </div>
                         </div>
@@ -25,7 +30,7 @@
                             @*  <i class="bi bi-eye"></i> @item.ViewCount views *@
                             @if (@item.NewsMedias?.Count() > 1)
                             {
-                                <a data-fancybox="details" href="@Url.Action("DetailsPartial", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
+                                <a data-fancybox="details-@item.Id" href="@Url.Action("DetailsPartial", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
                                     Click here watch more
                                 </a>
                             }
@@ -38,7 +43,7 @@
                 if (item.Images.Any())
                 {
                     <div class="news-image-container">
-                        <a data-fancybox="details"
+                        <a data-fancybox="details-@item.Id" data-type="ajax"
                            href="@Url.Action("DetailsPartial", "News", new { id = item.Id })"
                            >
                             <img src="@item.Images?.FirstOrDefault()?.FilePath" class="img-fluid" alt="@item.Title">
@@ -56,7 +61,7 @@
 @*                     <a href="@Url.Action("DetailsPartial", "News", new { id = item.Id })" target="_blank" class="btn btn-outline-primary btn-sm">
                         Read More
                     </a> *@
-                    <a data-fancybox="details"
+                    <a data-fancybox="details-@item.Id" data-type="ajax"
                        href="@Url.Action("DetailsPartial", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
                         Read More
                     </a>

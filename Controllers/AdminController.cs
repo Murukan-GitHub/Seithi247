@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Seithi247.Data;
 using Seithi247.Models;
+using Seithi247.Views.ViewModel;
 
 namespace Seithi247.Controllers
 {
@@ -30,16 +31,36 @@ namespace Seithi247.Controllers
             if (news == null) return NotFound();
             return View(news);
         }
+
+        private static News MapToNews(NewsVM i)
+        {
+            return new News
+            {
+                Title = i.Title,
+                NewsCategory = i.NewsCategory,
+                Content = i.Content,
+                Author = i.Author,
+                Country = i.Country,
+                Summary = i.Summary,
+                NewsMedias = i.NewsMedias,
+                IsPublished = i.IsPublished,
+                PublishedAt = i.PublishedAt,
+                NewsType = i.NewsType,
+                VideoUrl = i.VideoUrl,
+            };
+        }
         // GET: Admin/News/Create
         public IActionResult Create() => View();
 
         // POST: Admin/News/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult>  Create([Bind("Title,Summary,Content,Author,IsPublished,PublishedAt,VideoUrl,NewsType")] News news, List<IFormFile> ImageFiles, List<IFormFile> ThumbNailImages)
+        public async Task<IActionResult>  Create([Bind("Title,Summary,Content,Author,IsPublished,PublishedAt,VideoUrl,NewsType")] NewsVM newsVM, List<IFormFile> ImageFiles, List<IFormFile> ThumbNailImages)
         {
             if (ModelState.IsValid)
             {
+                var news = MapToNews(newsVM);
+
                 if (news.Content == null) { news.Content = " "; }
 
                 var sanitizer = new HtmlSanitizer();
@@ -116,7 +137,7 @@ namespace Seithi247.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            return View(news);
+            return View(newsVM);
         }
 
         [HttpPost]

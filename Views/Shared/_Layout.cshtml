@@ -19,29 +19,52 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fancyapps/ui/dist/fancybox.css" asp-append-version="true" async/>
     <script src="~/js/news.js"></script>
     <script src="~/css/comment.js"></script>
-    <script src="~/js/fancybox.umd.js" async></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="~/js/fancybox.umd.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" async></script>
 
-    <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@@fancyapps/ui/dist/fancybox.umd.js"></script>
+
+    <script src="https://platform.twitter.com/widgets.js" charset="utf-8" async></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" async>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" async></script>
 
     <!-- jQuery (required by Summernote) -->
     
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" async/>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js" async></script>
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" async></script>
-    <script src="~/js/globe.js"></script>
-    <script src="~/js/news.js"></script>
+    <script src="~/js/globe.js" async></script>
+    <script src="~/js/news.js" async></script>
 </head>
 <body>
     <style>
         /* Container that Fancybox uses for your AJAX content */
 
-        
+/* 🔥 FORCE CLOSE BUTTON ON TOP */
+.carousel__button.is-close {
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 999999 !important;
 
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}        
+.fancybox__nav {
+    display: none !important;
+}
 .news-post-popup .fancybox__content {
     display:flex !important;
     width:95vw !important;
@@ -55,11 +78,15 @@
     width:100%;
     height:100%;
 }
-
+    /* ❌ HIDE MOBILE COMMENT SHEET */
+    .comment-sheet,
+    .floating-comment-btn {
+        display: none !important;
+    }
 .popup-left{
     flex:2;
-    overflow-y:auto;
-    padding:15px;
+/*     overflow-y:auto;
+    padding:15px; */
 }
 
 .popup-right{
@@ -71,10 +98,10 @@
     background:#333;
 }
 
-.comments-list{
+/* .comments-list{
     flex:1;
     overflow-y:auto;
-}
+} */
 
 /* Allow scrollbar visibility */
 .popup-left::-webkit-scrollbar,
@@ -90,6 +117,9 @@
 
 /* Responsive stacking */
 @@media (max-width:768px){
+
+
+
 .recommended-section{
     width:100%;
     padding:8px 10px;
@@ -162,41 +192,72 @@
     align-items:center;
     margin-bottom:15px;
 }
-
+    .popup-container {
+        flex-direction: column !important;
+        height: 100%;
+    }
 .drawer-content{
     display:flex;
     flex-direction:column;
     gap:10px;
 }
 
+    .fancybox__content {
+        width: 100vw !important;
+        height: 100vh !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    .fancybox__slide {
+        padding: 0 !important;
+    }
 /* hide desktop pills */
 .news-categories-pills{
     display:none !important;
 }
-.fancybox__content{
-    border-radius:0 !important;
-    flex-direction:column !important;
-    width:100vw !important;
-    height:100vh !important;
-}
 
-.popup-container{
-    flex-direction:column;
-}
 
+    .popup-right {
+        display: none !important;
+    }
 .popup-left{
-    flex:none;
-    max-height:60vh;
-    overflow-y:auto;
+        width: 100% !important;
+        flex: none !important;
 }
+/* ✅ ENABLE COMMENT SHEET */
+    .comment-sheet {
+ display:flex !important;
+    flex-direction:column;
 
-.popup-right{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:-100%;
+
+    height:70vh;
+
+    background:#111;
+    z-index:999999;
+
+    transition:bottom 0.3s ease;
+    }
+
+    .comment-sheet.active {
+        bottom: 0;
+    }
+
+    .floating-comment-btn {
+         display:flex !important;
+    }
+/* .popup-right{
     flex:none;
     max-height:40vh;
     border-left:none;
     border-top:1px solid #444;
     background:#333;
-}
+} */
 /* Content first */
 
 
@@ -204,12 +265,12 @@
 .floating-share-bar{
     display:flex;
 }
-.add-comment{
+/* .add-comment{
     position:sticky;
     bottom:0;
     background:gray;
     z-index:3;
-}
+} */
 .recommended-card{
     min-width:140px;
     height:100px;
@@ -230,6 +291,11 @@
     .menu-toggle,
     .pills-drawer,
     .drawer-overlay{
+        display:none !important;
+    }
+
+  .comment-sheet,
+    .floating-comment-btn{
         display:none !important;
     }
 }
@@ -745,16 +811,14 @@
 
     <script>
 
-            $(function(){
-                    const toggle = document.getElementById("menuToggle");
-window.onload = function(){
+     const toggle = document.getElementById("menuToggle");
+    window.onload = function(){
 
     const toggle = document.getElementById("menuToggle");
     const drawer = document.getElementById("pillsDrawer");
     const overlay = document.getElementById("drawerOverlay");
     const closeBtn = document.getElementById("closeDrawer");
 
-    console.log("Elements:", toggle, drawer, overlay);
 
     toggle.onclick = function(){
         console.log("OPEN CLICK");
@@ -790,48 +854,61 @@ document.addEventListener("click", function(e){
 
 });
                     // Clear auto-binding if any
-        Fancybox.defaults.selector = false;
 
+if (!window._fancyboxBound) {
 
-            Fancybox.defaults.autoFocus = false;
-            Fancybox.defaults.trapFocus = false;
-            Fancybox.defaults.placeFocusBack = false;
-            Fancybox.defaults.closeButton = true;
-            Fancybox.defaults.Hash = false;
-            Fancybox.defaults.Thumbs = false;
-            Fancybox.defaults.arrows =false;
+   
+Fancybox.bind('[data-fancybox^="details-"]', {
+    type: "ajax",
 
-            Fancybox.bind('[data-fancybox="details"]', {
-                type: "ajax",
-                dragToClose: false,
-                infinite: false,
-                Toolbar: false,
-                closeButton: "top",
-                animated: true,
-                autoFocus: false,
-        Thumbs: false,
-        Hash: false,
-        Carousel: {
-            infinite: false,
-            Navigation: false  // Removes left/right arrows
-        },
-                width: "90%",
+    // 🚨 THIS LINE IS CRITICAL
+    groupAll: false,
+
+    // 🚨 FORCE SINGLE ITEM MODE
+    dragToClose: false,
+
+    Carousel: {
+        Navigation: false,
+        infinite: false
+    },
+
+    Thumbs: false,
+    Hash: false,
+Toolbar: { display:["close"] },
+
+    //closeButton: "top",
+    animated:true,
+                    width: "90%",
                 height: "90%",
                 display: "flex",
-                groupAll: false,
                 contentClick: false,
                 arrows: false,
-                Images: {
-                    zoom: false,
-                },
-                baseClass: 'news-post-popup',
-            });
+    Images: {
+        zoom: false
+    },
 
+    on: {
+        done: (fancybox, slide) => {
+            initDetailsInteractions(slide.$content);
+        }
+    }
+});
+ window._fancyboxBound = true;
+}
+document.addEventListener("click", function (e) {
+    if (e.target.closest('[data-fancybox="details"]')) {
+        Fancybox.close(); // 🔥 prevents stacking
+    }
+});
+document.addEventListener("click", function (e) {
+    const el = e.target.closest('[data-fancybox^="details-"]');
+    if (!el) return;
 
-
-
-
-                        $(document).on("click", ".like-btn", function (e) {
+    if (Fancybox.getInstance()) {
+        Fancybox.close(true);
+    }
+});
+               $(document).on("click", ".like-btn", function (e) {
                     e.preventDefault();
                    
                     const id = $(this).data("id");
@@ -840,16 +917,16 @@ document.addEventListener("click", function(e){
                     });
                 });
 
-                                $(document).off("click", ".post-comment").on("click", ".post-comment", function (e) {
+       $(document).off("click", ".post-comment").on("click", ".post-comment", function (e) {
                     e.preventDefault();
-                    alert("dff");
+
         let id = $(this).data("id");
 
         let comment = $(`#commentText[data-id='${id}']`).val();
         let author  = $(`#authorName[data-id='${id}']`).val();
 
-        console.log(comment);
-                                console.log(author);
+
+
                         $.post("/News/AddComment", { newsId: id,authorName :author, text: comment ,reaction:""}, function (res) {
 
                             $(".comments-list").html(res);
@@ -858,8 +935,24 @@ document.addEventListener("click", function(e){
                         });
                 });
 
-            });
+            
+       // $(document).off("click", ".post-comment-mobile").on("click", ".post-comment-mobile", function (e) {
+       //              e.preventDefault();
 
+       //  let id = $(this).data("id");
+
+       //  let comment = $(`#commentText[data-id='${id}']`).val();
+       //  let author  = $(`#authorName[data-id='${id}']`).val();
+
+
+
+       //                  $.post("/News/AddComment", { newsId: id,authorName :author, text: comment ,reaction:""}, function (res) {
+
+       //                      $(".comments-list-mobile").html(res);
+       //                        $(`#commentText[data-id='${id}']`).val("");
+       //                        $(`#commentText[data-id='${id}']`).val("");
+       //                  });
+       //          });
 
 
             const themeToggle = document.getElementById('themeToggle');
@@ -929,7 +1022,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
 });
 
-
+    $(function () {
+                $("#recommendedContainer").load("/News/Stories");
+    });
 
     </script>
     <!-- Floating Seithi 24/7 Banner -->

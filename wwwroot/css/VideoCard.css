@@ -1,4 +1,7 @@
-﻿.video-card {
+﻿. /* =========================
+   CARD CONTAINER
+========================= */
+.video-card {
     background: #111;
     border-radius: 14px;
     overflow: hidden;
@@ -8,51 +11,116 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-    .video-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-    }
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
 
+
+/* =========================
+   MEDIA WRAPPER
+========================= */
 .video-thumb-wrapper {
     position: relative;
-    cursor: pointer;
+    background: #000; /* prevents white flash */
     overflow: hidden;
 }
 
+/* loader */
+.video-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    transition: opacity .2s;
+}
+
+.video-card.loading .video-loading {
+    opacity: 1;
+}
+
+/* fade in player */
+.video-player iframe {
+    opacity: 0;
+    transition: opacity .35s ease;
+}
+
+.video-card.playing .video-player iframe {
+    opacity: 1;
+}
+/* =========================
+   THUMBNAIL
+========================= */
 .video-thumb {
     width: 100%;
-    height: auto;
     display: block;
-    object-fit: cover;
-    transition: transform 0.4s ease, filter 0.4s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .video-card:hover .video-thumb {
-    transform: scale(1.05);
-    filter: brightness(0.9);
+    transform: scale(1.06);
+    filter: brightness(0.85);
 }
 
+/* hide thumbnail when playing */
+.video-card.playing .video-thumb {
+    opacity: 0;
+}
+
+
+/* =========================
+   VIDEO PLAYER
+========================= */
+.video-player {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
+
+    .video-player iframe,
+    .video-player video {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        object-fit: cover;
+        border-radius: 14px;
+        background: #000;
+    }
+
+
+/* =========================
+   OVERLAY (PLAY BUTTON)
+========================= */
 .video-overlay {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.6));
-    opacity: 1; /* always visible */
-    transition: background 0.3s ease;
-    z-index: 2;
+    background: linear-gradient(to top, rgba(0,0,0,.7), transparent);
+    z-index: 3;
+    transition: opacity 0.3s ease;
 }
 
-.video-thumb-wrapper:hover .video-overlay {
-    background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.7));
+/* hide overlay when playing */
+.video-card.playing .video-overlay {
+    opacity: 0;
+    pointer-events: none;
 }
 
+
+/* =========================
+   PLAY BUTTON
+========================= */
 .play-button {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: rgba(255, 0, 0, 0.75);
+    background: rgba(255, 0, 0, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,9 +136,13 @@
 
 .video-thumb-wrapper:hover .play-button {
     transform: scale(1.1);
-    background: rgba(255, 0, 0, 0.95);
+    background: rgba(255, 0, 0, 1);
 }
 
+
+/* =========================
+   EXPAND BUTTON
+========================= */
 .expand-button {
     position: absolute;
     top: 10px;
@@ -82,7 +154,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 3;
+    z-index: 4;
     transition: background 0.3s ease;
 }
 
@@ -95,9 +167,11 @@
         background: rgba(0,0,0,0.75);
     }
 
+
+/* =========================
+   INFO SECTION
+========================= */
 .video-info {
-    position: relative;
-    z-index: 1;
     background: rgba(17,17,17,0.95);
     padding: 12px 16px;
     color: #eee;
@@ -114,19 +188,6 @@
     font-size: 0.85rem;
     color: #aaa;
 }
-
-.video-card iframe, .video-card video {
-    width: 100%;
-    height: auto;
-    border-radius: 14px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    background: #000;
-}
-
-    .video-card iframe.loaded, .video-card video.loaded {
-        opacity: 1;
-    }
 /* Responsive Play Button Scaling */
 @media (max-width: 1024px) {
     .play-button {
