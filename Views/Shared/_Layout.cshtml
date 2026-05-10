@@ -184,7 +184,12 @@
     opacity:1;
     visibility:visible;
 }
-
+.popup-left img,
+.popup-left iframe,
+.popup-left video{
+    max-width:100%;
+    height:auto;
+}
 /* header */
 .drawer-header{
     display:flex;
@@ -194,7 +199,10 @@
 }
     .popup-container {
         flex-direction: column !important;
-        height: 100%;
+        display:block !important;
+        height:auto !important;
+        min-height:auto !important;
+        /* height: 100%; */
     }
 .drawer-content{
     display:flex;
@@ -203,28 +211,41 @@
 }
 
     .fancybox__content {
-        width: 100vw !important;
-        height: 100vh !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        border-radius: 0 !important;
+width:100vw !important;
+        max-width:100vw !important;
+
+        height:auto !important;
+        min-height:auto !important;
+
+        margin:0 !important;
+        padding:0 !important;
+
+        border-radius:0 !important;
+
+        overflow:auto !important;
     }
 
     .fancybox__slide {
-        padding: 0 !important;
+        padding:0 !important;
+        overflow:auto !important;
     }
 /* hide desktop pills */
 .news-categories-pills{
     display:none !important;
 }
-
+    body{
+        overflow-x:hidden;
+    }
 
     .popup-right {
         display: none !important;
     }
 .popup-left{
-        width: 100% !important;
-        flex: none !important;
+        width:100% !important;
+        height:auto !important;
+        min-height:auto !important;
+        overflow:visible !important;
+/*         flex: none !important; */
 }
 /* ✅ ENABLE COMMENT SHEET */
     .comment-sheet {
