@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services
 builder.Services.AddControllersWithViews();
 // Configure EF Core with SQL Server - replace connection string in appsettings.json
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProdConnection")));
 builder.Services.AddResponseCaching();
 
 var app = builder.Build();
