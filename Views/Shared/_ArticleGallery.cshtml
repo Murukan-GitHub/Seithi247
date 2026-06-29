@@ -1,0 +1,26 @@
+@model Seithi247.Views.ViewModel.NewsVM
+
+@if(Model.Images?.Any()==true)
+{
+    <section class="gallery-section">
+
+        <h3>
+            📷 Photo Gallery
+        </h3>
+
+        <div class="gallery-grid">
+
+            @foreach(var image in Model.Images)
+            {
+                <a data-fancybox="gallery-@Model.Id"
+                   href="@image.FilePath">
+
+                    <img src="@image.FilePath">
+
+                </a>
+            }
+
+        </div>
+
+    </section>
+}

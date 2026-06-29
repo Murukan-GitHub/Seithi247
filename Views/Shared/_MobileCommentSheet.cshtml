@@ -1,0 +1,37 @@
+@model Seithi247.Views.ViewModel.NewsVM
+
+<div id="commentDrawer"
+     class="comment-drawer">
+
+    <div class="drawer-header">
+
+        <span>
+            Comments
+        </span>
+
+        <button id="closeComments">
+            ✕
+        </button>
+
+    </div>
+
+    <div class="comments-container">
+
+        @foreach(var comment in Model.Comments)
+        {
+            <div class="comment-item">
+
+                <strong>
+                    @comment.AuthorName
+                </strong>
+
+                <p>
+                    @comment.Text
+                </p>
+
+            </div>
+        }
+
+    </div>
+
+</div>

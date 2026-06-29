@@ -1,0 +1,31 @@
+@model Seithi247.Views.ViewModel.NewsVM;
+
+<header class="article-header">
+
+    <div class="article-meta">
+
+        <span class="badge-category">
+            @Model.NewsCategory
+        </span>
+
+        <span class="badge-country">
+            @Model.Country
+        </span>
+
+        <span class="published-date">
+            @Model.PublishedAt.ToString("dd MMM yyyy")
+        </span>
+
+    </div>
+
+@if(Model.Images?.Any() == true)
+{
+    <div class="hero-image">
+
+        <img src="@Model.Images.First().FilePath"
+             alt="@Model.Title" />
+
+    </div>
+}
+
+</header>

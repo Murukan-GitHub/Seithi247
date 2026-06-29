@@ -1,0 +1,176 @@
+/**
+ * Comment System CSS - Animations and Emoji Picker
+ */
+
+/* ============ EMOJI PICKER ============ */
+
+.emoji-picker {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: popIn 0.2s ease-out;
+    z-index: 1000;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.emoji-option {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.emoji-option:hover {
+    background: #f0f0f0;
+    border-color: #dee2e6;
+    transform: scale(1.2);
+}
+
+.emoji-option:active {
+    transform: scale(0.95);
+}
+
+/* ============ SMOOTH TRANSITIONS ============ */
+
+.comment-card {
+    transition: all 0.3s ease;
+}
+
+.comment-card:hover {
+    transform: translateX(2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.reply-card {
+    transition: all 0.3s ease;
+}
+
+.reply-card:hover {
+    background: #f5f5f5;
+}
+
+/* ============ LOADING STATES ============ */
+
+.btn-post-comment.loading,
+.btn-send-reply.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* ============ ANIMATIONS ============ */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============ RESPONSIVE ============ */
+
+@media (max-width: 640px) {
+    .emoji-picker {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .emoji-option {
+        padding: 6px;
+        font-size: 1.2rem;
+    }
+
+    .comment-actions-bar {
+        gap: 8px !important;
+    }
+
+    .action-btn {
+        padding: 4px 8px !important;
+        font-size: 0.8rem !important;
+    }
+}
+
+/* ============ ACCESSIBILITY ============ */
+
+.action-btn:focus,
+.emoji-option:focus {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+}
+
+.comment-card:focus-within {
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+/* ============ DARK MODE (Optional) ============ */
+
+@media (prefers-color-scheme: dark) {
+    .emoji-picker {
+        background: #2d2d2d;
+        border-color: #444;
+    }
+
+    .emoji-option:hover {
+        background: #444;
+        border-color: #555;
+    }
+
+    .reaction-badge {
+        background: #444 !important;
+        color: #e0e0e0;
+    }
+
+    .reply-card {
+        background: #1e1e1e !important;
+    }
+
+    .reply-card:hover {
+        background: #2d2d2d !important;
+    }
+}

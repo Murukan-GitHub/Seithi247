@@ -1,0 +1,51 @@
+@model NewsComment
+
+<div class="comment-card">
+
+    <div class="comment-avatar">
+
+        @(Model.AuthorName.Substring(0,1).ToUpper())
+
+    </div>
+
+    <div class="comment-main">
+
+        <div class="comment-top">
+
+            <span class="comment-author">
+                @Model.AuthorName
+            </span>
+
+            <span class="comment-date">
+                @Model.PostedDate.ToString("dd MMM yyyy")
+            </span>
+
+        </div>
+
+        <div class="comment-text">
+
+            @Model.Text
+
+        </div>
+
+        <div class="comment-footer">
+
+            <button class="comment-action like-comment"
+                    data-id="@Model.Id">
+
+                👍 Like
+
+            </button>
+
+            <button class="comment-action reply-comment"
+                    data-id="@Model.Id">
+
+                Reply
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

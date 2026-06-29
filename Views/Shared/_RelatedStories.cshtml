@@ -1,0 +1,12 @@
+@model IEnumerable<Seithi247.Views.ViewModel.NewsVM>
+<div id="recommendedContainer" class="related-stories">
+    <h5>Related Stories</h5>
+    <ul>
+        @foreach (var item in Model.Take(5))
+        {
+            <li>
+                <a href="/News/Details/@item.Id">@item.Title</a>
+            </li>
+        }
+    </ul>
+</div>

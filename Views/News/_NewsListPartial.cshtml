@@ -45,7 +45,7 @@
                             @*  <i class="bi bi-eye"></i> @item.ViewCount views *@
                             @if (@item.NewsMedias?.Count() > 1)
                             {
-                                <a data-fancybox="details-@item.Id" href="@Url.Action("DetailsPartial", "News", new { id = item.Id })" class="btn btn-outline-primary btn-sm">
+                                <a data-fancybox="details-@item.Id" data-src="@Url.Action("DetailsPartial","News",new{id=item.Id})" class="btn btn-outline-primary btn-sm">
                                     Click here watch more
                                 </a>
                             }
@@ -59,7 +59,7 @@
                 {
     <div class="news-image-wrapper">
                                    <a data-fancybox="details-@item.Id" data-type="ajax"
-                           href="@Url.Action("DetailsPartial", "News", new { id = item.Id })"
+                           data-src="@Url.Action("DetailsPartial","News",new{id=item.Id})"
                            >
                             <img src="@item.Images?.FirstOrDefault()?.FilePath" class="img-fluid" alt="@item.Title">
                         </a>

@@ -1,0 +1,177 @@
+@model Seithi247.Models.Comment
+@{
+    var reactionSummary = Model.Reactions?
+        .GroupBy(r => r.Emoji)
+        .OrderByDescending(g => g.Count())
+        .Take(3)
+        .ToList() ?? new List<IGrouping<string, Seithi247.Models.CommentReaction>>();
+}
+
+<div class="reply-card" data-comment-id="@Model.Id">
+    <div class="reply-content-wrapper">
+        <!-- Reply Header -->
+        <div class="reply-header">
+            <div class="reply-author-info">
+                <div class="author-avatar-small">@Model.AuthorName.Substring(0, 1).ToUpper()</div>
+                <div class="reply-author-details">
+                    <strong>@Model.AuthorName</strong>
+                    <span class="reply-date text-muted">
+                        @if (Model.IsEdited && Model.EditedDate.HasValue)
+                        {
+                            <small>(edited @Model.EditedDate.Value.ToString("MMM dd h:mm tt"))</small>
+                        }
+                        else
+                        {
+                            <small>@Model.PostedDate.ToString("MMM dd h:mm tt")</small>
+                        }
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reply Body -->
+        <div class="reply-body">
+            <p class="reply-text">@Model.Text</p>
+        </div>
+
+        <!-- Reply Reactions -->
+        @if (reactionSummary.Any())
+        {
+            <div class="reply-reactions">
+                @foreach (var group in reactionSummary)
+                {
+                    <span class="reaction-micro" title="@group.Count() reactions">
+                        @group.Key <small>@group.Count()</small>
+                    </span>
+                }
+            </div>
+        }
+
+        <!-- Reply Actions -->
+        <div class="reply-actions">
+            <button class="reply-action" title="React">😊</button>
+            <button class="reply-action" title="Like">👍</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .reply-card {
+        background: #f9f9f9;
+        border-radius: 6px;
+        padding: 12px;
+        border-left: 2px solid #0dcaf0;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    .reply-content-wrapper {
+        margin-left: 10px;
+    }
+
+    .reply-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .reply-author-info {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .author-avatar-small {
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #0dcaf0, #0d6efd);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+    }
+
+    .reply-author-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    .reply-author-details strong {
+        font-size: 0.9rem;
+        color: #212529;
+    }
+
+    .reply-date {
+        font-size: 0.8rem;
+    }
+
+    .reply-body {
+        margin: 8px 0;
+    }
+
+    .reply-text {
+        font-size: 0.9rem;
+        color: #212529;
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    .reply-reactions {
+        display: flex;
+        gap: 6px;
+        margin: 8px 0;
+        flex-wrap: wrap;
+    }
+
+    .reaction-micro {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        background: white;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        padding: 2px 6px;
+        font-size: 0.8rem;
+        cursor: pointer;
+    }
+
+    .reaction-micro small {
+        font-weight: 600;
+        color: #6c757d;
+    }
+
+    .reply-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 6px;
+    }
+
+    .reply-action {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9rem;
+        padding: 3px 8px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+    }
+
+    .reply-action:hover {
+        background: #e9ecef;
+    }
+
+    @media (max-width: 768px) {
+        .reply-card {
+            padding: 10px;
+        }
+
+        .reply-content-wrapper {
+            margin-left: 5px;
+        }
+    }
+</style>

@@ -1,0 +1,29 @@
+@model Seithi247.Views.ViewModel.NewsVM
+
+<div class="comment-input">
+
+    <input
+
+        id="authorName"
+
+        placeholder="Your name" />
+
+    <textarea
+
+        id="commentText"
+
+        placeholder="Write a comment..."></textarea>
+
+    <button
+
+        class="post-comment"
+
+        data-id="@Model.Id">
+
+        <i class="fa-solid fa-paper-plane"></i>
+
+        <span>Post</span>
+
+    </button>
+
+</div>

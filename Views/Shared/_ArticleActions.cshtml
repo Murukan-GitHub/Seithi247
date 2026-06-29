@@ -1,0 +1,46 @@
+@model Seithi247.Views.ViewModel.NewsVM;
+
+<div class="article-actions">
+
+    <button class="action-btn">
+        👍 Like (@Model.Likes)
+    </button>
+
+    <button class="action-btn recommend-icon"
+            data-id="@Model.Id">
+        ⭐ Recommend
+    </button>
+
+    <button id="openComments"
+            class="action-btn comments-trigger">
+        💬 Comments (@Model.Comments.Count)
+    </button>
+
+    <button class="action-btn"
+            onclick="copyLink('@Model.Id')">
+        🔗 Share
+    </button>
+</div>
+
+
+<div class="mobile-action-bar">
+
+    <button class="action-btn">
+        👍
+        <span>53</span>
+    </button>
+
+    <button class="action-btn">
+        ⭐
+    </button>
+
+<button id="openComments"
+        class="action-btn comments-trigger">
+    💬 Comments (@Model.Comments.Count)
+</button>
+
+    <button class="action-btn">
+        🔗
+    </button>
+
+</div>

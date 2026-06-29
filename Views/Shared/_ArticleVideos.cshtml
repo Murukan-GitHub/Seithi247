@@ -1,0 +1,40 @@
+@model Seithi247.Views.ViewModel.NewsVM
+
+@if(Model.NewsMedias?.Any()==true)
+{
+    <section class="video-section">
+
+        <h3>
+            🎥 Watch
+        </h3>
+
+        @foreach(var media in Model.NewsMedias)
+        {
+            <div class="video-wrapper">
+
+                <iframe src="@GetEmbedUrl(media.MediaUrl)"
+                        allowfullscreen>
+                </iframe>
+
+            </div>
+        }
+
+    </section>
+}
+
+@functions {
+    public string GetEmbedUrl(string VideoUrl)
+    {
+        string videoUrl = VideoUrl;
+        if (!string.IsNullOrEmpty(videoUrl))
+        {
+            if (videoUrl.Contains("watch?v="))
+                videoUrl = videoUrl.Replace("watch?v=", "embed/");
+            else if (videoUrl.Contains("youtu.be/"))
+                videoUrl = videoUrl.Replace("youtu.be/", "www.youtube.com/embed/");
+            else if (videoUrl.Contains("youtube.com/shorts/"))
+                videoUrl = videoUrl.Replace("youtube.com/shorts/", "youtube.com/embed/");
+        }
+        return videoUrl;
+    }
+}

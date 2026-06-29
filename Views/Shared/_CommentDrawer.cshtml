@@ -1,0 +1,41 @@
+﻿@model Seithi247.Views.ViewModel.NewsVM
+
+<aside id="commentDrawer" class="comment-drawer">
+
+    <div class="drawer-overlay"></div>
+
+    <div class="drawer-panel">
+
+        <div class="drawer-header">
+
+            <div>
+                <h4>Comments</h4>
+                <small>@Model.Comments.Count discussion@(Model.Comments.Count == 1 ? "" : "s")</small>
+            </div>
+
+            <button id="closeComments" class="drawer-close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <div class="drawer-comments">
+
+            @foreach (var comment in Model.Comments.OrderByDescending(x => x.PostedDate))
+            {
+                @await Html.PartialAsync(
+                    "_CommentCard",
+                    comment
+                )
+            }
+
+        </div>
+
+        @await Html.PartialAsync(
+            "_CommentInput",
+            Model
+        )
+
+    </div>
+
+</aside>

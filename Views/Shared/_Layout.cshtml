@@ -4,9 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Seithi247</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Seithi247.styles.css" asp-append-version="true" />
+
+
+
     <link rel="stylesheet" href="~/css/menu.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/VideoCard.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/stories.css" asp-append-version="true" />
@@ -14,751 +16,753 @@
     <link rel="stylesheet" href="~/css/comment.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/detailspage.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/partialdetails.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/commentdrawer.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/catgorypills.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" asp-append-version="true" async/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fancyapps/ui/dist/fancybox.css" asp-append-version="true" async/>
-    <script src="~/js/news.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" asp-append-version="true"  />
     <script src="~/css/comment.js"></script>
-    <script src="~/js/fancybox.umd.js" ></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" async></script>
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/@@fancyapps/ui/dist/fancybox.umd.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
 
     <script src="https://platform.twitter.com/widgets.js" charset="utf-8" async></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" async>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" >
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" async></script>
 
     <!-- jQuery (required by Summernote) -->
-    
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css" async/>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.css"  />
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote.min.js" ></script>
     <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" async></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" ></script>
     <script src="~/js/globe.js" async></script>
-    <script src="~/js/news.js" async></script>
 </head>
 <body>
     <style>
-        /* Container that Fancybox uses for your AJAX content */
+            /* Container that Fancybox uses for your AJAX content */
 
-/* 🔥 FORCE CLOSE BUTTON ON TOP */
-.carousel__button.is-close {
-    position: fixed !important;
-    top: 10px !important;
-    right: 10px !important;
-    z-index: 999999 !important;
+            /* 🔥 FORCE CLOSE BUTTON ON TOP */
+            .carousel__button.is-close {
+                position: fixed !important;
+                top: 10px !important;
+                right: 10px !important;
+                z-index: 999999 !important;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: rgba(0,0,0,0.7);
+                color: #fff;
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+            }
 
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.7);
-    color: #fff;
+            .fancybox__nav {
+                display: none !important;
+            }
 
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-}        
-.fancybox__nav {
-    display: none !important;
-}
-.news-post-popup .fancybox__content {
-    display:flex !important;
-    width:95vw !important;
-    height:95vh !important;
-    padding:0 !important;
-    overflow:hidden !important;
-}
-.popup-container{
-    display:flex;
-    flex-direction:row;
-    width:100%;
-    height:100%;
-}
-    /* ❌ HIDE MOBILE COMMENT SHEET */
-    .comment-sheet,
-    .floating-comment-btn {
-        display: none !important;
-    }
-.popup-left{
-    flex:2;
-/*     overflow-y:auto;
-    padding:15px; */
-}
+/*             .news-post-popup .fancybox__content {
+                display: flex !important;
+                width: 95vw !important;
+                height: 95vh !important;
+                padding: 0 !important;
+                overflow: hidden !important;
+            } */
 
-.popup-right{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    border-left:1px solid #444;
-    overflow:hidden;
-    background:#333;
-}
+            .popup-container {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                height: 100%;
+            }
+            /* ❌ HIDE MOBILE COMMENT SHEET */
+/*             .comment-sheet,
+            .floating-comment-btn {
+                display: none !important;
+            } */
 
-/* .comments-list{
-    flex:1;
-    overflow-y:auto;
-} */
+            .popup-left {
+                flex: 2;
+                /*     overflow-y:auto;
+                            padding:15px; */
+            }
 
-/* Allow scrollbar visibility */
-.popup-left::-webkit-scrollbar,
-.popup-right::-webkit-scrollbar {
-    width: 6px;
-}
+            .popup-right {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                border-left: 1px solid #444;
+                overflow: hidden;
+                background: #333;
+            }
 
-.popup-left::-webkit-scrollbar-thumb,
-.popup-right::-webkit-scrollbar-thumb {
-    background: #aaa;
-    border-radius: 10px;
-}
+                /* .comments-list{
+                            flex:1;
+                            overflow-y:auto;
+                        } */
 
-/* Responsive stacking */
-@@media (max-width:768px){
+                /* Allow scrollbar visibility */
+                .popup-left::-webkit-scrollbar,
+                .popup-right::-webkit-scrollbar {
+                    width: 6px;
+                }
 
+                .popup-left::-webkit-scrollbar-thumb,
+                .popup-right::-webkit-scrollbar-thumb {
+                    background: #aaa;
+                    border-radius: 10px;
+                }
 
-
-.recommended-section{
-    width:100%;
-    padding:8px 10px;
-    background:#000;
-    margin-top:0px;
-}
-/* show toggle */
-
-.menu-toggle{
-    display:block !important;
-    position:fixed;
-    top:12px;
-    left:12px;
-    z-index:99999; /* VERY IMPORTANT */
-    background:#111;
-    color:#fff;
-    border:none;
-    padding:10px 12px;
-    border-radius:8px;
-    font-size:18px;
-}
+            /* Responsive stacking */
+            @@media (max-width:768px) {
 
 
-/* overlay */
-.drawer-overlay{
 
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.6);
-    opacity:0;
-    visibility:hidden;
-    transition:0.3s;
+                .recommended-section {
+                    width: 100%;
+                    padding: 8px 10px;
+                    background: #000;
+                    margin-top: 0px;
+                }
+                /* show toggle */
 
-        pointer-events: none;   /* 🔥 prevents blocking */
-    opacity:0;
-    visibility:hidden;
-}
+                .menu-toggle {
+                    display: block !important;
+                    position: fixed;
+                    top: 12px;
+                    left: 12px;
+                    z-index: 99999; /* VERY IMPORTANT */
+                    background: #111;
+                    color: #fff;
+                    border: none;
+                    padding: 10px 12px;
+                    border-radius: 8px;
+                    font-size: 18px;
+                }
+                /* overlay */
+                .drawer-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.6);
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: 0.3s;
+                    pointer-events: none; /* 🔥 prevents blocking */
+                    opacity: 0;
+                    visibility: hidden;
+                }
+                /* drawer */
+                .pills-drawer {
+                    position: fixed;
+                    top: 0;
+                    left: -260px; /* hidden */
+                    width: 250px;
+                    height: 100vh;
+                    background: #000;
+                    z-index: 9999;
+                    transition: left 0.3s ease;
+                    display: block !important;
+                }
+                    /* 🔥 THIS IS THE IMPORTANT PART */
+                    .pills-drawer.active {
+                        left: 0 !important;
+                    }
 
-/* drawer */
-.pills-drawer{
-    position: fixed;
-    top: 0;
-    left: -260px; /* hidden */
-    width: 250px;
-    height: 100vh;
-    background: #000;
-    z-index: 9999;
-    transition: left 0.3s ease;
-    display: block !important;
-}
+                .drawer-overlay.active {
+                    pointer-events: auto; /* enable only when open */
+                    opacity: 1;
+                    visibility: visible;
+                }
 
-/* 🔥 THIS IS THE IMPORTANT PART */
-.pills-drawer.active{
-    left: 0 !important;
-}
+                .popup-left img,
+                .popup-left iframe,
+                .popup-left video {
+                    max-width: 100%;
+                    height: auto;
+                }
+                /* header */
+                .drawer-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 15px;
+                }
 
-.drawer-overlay.active{
-    pointer-events: auto;   /* enable only when open */
-    opacity:1;
-    visibility:visible;
-}
-.popup-left img,
-.popup-left iframe,
-.popup-left video{
-    max-width:100%;
-    height:auto;
-}
-/* header */
-.drawer-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
-}
-    .popup-container {
-        flex-direction: column !important;
-        display:block !important;
-        height:auto !important;
-        min-height:auto !important;
-        /* height: 100%; */
-    }
-.drawer-content{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
+                .popup-container {
+                    flex-direction: column !important;
+                    display: block !important;
+                    height: auto !important;
+                    min-height: auto !important;
+                    /* height: 100%; */
+                }
 
-    .fancybox__content {
-width:100vw !important;
-        max-width:100vw !important;
+                .drawer-content {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
 
-        height:auto !important;
-        min-height:auto !important;
+/*                 .fancybox__content {
+                    width: 100vw !important;
+                    max-width: 100vw !important;
+                    height: auto !important;
+                    min-height: auto !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    border-radius: 0 !important;
+                    overflow: auto !important;
+                } */
 
-        margin:0 !important;
-        padding:0 !important;
+                .fancybox__slide {
+                    padding: 0 !important;
+                    overflow: auto !important;
+                }
+                /* hide desktop pills */
+                .news-categories-pills {
+                    display: none !important;
+                }
 
-        border-radius:0 !important;
+                body {
+                    overflow-x: hidden;
+                }
 
-        overflow:auto !important;
-    }
+                .popup-right {
+                    display: none !important;
+                }
 
-    .fancybox__slide {
-        padding:0 !important;
-        overflow:auto !important;
-    }
-/* hide desktop pills */
-.news-categories-pills{
-    display:none !important;
-}
-    body{
-        overflow-x:hidden;
-    }
+                .popup-left {
+                    width: 100% !important;
+                    height: auto !important;
+                    min-height: auto !important;
+                    overflow: visible !important;
+                    /*         flex: none !important; */
+                }
+                /* ✅ ENABLE COMMENT SHEET */
+                .comment-sheet {
+                    display: flex !important;
+                    flex-direction: column;
+                    position: fixed;
+                    left: 0;
+                    right: 0;
+                    bottom: -100%;
+                    height: 70vh;
+                    background: #111;
+                    z-index: 999999;
+                    transition: bottom 0.3s ease;
+                }
 
-    .popup-right {
-        display: none !important;
-    }
-.popup-left{
-        width:100% !important;
-        height:auto !important;
-        min-height:auto !important;
-        overflow:visible !important;
-/*         flex: none !important; */
-}
-/* ✅ ENABLE COMMENT SHEET */
-    .comment-sheet {
- display:flex !important;
-    flex-direction:column;
+                    .comment-sheet.active {
+                        bottom: 0;
+                    }
 
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:-100%;
+                .floating-comment-btn {
+                    display: flex !important;
+                }
+                /* .popup-right{
+                            flex:none;
+                            max-height:40vh;
+                            border-left:none;
+                            border-top:1px solid #444;
+                            background:#333;
+                        } */
+                /* Content first */
+                /* Floating share bar visible only mobile */
+                .floating-share-bar {
+                    display: flex;
+                }
+                /* .add-comment{
+                            position:sticky;
+                            bottom:0;
+                            background:gray;
+                            z-index:3;
+                        } */
+                .recommended-card {
+                    min-width: 140px;
+                    height: 100px;
+                }
 
-    height:70vh;
+                .newsContainer {
+                    margin-top: 80px;
+                }
 
-    background:#111;
-    z-index:999999;
+                .nav-arrows {
+                    display: flex !important; /* swipe instead */
+                }
+            }
 
-    transition:bottom 0.3s ease;
-    }
+            @@media (min-width:769px) {
+                .floating-share-bar {
+                    display: none;
+                }
 
-    .comment-sheet.active {
-        bottom: 0;
-    }
+                .menu-toggle,
+                .pills-drawer,
+                .drawer-overlay {
+                    display: none !important;
+                }
 
-    .floating-comment-btn {
-         display:flex !important;
-    }
-/* .popup-right{
-    flex:none;
-    max-height:40vh;
-    border-left:none;
-    border-top:1px solid #444;
-    background:#333;
-} */
-/* Content first */
+                .comment-sheet,
+                .floating-comment-btn {
+                    display: none !important;
+                }
+            }
 
+            .newsContainer {
+                margin-top: 140px; /* adjust to header height */
+            }
 
-/* Floating share bar visible only mobile */
-.floating-share-bar{
-    display:flex;
-}
-/* .add-comment{
-    position:sticky;
-    bottom:0;
-    background:gray;
-    z-index:3;
-} */
-.recommended-card{
-    min-width:140px;
-    height:100px;
-}
+            .news-header h2 {
+                margin: 0;
+                font-size: 1.5rem;
+            }
 
-.newsContainer{
-    margin-top:80px;
-}
+            .image-gallery img {
+                width: 100%;
+                margin-bottom: 10px;
+                border-radius: 8px;
+            }
 
-.nav-arrows{
-    display:flex !important; /* swipe instead */
-}
-}
-@@media (min-width:769px){
-.floating-share-bar{
-    display:none;
-}
-    .menu-toggle,
-    .pills-drawer,
-    .drawer-overlay{
-        display:none !important;
-    }
+            .news-actions {
+                margin-top: 15px;
+                display: flex;
+                gap: 1rem;
+            }
+            /* SHARE BUTTONS */
+            .share-section {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 10px;
+            }
 
-  .comment-sheet,
-    .floating-comment-btn{
-        display:none !important;
-    }
-}
+            .share-buttons {
+                display: flex;
+                gap: 8px;
+            }
 
-.newsContainer{
-    margin-top:140px; /* adjust to header height */
-}
-
-        .news-header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .image-gallery img {
-            width: 100%;
-            margin-bottom: 10px;
-            border-radius: 8px;
-        }
-
-        .news-actions {
-            margin-top: 15px;
-            display: flex;
-            gap: 1rem;
-        }
- /* SHARE BUTTONS */
-.share-section{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-top:10px;
-}
-
-.share-buttons{
-    display:flex;
-    gap:8px;
-}
-
-.share-btn{
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    border:none;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    cursor:pointer;
-}
-
-/* Colors */
-.fb{background:#1877f2;}
-.wa{background:#25D366;}
-.tw{background:#000;}
-.copy{background:#666;}
-
-.share-count{
-    font-size:13px;
-    color:#ccc;
-}
-
-        .like-btn, .share-btn {
-            background: none;
-            border: none;
-            color: #007bff;
-            cursor: pointer;
-            font-size: 1rem;
-        }       
-        /* Title */
-        .comments-title {
-            margin-bottom: 10px;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        /* Comment input wrapper */
-        .comment-input-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        /* Name input */
-        .author-input {
-            height: 36px;
-            width: 100%;
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            outline: none;
-        }
-
-        /* Main comment row */
-        .comment-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Comment textarea */
-        .comment-textarea {
-            flex: 1;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            outline: none;
-            resize: none;
-        }
-
-        /* Send button */
-        .send-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: #ff5252;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .send-btn:hover {
-            background: #ff3030;
-        }
-        /* Main container */
-        #comments-list {
-            padding: 10px;
-            border-radius: 10px;
-             flex:1;
-            overflow-y:auto;
-            padding:10px;
-            
-        }
-
-        /* Each comment row */
-        .fb-comment {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 14px;
-            background: #333;
-        }
-
-            /* Avatar */
-            .fb-comment .avatar {
+            .share-btn {
                 width: 36px;
                 height: 36px;
                 border-radius: 50%;
-                margin-right: 10px;
-                object-fit: cover;
-                background: #222;
-            }
-
-            /* Comment text bubble */
-            .fb-comment .comment-bubble {
-                background: #1a1a1a;
-                padding: 10px 12px;
-                border-radius: 14px;
-                border: 1px solid #333;
-                max-width: 100%;
-            }
-
-            /* Author */
-            .fb-comment .name {
-                font-weight: 600;
-                color: #e4e6eb;
-                display: block;
-                margin-bottom: 2px;
-                font-size: 14px;
-            }
-
-            /* Comment text paragraph */
-            .fb-comment .text {
-                margin: 0;
-                color: #ddd;
-                font-size: 14px;
-                line-height: 1.4;
-            }
-
-            /* Meta row */
-            .fb-comment .comment-meta {
-                font-size: 12px;
-                color: #888;
-                margin-left: 4px;
-                margin-top: 4px;
-            }
-
-            /* Reply link */
-            .fb-comment .reply-link {
-                color: #bbb;
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
                 cursor: pointer;
-                text-decoration: none;
             }
 
-                .fb-comment .reply-link:hover {
-                    color: #fff;
-                    text-decoration: underline;
+            /* Colors */
+            .fb {
+                background: #1877f2;
+            }
+
+            .wa {
+                background: #25D366;
+            }
+
+            .tw {
+                background: #000;
+            }
+
+            .copy {
+                background: #666;
+            }
+
+            .share-count {
+                font-size: 13px;
+                color: #ccc;
+            }
+
+            .like-btn, .share-btn {
+                background: none;
+                border: none;
+                color: #007bff;
+                cursor: pointer;
+                font-size: 1rem;
+            }
+            /* Title */
+            .comments-title {
+                margin-bottom: 10px;
+                font-size: 18px;
+                font-weight: 600;
+            }
+
+            /* Comment input wrapper */
+            .comment-input-wrapper {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            /* Name input */
+            .author-input {
+                height: 36px;
+                width: 100%;
+                padding: 8px 12px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+                outline: none;
+            }
+
+            /* Main comment row */
+            .comment-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            /* Comment textarea */
+            .comment-textarea {
+                flex: 1;
+                padding: 10px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+                outline: none;
+                resize: none;
+            }
+
+            /* Send button */
+            .send-btn {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: none;
+                background: #ff5252;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+
+                .send-btn:hover {
+                    background: #ff3030;
+                }
+            /* Main container */
+            #comments-list {
+                padding: 10px;
+                border-radius: 10px;
+                flex: 1;
+                overflow-y: auto;
+                padding: 10px;
+            }
+
+            /* Each comment row */
+            .fb-comment {
+                display: flex;
+                align-items: flex-start;
+                margin-bottom: 14px;
+                background: #333;
+            }
+
+                /* Avatar */
+                .fb-comment .avatar {
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 50%;
+                    margin-right: 10px;
+                    object-fit: cover;
+                    background: #222;
                 }
 
-        /* Scrollbar */
-        #comments-list::-webkit-scrollbar {
-            width: 7px;
-        }
+                /* Comment text bubble */
+                .fb-comment .comment-bubble {
+                    background: #1a1a1a;
+                    padding: 10px 12px;
+                    border-radius: 14px;
+                    border: 1px solid #333;
+                    max-width: 100%;
+                }
 
-        #comments-list::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 5px;
-        }
+                /* Author */
+                .fb-comment .name {
+                    font-weight: 600;
+                    color: #e4e6eb;
+                    display: block;
+                    margin-bottom: 2px;
+                    font-size: 14px;
+                }
 
-        #comments-list::-webkit-scrollbar-track {
-            background: #000;
-        }
+                /* Comment text paragraph */
+                .fb-comment .text {
+                    margin: 0;
+                    color: #ddd;
+                    font-size: 14px;
+                    line-height: 1.4;
+                }
 
-/* 
-        .popup-container {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            height: 100%;
-            background: #1a1a1a;
-            color: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-        } */
+                /* Meta row */
+                .fb-comment .comment-meta {
+                    font-size: 12px;
+                    color: #888;
+                    margin-left: 4px;
+                    margin-top: 4px;
+                }
 
+                /* Reply link */
+                .fb-comment .reply-link {
+                    color: #bbb;
+                    cursor: pointer;
+                    text-decoration: none;
+                }
 
-        /* Fade-in animation */
-        .fade-in {
-            animation: fadeInPopup 0.4s ease;
-        }
+                    .fb-comment .reply-link:hover {
+                        color: #fff;
+                        text-decoration: underline;
+                    }
 
-        @@keyframes fadeInPopup {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
+            /* Scrollbar */
+            #comments-list::-webkit-scrollbar {
+                width: 7px;
             }
 
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* Dark Mode background around content */
-        .fancybox__backdrop {
-            background: rgba(10, 10, 10, 0.92) !important;
-        }
-
-.add-comment{
-    position:sticky;
-    bottom:0;
-    background: #333;
-    padding:10px;
-    display:flex;
-    gap:6px;
-}
-.add-comment input,
-.add-comment textarea{
-    flex:1;
-    border-radius:20px;
-    padding:8px;
-}
-
-.add-comment button {
-  border:none;
-    background:#ff004f;
-    color:white;
-    padding:10px 14px;
-    border-radius:50%;
+            #comments-list::-webkit-scrollbar-thumb {
+                background: #333;
+                border-radius: 5px;
             }
 
+            #comments-list::-webkit-scrollbar-track {
+                background: #000;
+            }
 
-/*popup who shared what*/
-.shared-users-popup{
-    padding:20px;
-    background:#111;
-    color:#fff;
-    width:300px;
-}
-
-.shared-user{
-    display:flex;
-    gap:10px;
-    margin-bottom:10px;
-}
-
-.shared-user .avatar{
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    background:#444;
-}
-
-.time{
-    font-size:12px;
-    color:#aaa;
-}
-
-/* recommended section */
-.recommended-section{
-    width:100%;
-    padding:8px 10px;
-    background:#000;
-    margin-top:100px;
-}
+            /*
+                                .popup-container {
+                                    display: flex;
+                                    flex-direction: row;
+                                    width: 100%;
+                                    height: 100%;
+                                    background: #1a1a1a;
+                                    color: #fff;
+                                    border-radius: 8px;
+                                    overflow: hidden;
+                                } */
 
 
-/* Header */
-.recommended-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:8px;
-    margin-top:10px;
-}
+            /* Fade-in animation */
+            .fade-in {
+                animation: fadeInPopup 0.4s ease;
+            }
 
-/* Container */
-.recommended-container{
-    display:flex;
-    gap:10px;
-    overflow:hidden; /* important for auto scroll */
-}
+            @@keyframes fadeInPopup {
+                from {
+                    opacity: 0;
+                    transform: scale(0.95);
+                }
 
-.recommended-container::-webkit-scrollbar{
-    display:none;
-}
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
 
-/* Cards */
-.recommended-card{
-    min-width:160px;
-    height:100px;
-    border-radius:12px;
-    overflow:hidden;
-    transition:0.2s;
-}
+            /* Dark Mode background around content */
+            .fancybox__backdrop {
+                background: rgba(10, 10, 10, 0.92) !important;
+            }
 
-.recommended-card img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-.recommended-card:hover{
-    transform:scale(1.05);
-}
-/* Overlay */
-.rec-overlay{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    padding:6px;
-    background:rgba(0,0,0,0.6);
-    color:#fff;
-    font-size:12px;
-}
+            .add-comment {
+                position: sticky;
+                bottom: 0;
+                background: #333;
+                padding: 10px;
+                display: flex;
+                gap: 6px;
+            }
 
-/* Arrows */
-.nav-arrows button{
-    background:#111;
-    border:none;
-    color:#fff;
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    margin-left:5px;
-    cursor:pointer;
-}
+                .add-comment input,
+                .add-comment textarea {
+                    flex: 1;
+                    border-radius: 20px;
+                    padding: 8px;
+                }
 
-.nav-arrows button:hover{
-    background:#ff004f;
-}
+                .add-comment button {
+                    border: none;
+                    background: #ff004f;
+                    color: white;
+                    padding: 10px 14px;
+                    border-radius: 50%;
+                }
 
-.container{
-    margin-top:250px 
-}
-.nav-arrows{
-    display:flex;
-}
-.top-section{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    z-index:1000;
-    background:#000;
-    display:flex;
-    flex-direction:column;
-    z-index:1000;
-}
 
-/* Desktop pills */
-.pills-container{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-}
-.menu-toggle,
-.pills-drawer,
-.drawer-overlay {
-    display: none;
-}
+            /*popup who shared what*/
+            .shared-users-popup {
+                padding: 20px;
+                background: #111;
+                color: #fff;
+                width: 300px;
+            }
+
+            .shared-user {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+                .shared-user .avatar {
+                    width: 35px;
+                    height: 35px;
+                    border-radius: 50%;
+                    background: #444;
+                }
+
+            .time {
+                font-size: 12px;
+                color: #aaa;
+            }
+
+            /* recommended section */
+            .recommended-section {
+                width: 100%;
+                padding: 8px 10px;
+                background: #000;
+                margin-top: 100px;
+            }
+
+
+            /* Header */
+            .recommended-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+                margin-top: 10px;
+            }
+
+            /* Container */
+            .recommended-container {
+                display: flex;
+                gap: 10px;
+                overflow: hidden; /* important for auto scroll */
+            }
+
+                .recommended-container::-webkit-scrollbar {
+                    display: none;
+                }
+
+            /* Cards */
+            .recommended-card {
+                min-width: 160px;
+                height: 100px;
+                border-radius: 12px;
+                overflow: hidden;
+                transition: 0.2s;
+            }
+
+                .recommended-card img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .recommended-card:hover {
+                    transform: scale(1.05);
+                }
+            /* Overlay */
+            .rec-overlay {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                padding: 6px;
+                background: rgba(0,0,0,0.6);
+                color: #fff;
+                font-size: 12px;
+            }
+
+            /* Arrows */
+            .nav-arrows button {
+                background: #111;
+                border: none;
+                color: #fff;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+
+                .nav-arrows button:hover {
+                    background: #ff004f;
+                }
+
+            .container {
+                margin-top: 250px
+            }
+
+            .nav-arrows {
+                display: flex;
+            }
+
+            .top-section {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                background: #000;
+                display: flex;
+                flex-direction: column;
+                z-index: 1000;
+            }
+
+            /* Desktop pills */
+            .pills-container {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .menu-toggle,
+            .pills-drawer,
+            .drawer-overlay {
+                display: none;
+            }
     </style>
     <header>
-
-
     </header>
     <!-- Floating Categories as Pills -->
     <div class="top-section">
 
-<!-- MENU BUTTON (mobile only) -->
-<button id="menuToggle" class="menu-toggle">
-    ☰
-</button>
+        <!-- MENU BUTTON (mobile only) -->
+        <button id="menuToggle" class="menu-toggle">
+            ☰
+        </button>
 
-<!-- OVERLAY -->
-<div id="drawerOverlay" class="drawer-overlay"></div>
+        <!-- OVERLAY -->
+        <div id="drawerOverlay" class="drawer-overlay"></div>
 
-<!-- DRAWER -->
-<div id="pillsDrawer" class="pills-drawer">
-    <div class="drawer-header">
-        <span></span>
-        <button id="closeDrawer">✕</button>
-    </div>
+        <!-- DRAWER -->
+        <div id="pillsDrawer" class="pills-drawer">
+            <div class="drawer-header">
+                <span></span>
+                <button id="closeDrawer">✕</button>
+            </div>
 
-    <div class="drawer-content">
+            <div class="drawer-content">
 
-            @foreach (var category in Enum.GetValues(typeof(NewsCategory)).Cast<NewsCategory>())
-            {
-                @if (category.ToString() == "Home")
+                @foreach (var category in Enum.GetValues(typeof(NewsCategory)).Cast<NewsCategory>())
                 {
-                    <a href="/" class="pill pill-home active">
-                        <i class="bi bi-house-fill"></i>
-                        @category
-                    </a>
-                }
-                else
-                {
-                    <a href="#" class="category-pill" data-category="@category">@category</a>
+                    @if (category.ToString() == "Home")
+                    {
+                        <a href="/" class="pill pill-home active">
+                            <i class="bi bi-house-fill"></i>
+                            @category
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" class="category-pill" data-category="@category">@category</a>
+                    }
+
                 }
 
-            }
-
-        </div>
+            </div>
         </div>
         <div class="news-categories-pills">
             @foreach (var category in Enum.GetValues(typeof(NewsCategory)).Cast<NewsCategory>())
@@ -780,18 +784,18 @@ width:100vw !important;
         @* <div id="stories-container"></div> *@
         <div class="recommended-section">
 
-    <div class="recommended-header">
-        <h5>⭐ Recommended By Viewers</h5>
+            <div class="recommended-header">
+                <h5>⭐ Recommended By Viewers</h5>
 
-        <div class="nav-arrows">
-            <button class="scroll-left"><i class="fas fa-chevron-left"></i></button>
-            <button class="scroll-right"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
+                <div class="nav-arrows">
+                    <button class="scroll-left"><i class="fas fa-chevron-left"></i></button>
+                    <button class="scroll-right"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
 
-    <div class="recommended-container" id="recommendedContainer">
+            <div class="recommended-container" id="recommendedContainer">
 
-       @*  @foreach (var news in Model.Stories)
+                @*  @foreach (var news in Model.Stories)
         {
             <div class="recommended-card">
 
@@ -810,9 +814,9 @@ width:100vw !important;
             </div>
         } *@
 
-    </div>
+            </div>
 
-</div>
+        </div>
     </div>
     <div class="container">
         <main role="main" class="pb-3">
@@ -820,7 +824,7 @@ width:100vw !important;
         </main>
     </div>
 
-@*     <footer class="border-top footer text-muted">
+    @*     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2025 - Seithi247 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
@@ -828,224 +832,282 @@ width:100vw !important;
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/partialdetails.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
 
-     const toggle = document.getElementById("menuToggle");
-    window.onload = function(){
+                 const toggle = document.getElementById("menuToggle");
+                window.onload = function(){
 
-    const toggle = document.getElementById("menuToggle");
-    const drawer = document.getElementById("pillsDrawer");
-    const overlay = document.getElementById("drawerOverlay");
-    const closeBtn = document.getElementById("closeDrawer");
-
-
-    toggle.onclick = function(){
-        console.log("OPEN CLICK");
-        drawer.classList.add("active");
-        overlay.classList.add("active");
-    };
-
-    closeBtn.onclick = function(){
-        drawer.classList.remove("active");
-        overlay.classList.remove("active");
-    };
-
-    overlay.onclick = function(){
-        drawer.classList.remove("active");
-        overlay.classList.remove("active");
-    };
-
-};
-document.addEventListener("click", function(e){
+                const toggle = document.getElementById("menuToggle");
+                const drawer = document.getElementById("pillsDrawer");
+                const overlay = document.getElementById("drawerOverlay");
+                const closeBtn = document.getElementById("closeDrawer");
 
 
-    // OPEN
-    if(e.target.closest("#menuToggle")){
-        document.getElementById("pillsDrawer").classList.add("active");
-        document.getElementById("drawerOverlay").classList.add("active");
-    }
+                toggle.onclick = function(){
+                    console.log("OPEN CLICK");
+                    drawer.classList.add("active");
+                    overlay.classList.add("active");
+                };
 
-    // CLOSE
-    if(e.target.closest("#closeDrawer") || e.target.id === "drawerOverlay"){
-        document.getElementById("pillsDrawer").classList.remove("active");
-        document.getElementById("drawerOverlay").classList.remove("active");
-    }
+                closeBtn.onclick = function(){
+                    drawer.classList.remove("active");
+                    overlay.classList.remove("active");
+                };
 
-});
-                    // Clear auto-binding if any
+                overlay.onclick = function(){
+                    drawer.classList.remove("active");
+                    overlay.classList.remove("active");
+                };
 
-if (!window._fancyboxBound) {
+            };
+            document.addEventListener("click", function(e){
 
-   
-Fancybox.bind('[data-fancybox^="details-"]', {
-    type: "ajax",
 
-    // 🚨 THIS LINE IS CRITICAL
-    groupAll: false,
+                // OPEN
+                if(e.target.closest("#menuToggle")){
+                    document.getElementById("pillsDrawer").classList.add("active");
+                    document.getElementById("drawerOverlay").classList.add("active");
+                }
 
-    // 🚨 FORCE SINGLE ITEM MODE
-    dragToClose: false,
+                // CLOSE
+                if(e.target.closest("#closeDrawer") || e.target.id === "drawerOverlay"){
+                    document.getElementById("pillsDrawer").classList.remove("active");
+                    document.getElementById("drawerOverlay").classList.remove("active");
+                }
 
-    Carousel: {
-        Navigation: false,
-        infinite: false
-    },
+            });
+                                // Clear auto-binding if any
 
-    Thumbs: false,
-    Hash: false,
-Toolbar: { display:["close"] },
+                        if (!window._detailsBound) {
 
-    //closeButton: "top",
-    animated:true,
-                    width: "90%",
-                height: "90%",
-                display: "flex",
-                contentClick: false,
-                arrows: false,
-    Images: {
-        zoom: false
-    },
+                Fancybox.bind('[data-fancybox^="details-"]', {
 
-    on: {
-        done: (fancybox, slide) => {
-            initDetailsInteractions(slide.$content);
-        }
-    }
-});
- window._fancyboxBound = true;
-}
-document.addEventListener("click", function (e) {
-    if (e.target.closest('[data-fancybox="details"]')) {
-        Fancybox.close(); // 🔥 prevents stacking
-    }
-});
-document.addEventListener("click", function (e) {
-    const el = e.target.closest('[data-fancybox^="details-"]');
-    if (!el) return;
+                    groupAll: false,
 
-    if (Fancybox.getInstance()) {
-        Fancybox.close(true);
-    }
-});
-               $(document).on("click", ".like-btn", function (e) {
-                    e.preventDefault();
-                   
-                    const id = $(this).data("id");
-                      $.post("/News/Like", { id: id }, function (res) {
-                        $(".like-count").text(res.likes);
-                    });
+                    dragToClose: false,
+
+                    autoFocus: false,
+
+                    trapFocus: false,
+
+                    placeFocusBack: false,
+
+                    animated: true,
+
+                    closeButton: "inside",
+
+                    Toolbar: {
+
+                        display: {
+
+                            left: [],
+
+                            middle: [],
+
+                            right: ["close"]
+
+                        }
+
+                    },
+
+                    Carousel: {
+
+                        infinite: false
+
+                    },
+
+                    on: {
+
+                        reveal: (fb, slide) => {
+
+                            const article =
+                                slide.el.querySelector(".article-layout");
+
+                            if (!article)
+                                return;
+
+                            article.scrollTop = 0;
+
+                            initDetailsInteractions(article);
+
+                        }
+
+                    }
+
                 });
 
-       $(document).off("click", ".post-comment").on("click", ".post-comment", function (e) {
-                    e.preventDefault();
+            Fancybox.bind('[data-fancybox^="gallery-"]', {
 
-        let id = $(this).data("id");
+                groupAll:true,
 
-        let comment = $(`#commentText[data-id='${id}']`).val();
-        let author  = $(`#authorName[data-id='${id}']`).val();
+                dragToClose:true,
 
+                Toolbar:{
+                    display:{
+                        left:[],
+                        middle:[
+                            "zoom",
+                            "slideshow"
+                        ],
+                        right:[
+                            "thumbs",
+                            "fullscreen",
+                            "close"
+                        ]
+                    }
+                },
 
+                Images:{
+                    zoom:true
+                },
 
-                        $.post("/News/AddComment", { newsId: id,authorName :author, text: comment ,reaction:""}, function (res) {
+                Slideshow:{
+                    autoStart:false
+                },
 
-                            $(".comments-list").html(res);
-                              $(`#commentText[data-id='${id}']`).val("");
-                              $(`#commentText[data-id='${id}']`).val("");
-                        });
-                });
+                Thumbs:{
+                    type:"modern"
+                }
 
-            
-       // $(document).off("click", ".post-comment-mobile").on("click", ".post-comment-mobile", function (e) {
-       //              e.preventDefault();
-
-       //  let id = $(this).data("id");
-
-       //  let comment = $(`#commentText[data-id='${id}']`).val();
-       //  let author  = $(`#authorName[data-id='${id}']`).val();
-
-
-
-       //                  $.post("/News/AddComment", { newsId: id,authorName :author, text: comment ,reaction:""}, function (res) {
-
-       //                      $(".comments-list-mobile").html(res);
-       //                        $(`#commentText[data-id='${id}']`).val("");
-       //                        $(`#commentText[data-id='${id}']`).val("");
-       //                  });
-       //          });
-
-
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = document.getElementById('themeIcon');
-
-            // Load saved theme or system preference
-            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            setTheme(savedTheme);
-
-            themeToggle.addEventListener('click', () => {
-                const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
-                setTheme(newTheme);
             });
 
-            function setTheme(mode) {
-                if (mode === 'dark') {
-                    document.body.classList.add('dark-mode');
-                    themeIcon.classList.replace('bi-moon-fill', 'bi-sun-fill');
-                } else {
-                    document.body.classList.remove('dark-mode');
-                    themeIcon.classList.replace('bi-sun-fill', 'bi-moon-fill');
-                }
-                localStorage.setItem('theme', mode);
+                window._detailsBound = true;
+
             }
 
-            // Optional scroll effect
-            window.addEventListener('scroll', () => {
-                const nav = document.querySelector('.custom-navbar');
-                if (window.scrollY > 50) nav.classList.add('scrolled');
-                else nav.classList.remove('scrolled');
+            // document.addEventListener("click", function (e) {
+            //     if (e.target.closest('[data-fancybox="details"]')) {
+            //         Fancybox.close(); // 🔥 prevents stacking
+            //     }
+            // });
+            // document.addEventListener("click", function (e) {
+            //     const el = e.target.closest('[data-fancybox^="details-"]');
+            //     if (!el) return;
+
+            //     if (Fancybox.getInstance()) {
+            //         Fancybox.close(true);
+            //     }
+            // });
+                           $(document).on("click", ".like-btn", function (e) {
+                                e.preventDefault();
+
+                                const id = $(this).data("id");
+                                  $.post("/News/Like", { id: id }, function (res) {
+                                    $(".like-count").text(res.likes);
+                                });
+                            });
+
+                   $(document).off("click", ".post-comment").on("click", ".post-comment", function (e) {
+                                e.preventDefault();
+
+                    let id = $(this).data("id");
+
+                    let comment = $(`#commentText[data-id='${id}']`).val();
+                    let author  = $(`#authorName[data-id='${id}']`).val();
+
+
+
+                                    $.post("/News/AddComment", { newsId: id,authorName :author, text: comment ,reaction:""}, function (res) {
+
+                                        $(".comments-list").html(res);
+                                          $(`#commentText[data-id='${id}']`).val("");
+                                          $(`#commentText[data-id='${id}']`).val("");
+                                    });
+                            });
+
+            
+                   // $(document).off("click", ".post-comment-mobile").on("click", ".post-comment-mobile", function (e) {
+                   //              e.preventDefault();
+
+                   //  let id = $(this).data("id");
+
+                   //  let comment = $(`#commentText[data-id='${id}']`).val();
+                   //  let author  = $(`#authorName[data-id='${id}']`).val();
+
+
+
+                   //                  $.post("/News/AddComment", { newsId: id,authorName :author, text: comment ,reaction:""}, function (res) {
+
+                   //                      $(".comments-list-mobile").html(res);
+                   //                        $(`#commentText[data-id='${id}']`).val("");
+                   //                        $(`#commentText[data-id='${id}']`).val("");
+                   //                  });
+                   //          });
+
+
+                        const themeToggle = document.getElementById('themeToggle');
+                        const themeIcon = document.getElementById('themeIcon');
+
+                        // Load saved theme or system preference
+                        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                        setTheme(savedTheme);
+
+                        themeToggle.addEventListener('click', () => {
+                            const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                            setTheme(newTheme);
+                        });
+
+                        function setTheme(mode) {
+                            if (mode === 'dark') {
+                                document.body.classList.add('dark-mode');
+                                themeIcon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+                            } else {
+                                document.body.classList.remove('dark-mode');
+                                themeIcon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+                            }
+                            localStorage.setItem('theme', mode);
+                        }
+
+                        // Optional scroll effect
+                        window.addEventListener('scroll', () => {
+                            const nav = document.querySelector('.custom-navbar');
+                            if (window.scrollY > 50) nav.classList.add('scrolled');
+                            else nav.classList.remove('scrolled');
+                        });
+
+                        document.querySelector(".menu-toggle").onclick = () => {
+                        document.getElementById("pillsDrawer").classList.toggle("active");
+            };
+
+
+            document.addEventListener("DOMContentLoaded", function(){
+
+                const toggle = document.getElementById("menuToggle");
+                const drawer = document.getElementById("pillsDrawer");
+                const overlay = document.getElementById("drawerOverlay");
+                const closeBtn = document.getElementById("closeDrawer");
+
+                function openDrawer(){
+                    drawer.classList.add("active");
+                    overlay.classList.add("active");
+                }
+
+                function closeDrawer(){
+                    drawer.classList.remove("active");
+                    overlay.classList.remove("active");
+                }
+
+                if(toggle){
+                    toggle.addEventListener("click", openDrawer);
+                    toggle.classList.add("display:none");
+                }
+
+                if(closeBtn){
+                    closeBtn.addEventListener("click", closeDrawer);
+                }
+
+                if(overlay){
+                    overlay.addEventListener("click", closeDrawer);
+                }
+
             });
 
-            document.querySelector(".menu-toggle").onclick = () => {
-            document.getElementById("pillsDrawer").classList.toggle("active");
-};
-
-
-document.addEventListener("DOMContentLoaded", function(){
-
-    const toggle = document.getElementById("menuToggle");
-    const drawer = document.getElementById("pillsDrawer");
-    const overlay = document.getElementById("drawerOverlay");
-    const closeBtn = document.getElementById("closeDrawer");
-
-    function openDrawer(){
-        drawer.classList.add("active");
-        overlay.classList.add("active");
-    }
-
-    function closeDrawer(){
-        drawer.classList.remove("active");
-        overlay.classList.remove("active");
-    }
-
-    if(toggle){
-        toggle.addEventListener("click", openDrawer);
-        toggle.classList.add("display:none");
-    }
-
-    if(closeBtn){
-        closeBtn.addEventListener("click", closeDrawer);
-    }
-
-    if(overlay){
-        overlay.addEventListener("click", closeDrawer);
-    }
-
-});
-
-    $(function () {
-                $("#recommendedContainer").load("/News/Stories");
-    });
+                $(function () {
+                            $("#recommendedContainer").load("/News/Stories");
+                });
 
     </script>
     <!-- Floating Seithi 24/7 Banner -->
